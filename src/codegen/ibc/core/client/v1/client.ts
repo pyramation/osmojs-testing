@@ -845,8 +845,8 @@ export const Height = {
 
   fromAmino(object: HeightAmino): Height {
     return {
-      revisionNumber: Long.fromString(object.revision_number),
-      revisionHeight: Long.fromString(object.revision_height)
+      revisionNumber: Long.fromString(object.revision_number || "0", true),
+      revisionHeight: Long.fromString(object.revision_height || "0", true)
     };
   },
 
