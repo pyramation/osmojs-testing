@@ -2,6 +2,7 @@ import { Grant, GrantAmino, GrantSDKType, GenericAuthorization } from "./authz";
 import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
 import { SendAuthorization } from "../../bank/v1beta1/authz";
 import { StakeAuthorization } from "../../staking/v1beta1/authz";
+import { ContractExecutionAuthorization, ContractMigrationAuthorization } from "../../../cosmwasm/wasm/v1/authz";
 import * as _m0 from "protobufjs/minimal";
 /**
  * MsgGrant is a request type for Grant method. It declares authorization to the grantee
@@ -181,7 +182,7 @@ export declare const MsgRevokeResponse: {
 export declare const Sdk_Msg_InterfaceDecoder: (input: _m0.Reader | Uint8Array) => Any;
 export declare const Sdk_Msg_FromAmino: (content: AnyAmino) => Any;
 export declare const Sdk_Msg_ToAmino: (content: Any) => AnyAmino;
-export declare const Cosmos_authzAuthorization_InterfaceDecoder: (input: _m0.Reader | Uint8Array) => GenericAuthorization | SendAuthorization | StakeAuthorization | Any;
+export declare const Cosmos_authzAuthorization_InterfaceDecoder: (input: _m0.Reader | Uint8Array) => GenericAuthorization | SendAuthorization | StakeAuthorization | ContractExecutionAuthorization | ContractMigrationAuthorization | Any;
 export declare const Cosmos_authzAuthorization_FromAmino: (content: AnyAmino) => Any;
 export declare const Cosmos_authzAuthorization_ToAmino: (content: Any) => AnyAmino | {
     type: string;
@@ -192,4 +193,7 @@ export declare const Cosmos_authzAuthorization_ToAmino: (content: Any) => AnyAmi
 } | {
     type: string;
     value: import("../../staking/v1beta1/authz").StakeAuthorizationAmino;
+} | {
+    type: string;
+    value: import("../../../cosmwasm/wasm/v1/authz").ContractExecutionAuthorizationAmino;
 };

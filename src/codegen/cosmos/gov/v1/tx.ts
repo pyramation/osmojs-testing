@@ -5,6 +5,7 @@ import { CommunityPoolSpendProposal, CommunityPoolSpendProposalWithDeposit } fro
 import { TextProposal } from "../v1beta1/gov";
 import { ParameterChangeProposal } from "../../params/v1beta1/params";
 import { SoftwareUpgradeProposal, CancelSoftwareUpgradeProposal } from "../../upgrade/v1beta1/upgrade";
+import { StoreCodeProposal, InstantiateContractProposal, InstantiateContract2Proposal, MigrateContractProposal, SudoContractProposal, ExecuteContractProposal, UpdateAdminProposal, ClearAdminProposal, PinCodesProposal, UnpinCodesProposal, UpdateInstantiateConfigProposal, StoreAndInstantiateContractProposal } from "../../../cosmwasm/wasm/v1/proposal";
 import { ClientUpdateProposal, UpgradeProposal } from "../../../ibc/core/client/v1/client";
 import { ReplacePoolIncentivesProposal, UpdatePoolIncentivesProposal } from "../../../osmosis/pool-incentives/v1beta1/gov";
 import { SetProtoRevEnabledProposal, SetProtoRevAdminAccountProposal } from "../../../osmosis/protorev/v1beta1/gov";
@@ -71,7 +72,7 @@ export interface MsgSubmitProposalResponseSDKType {
 
 export interface MsgExecLegacyContent {
   /** content is the proposal's content. */
-  content?: (CommunityPoolSpendProposal & CommunityPoolSpendProposalWithDeposit & TextProposal & ParameterChangeProposal & SoftwareUpgradeProposal & CancelSoftwareUpgradeProposal & ClientUpdateProposal & UpgradeProposal & ReplacePoolIncentivesProposal & UpdatePoolIncentivesProposal & SetProtoRevEnabledProposal & SetProtoRevAdminAccountProposal & SetSuperfluidAssetsProposal & RemoveSuperfluidAssetsProposal & UpdateUnpoolWhiteListProposal & UpdateFeeTokenProposal & Any) | undefined;
+  content?: (CommunityPoolSpendProposal & CommunityPoolSpendProposalWithDeposit & TextProposal & ParameterChangeProposal & SoftwareUpgradeProposal & CancelSoftwareUpgradeProposal & StoreCodeProposal & InstantiateContractProposal & InstantiateContract2Proposal & MigrateContractProposal & SudoContractProposal & ExecuteContractProposal & UpdateAdminProposal & ClearAdminProposal & PinCodesProposal & UnpinCodesProposal & UpdateInstantiateConfigProposal & StoreAndInstantiateContractProposal & ClientUpdateProposal & UpgradeProposal & ReplacePoolIncentivesProposal & UpdatePoolIncentivesProposal & SetProtoRevEnabledProposal & SetProtoRevAdminAccountProposal & SetSuperfluidAssetsProposal & RemoveSuperfluidAssetsProposal & UpdateUnpoolWhiteListProposal & UpdateFeeTokenProposal & Any) | undefined;
   /** authority must be the gov module address. */
 
   authority: string;
@@ -1038,7 +1039,7 @@ export const MsgDepositResponse = {
   }
 
 };
-export const Cosmos_govv1beta1Content_InterfaceDecoder = (input: _m0.Reader | Uint8Array): CommunityPoolSpendProposal | CommunityPoolSpendProposalWithDeposit | TextProposal | ParameterChangeProposal | SoftwareUpgradeProposal | CancelSoftwareUpgradeProposal | ClientUpdateProposal | UpgradeProposal | ReplacePoolIncentivesProposal | UpdatePoolIncentivesProposal | SetProtoRevEnabledProposal | SetProtoRevAdminAccountProposal | SetSuperfluidAssetsProposal | RemoveSuperfluidAssetsProposal | UpdateUnpoolWhiteListProposal | UpdateFeeTokenProposal | Any => {
+export const Cosmos_govv1beta1Content_InterfaceDecoder = (input: _m0.Reader | Uint8Array): CommunityPoolSpendProposal | CommunityPoolSpendProposalWithDeposit | TextProposal | ParameterChangeProposal | SoftwareUpgradeProposal | CancelSoftwareUpgradeProposal | StoreCodeProposal | InstantiateContractProposal | InstantiateContract2Proposal | MigrateContractProposal | SudoContractProposal | ExecuteContractProposal | UpdateAdminProposal | ClearAdminProposal | PinCodesProposal | UnpinCodesProposal | UpdateInstantiateConfigProposal | StoreAndInstantiateContractProposal | ClientUpdateProposal | UpgradeProposal | ReplacePoolIncentivesProposal | UpdatePoolIncentivesProposal | SetProtoRevEnabledProposal | SetProtoRevAdminAccountProposal | SetSuperfluidAssetsProposal | RemoveSuperfluidAssetsProposal | UpdateUnpoolWhiteListProposal | UpdateFeeTokenProposal | Any => {
   const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
   const data = Any.decode(reader, reader.uint32());
 
@@ -1060,6 +1061,42 @@ export const Cosmos_govv1beta1Content_InterfaceDecoder = (input: _m0.Reader | Ui
 
     case "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal":
       return CancelSoftwareUpgradeProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.StoreCodeProposal":
+      return StoreCodeProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.InstantiateContractProposal":
+      return InstantiateContractProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.InstantiateContract2Proposal":
+      return InstantiateContract2Proposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.MigrateContractProposal":
+      return MigrateContractProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.SudoContractProposal":
+      return SudoContractProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.ExecuteContractProposal":
+      return ExecuteContractProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.UpdateAdminProposal":
+      return UpdateAdminProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.ClearAdminProposal":
+      return ClearAdminProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.PinCodesProposal":
+      return PinCodesProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.UnpinCodesProposal":
+      return UnpinCodesProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal":
+      return UpdateInstantiateConfigProposal.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.StoreAndInstantiateContractProposal":
+      return StoreAndInstantiateContractProposal.decode(data.value);
 
     case "/ibc.core.client.v1.ClientUpdateProposal":
       return ClientUpdateProposal.decode(data.value);
@@ -1131,6 +1168,78 @@ export const Cosmos_govv1beta1Content_FromAmino = (content: AnyAmino) => {
       return Any.fromPartial({
         typeUrl: "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal",
         value: CancelSoftwareUpgradeProposal.encode(CancelSoftwareUpgradeProposal.fromPartial((content.value as DeepPartial<CancelSoftwareUpgradeProposal>))).finish()
+      });
+
+    case "wasm/StoreCodeProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.StoreCodeProposal",
+        value: StoreCodeProposal.encode(StoreCodeProposal.fromPartial((content.value as DeepPartial<StoreCodeProposal>))).finish()
+      });
+
+    case "wasm/InstantiateContractProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.InstantiateContractProposal",
+        value: InstantiateContractProposal.encode(InstantiateContractProposal.fromPartial((content.value as DeepPartial<InstantiateContractProposal>))).finish()
+      });
+
+    case "wasm/InstantiateContract2Proposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.InstantiateContract2Proposal",
+        value: InstantiateContract2Proposal.encode(InstantiateContract2Proposal.fromPartial((content.value as DeepPartial<InstantiateContract2Proposal>))).finish()
+      });
+
+    case "wasm/MigrateContractProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.MigrateContractProposal",
+        value: MigrateContractProposal.encode(MigrateContractProposal.fromPartial((content.value as DeepPartial<MigrateContractProposal>))).finish()
+      });
+
+    case "wasm/SudoContractProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.SudoContractProposal",
+        value: SudoContractProposal.encode(SudoContractProposal.fromPartial((content.value as DeepPartial<SudoContractProposal>))).finish()
+      });
+
+    case "wasm/ExecuteContractProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.ExecuteContractProposal",
+        value: ExecuteContractProposal.encode(ExecuteContractProposal.fromPartial((content.value as DeepPartial<ExecuteContractProposal>))).finish()
+      });
+
+    case "wasm/UpdateAdminProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.UpdateAdminProposal",
+        value: UpdateAdminProposal.encode(UpdateAdminProposal.fromPartial((content.value as DeepPartial<UpdateAdminProposal>))).finish()
+      });
+
+    case "wasm/ClearAdminProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.ClearAdminProposal",
+        value: ClearAdminProposal.encode(ClearAdminProposal.fromPartial((content.value as DeepPartial<ClearAdminProposal>))).finish()
+      });
+
+    case "wasm/PinCodesProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.PinCodesProposal",
+        value: PinCodesProposal.encode(PinCodesProposal.fromPartial((content.value as DeepPartial<PinCodesProposal>))).finish()
+      });
+
+    case "wasm/UnpinCodesProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.UnpinCodesProposal",
+        value: UnpinCodesProposal.encode(UnpinCodesProposal.fromPartial((content.value as DeepPartial<UnpinCodesProposal>))).finish()
+      });
+
+    case "wasm/UpdateInstantiateConfigProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal",
+        value: UpdateInstantiateConfigProposal.encode(UpdateInstantiateConfigProposal.fromPartial((content.value as DeepPartial<UpdateInstantiateConfigProposal>))).finish()
+      });
+
+    case "wasm/StoreAndInstantiateContractProposal":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.StoreAndInstantiateContractProposal",
+        value: StoreAndInstantiateContractProposal.encode(StoreAndInstantiateContractProposal.fromPartial((content.value as DeepPartial<StoreAndInstantiateContractProposal>))).finish()
       });
 
     case "cosmos-sdk/ClientUpdateProposal":
@@ -1233,6 +1342,78 @@ export const Cosmos_govv1beta1Content_ToAmino = (content: Any) => {
       return {
         type: "cosmos-sdk/v1/CancelSoftwareUpgradeProposal",
         value: CancelSoftwareUpgradeProposal.toAmino(CancelSoftwareUpgradeProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.StoreCodeProposal":
+      return {
+        type: "wasm/StoreCodeProposal",
+        value: StoreCodeProposal.toAmino(StoreCodeProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.InstantiateContractProposal":
+      return {
+        type: "wasm/InstantiateContractProposal",
+        value: InstantiateContractProposal.toAmino(InstantiateContractProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.InstantiateContract2Proposal":
+      return {
+        type: "wasm/InstantiateContract2Proposal",
+        value: InstantiateContract2Proposal.toAmino(InstantiateContract2Proposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.MigrateContractProposal":
+      return {
+        type: "wasm/MigrateContractProposal",
+        value: MigrateContractProposal.toAmino(MigrateContractProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.SudoContractProposal":
+      return {
+        type: "wasm/SudoContractProposal",
+        value: SudoContractProposal.toAmino(SudoContractProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.ExecuteContractProposal":
+      return {
+        type: "wasm/ExecuteContractProposal",
+        value: ExecuteContractProposal.toAmino(ExecuteContractProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.UpdateAdminProposal":
+      return {
+        type: "wasm/UpdateAdminProposal",
+        value: UpdateAdminProposal.toAmino(UpdateAdminProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.ClearAdminProposal":
+      return {
+        type: "wasm/ClearAdminProposal",
+        value: ClearAdminProposal.toAmino(ClearAdminProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.PinCodesProposal":
+      return {
+        type: "wasm/PinCodesProposal",
+        value: PinCodesProposal.toAmino(PinCodesProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.UnpinCodesProposal":
+      return {
+        type: "wasm/UnpinCodesProposal",
+        value: UnpinCodesProposal.toAmino(UnpinCodesProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.UpdateInstantiateConfigProposal":
+      return {
+        type: "wasm/UpdateInstantiateConfigProposal",
+        value: UpdateInstantiateConfigProposal.toAmino(UpdateInstantiateConfigProposal.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.StoreAndInstantiateContractProposal":
+      return {
+        type: "wasm/StoreAndInstantiateContractProposal",
+        value: StoreAndInstantiateContractProposal.toAmino(StoreAndInstantiateContractProposal.decode(content.value))
       };
 
     case "/ibc.core.client.v1.ClientUpdateProposal":

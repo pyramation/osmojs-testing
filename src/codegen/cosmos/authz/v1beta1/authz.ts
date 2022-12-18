@@ -2,6 +2,7 @@ import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
 import { Timestamp, TimestampAmino, TimestampSDKType } from "../../../google/protobuf/timestamp";
 import { SendAuthorization } from "../../bank/v1beta1/authz";
 import { StakeAuthorization } from "../../staking/v1beta1/authz";
+import { ContractExecutionAuthorization, ContractMigrationAuthorization } from "../../../cosmwasm/wasm/v1/authz";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, fromJsonTimestamp, fromTimestamp, DeepPartial } from "../../../helpers";
 /**
@@ -39,7 +40,7 @@ export interface GenericAuthorizationSDKType {
  */
 
 export interface Grant {
-  authorization?: (GenericAuthorization & SendAuthorization & StakeAuthorization & Any) | undefined;
+  authorization?: (GenericAuthorization & SendAuthorization & StakeAuthorization & ContractExecutionAuthorization & ContractMigrationAuthorization & Any) | undefined;
   /**
    * time when the grant will expire and will be pruned. If null, then the grant
    * doesn't have a time expiration (other conditions  in `authorization`
@@ -80,7 +81,7 @@ export interface GrantSDKType {
 export interface GrantAuthorization {
   granter: string;
   grantee: string;
-  authorization?: (GenericAuthorization & SendAuthorization & StakeAuthorization & Any) | undefined;
+  authorization?: (GenericAuthorization & SendAuthorization & StakeAuthorization & ContractExecutionAuthorization & ContractMigrationAuthorization & Any) | undefined;
   expiration?: Timestamp;
 }
 /**
@@ -467,7 +468,7 @@ export const GrantQueueItem = {
   }
 
 };
-export const Cosmos_authzAuthorization_InterfaceDecoder = (input: _m0.Reader | Uint8Array): GenericAuthorization | SendAuthorization | StakeAuthorization | Any => {
+export const Cosmos_authzAuthorization_InterfaceDecoder = (input: _m0.Reader | Uint8Array): GenericAuthorization | SendAuthorization | StakeAuthorization | ContractExecutionAuthorization | ContractMigrationAuthorization | Any => {
   const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
   const data = Any.decode(reader, reader.uint32());
 
@@ -480,6 +481,12 @@ export const Cosmos_authzAuthorization_InterfaceDecoder = (input: _m0.Reader | U
 
     case "/cosmos.staking.v1beta1.StakeAuthorization":
       return StakeAuthorization.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.ContractExecutionAuthorization":
+      return ContractExecutionAuthorization.decode(data.value);
+
+    case "/cosmwasm.wasm.v1.ContractMigrationAuthorization":
+      return ContractMigrationAuthorization.decode(data.value);
 
     default:
       return data;
@@ -505,6 +512,18 @@ export const Cosmos_authzAuthorization_FromAmino = (content: AnyAmino) => {
         value: StakeAuthorization.encode(StakeAuthorization.fromPartial((content.value as DeepPartial<StakeAuthorization>))).finish()
       });
 
+    case "wasm/ContractExecutionAuthorization":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.ContractExecutionAuthorization",
+        value: ContractExecutionAuthorization.encode(ContractExecutionAuthorization.fromPartial((content.value as DeepPartial<ContractExecutionAuthorization>))).finish()
+      });
+
+    case "wasm/ContractMigrationAuthorization":
+      return Any.fromPartial({
+        typeUrl: "/cosmwasm.wasm.v1.ContractMigrationAuthorization",
+        value: ContractMigrationAuthorization.encode(ContractMigrationAuthorization.fromPartial((content.value as DeepPartial<ContractMigrationAuthorization>))).finish()
+      });
+
     default:
       return Any.fromAmino(content);
   }
@@ -527,6 +546,18 @@ export const Cosmos_authzAuthorization_ToAmino = (content: Any) => {
       return {
         type: "cosmos-sdk/StakeAuthorization",
         value: StakeAuthorization.toAmino(StakeAuthorization.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.ContractExecutionAuthorization":
+      return {
+        type: "wasm/ContractExecutionAuthorization",
+        value: ContractExecutionAuthorization.toAmino(ContractExecutionAuthorization.decode(content.value))
+      };
+
+    case "/cosmwasm.wasm.v1.ContractMigrationAuthorization":
+      return {
+        type: "wasm/ContractMigrationAuthorization",
+        value: ContractMigrationAuthorization.toAmino(ContractMigrationAuthorization.decode(content.value))
       };
 
     default:
