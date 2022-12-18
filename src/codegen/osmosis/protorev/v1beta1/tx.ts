@@ -1,4 +1,4 @@
-import { TokenPairArbRoutes, TokenPairArbRoutesSDKType } from "./protorev";
+import { TokenPairArbRoutes, TokenPairArbRoutesAmino, TokenPairArbRoutesSDKType } from "./protorev";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** MsgSetHotRoutes defines the Msg/SetHotRoutes request type. */
@@ -12,6 +12,15 @@ export interface MsgSetHotRoutes {
 }
 /** MsgSetHotRoutes defines the Msg/SetHotRoutes request type. */
 
+export interface MsgSetHotRoutesAmino {
+  /** admin is the account that is authorized to set the hot routes. */
+  admin: string;
+  /** hot_routes is the list of hot routes to set. */
+
+  hot_routes: TokenPairArbRoutesAmino[];
+}
+/** MsgSetHotRoutes defines the Msg/SetHotRoutes request type. */
+
 export interface MsgSetHotRoutesSDKType {
   admin: string;
   hot_routes: TokenPairArbRoutesSDKType[];
@@ -19,6 +28,9 @@ export interface MsgSetHotRoutesSDKType {
 /** MsgSetHotRoutesResponse defines the Msg/SetHotRoutes response type. */
 
 export interface MsgSetHotRoutesResponse {}
+/** MsgSetHotRoutesResponse defines the Msg/SetHotRoutes response type. */
+
+export interface MsgSetHotRoutesResponseAmino {}
 /** MsgSetHotRoutesResponse defines the Msg/SetHotRoutes response type. */
 
 export interface MsgSetHotRoutesResponseSDKType {}
@@ -36,6 +48,18 @@ export interface MsgSetDeveloperAccount {
 }
 /** MsgSetDeveloperAccount defines the Msg/SetDeveloperAccount request type. */
 
+export interface MsgSetDeveloperAccountAmino {
+  /** admin is the account that is authorized to set the developer account. */
+  admin: string;
+  /**
+   * developer_account is the account that will receive a portion of the profits
+   * from the protorev module.
+   */
+
+  developer_account: string;
+}
+/** MsgSetDeveloperAccount defines the Msg/SetDeveloperAccount request type. */
+
 export interface MsgSetDeveloperAccountSDKType {
   admin: string;
   developer_account: string;
@@ -46,6 +70,12 @@ export interface MsgSetDeveloperAccountSDKType {
  */
 
 export interface MsgSetDeveloperAccountResponse {}
+/**
+ * MsgSetDeveloperAccountResponse defines the Msg/SetDeveloperAccount response
+ * type.
+ */
+
+export interface MsgSetDeveloperAccountResponseAmino {}
 /**
  * MsgSetDeveloperAccountResponse defines the Msg/SetDeveloperAccount response
  * type.
@@ -124,6 +154,26 @@ export const MsgSetHotRoutes = {
     message.admin = object.admin ?? "";
     message.hotRoutes = object.hotRoutes?.map(e => TokenPairArbRoutes.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: MsgSetHotRoutesAmino): MsgSetHotRoutes {
+    return {
+      admin: object.admin,
+      hotRoutes: Array.isArray(object?.hot_routes) ? object.hot_routes.map((e: any) => TokenPairArbRoutes.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: MsgSetHotRoutes): MsgSetHotRoutesAmino {
+    const obj: any = {};
+    obj.admin = message.admin;
+
+    if (message.hotRoutes) {
+      obj.hot_routes = message.hotRoutes.map(e => e ? TokenPairArbRoutes.toAmino(e) : undefined);
+    } else {
+      obj.hot_routes = [];
+    }
+
+    return obj;
   }
 
 };
@@ -167,6 +217,15 @@ export const MsgSetHotRoutesResponse = {
   fromPartial(_: Partial<MsgSetHotRoutesResponse>): MsgSetHotRoutesResponse {
     const message = createBaseMsgSetHotRoutesResponse();
     return message;
+  },
+
+  fromAmino(_: MsgSetHotRoutesResponseAmino): MsgSetHotRoutesResponse {
+    return {};
+  },
+
+  toAmino(_: MsgSetHotRoutesResponse): MsgSetHotRoutesResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -236,6 +295,20 @@ export const MsgSetDeveloperAccount = {
     message.admin = object.admin ?? "";
     message.developerAccount = object.developerAccount ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgSetDeveloperAccountAmino): MsgSetDeveloperAccount {
+    return {
+      admin: object.admin,
+      developerAccount: object.developer_account
+    };
+  },
+
+  toAmino(message: MsgSetDeveloperAccount): MsgSetDeveloperAccountAmino {
+    const obj: any = {};
+    obj.admin = message.admin;
+    obj.developer_account = message.developerAccount;
+    return obj;
   }
 
 };
@@ -279,6 +352,15 @@ export const MsgSetDeveloperAccountResponse = {
   fromPartial(_: Partial<MsgSetDeveloperAccountResponse>): MsgSetDeveloperAccountResponse {
     const message = createBaseMsgSetDeveloperAccountResponse();
     return message;
+  },
+
+  fromAmino(_: MsgSetDeveloperAccountResponseAmino): MsgSetDeveloperAccountResponse {
+    return {};
+  },
+
+  toAmino(_: MsgSetDeveloperAccountResponse): MsgSetDeveloperAccountResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };

@@ -4,6 +4,10 @@ export interface SwapAmountInRoute {
   poolId: Long;
   tokenOutDenom: string;
 }
+export interface SwapAmountInRouteAmino {
+  pool_id: string;
+  token_out_denom: string;
+}
 export interface SwapAmountInRouteSDKType {
   pool_id: Long;
   token_out_denom: string;
@@ -11,6 +15,10 @@ export interface SwapAmountInRouteSDKType {
 export interface SwapAmountOutRoute {
   poolId: Long;
   tokenInDenom: string;
+}
+export interface SwapAmountOutRouteAmino {
+  pool_id: string;
+  token_in_denom: string;
 }
 export interface SwapAmountOutRouteSDKType {
   pool_id: Long;
@@ -82,6 +90,20 @@ export const SwapAmountInRoute = {
     message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
     message.tokenOutDenom = object.tokenOutDenom ?? "";
     return message;
+  },
+
+  fromAmino(object: SwapAmountInRouteAmino): SwapAmountInRoute {
+    return {
+      poolId: Long.fromString(object.pool_id),
+      tokenOutDenom: object.token_out_denom
+    };
+  },
+
+  toAmino(message: SwapAmountInRoute): SwapAmountInRouteAmino {
+    const obj: any = {};
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.token_out_denom = message.tokenOutDenom;
+    return obj;
   }
 
 };
@@ -151,6 +173,20 @@ export const SwapAmountOutRoute = {
     message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
     message.tokenInDenom = object.tokenInDenom ?? "";
     return message;
+  },
+
+  fromAmino(object: SwapAmountOutRouteAmino): SwapAmountOutRoute {
+    return {
+      poolId: Long.fromString(object.pool_id),
+      tokenInDenom: object.token_in_denom
+    };
+  },
+
+  toAmino(message: SwapAmountOutRoute): SwapAmountOutRouteAmino {
+    const obj: any = {};
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.token_in_denom = message.tokenInDenom;
+    return obj;
   }
 
 };

@@ -1,7 +1,7 @@
-import { Description, DescriptionSDKType, CommissionRates, CommissionRatesSDKType } from "./staking";
-import { Any, AnySDKType } from "../../../google/protobuf/any";
-import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
-import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
+import { Description, DescriptionAmino, DescriptionSDKType, CommissionRates, CommissionRatesAmino, CommissionRatesSDKType } from "./staking";
+import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
+import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
+import { Timestamp, TimestampAmino, TimestampSDKType } from "../../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
 /** MsgCreateValidator defines a SDK message for creating a new validator. */
 export interface MsgCreateValidator {
@@ -12,6 +12,16 @@ export interface MsgCreateValidator {
     validatorAddress: string;
     pubkey?: (Any) | undefined;
     value?: Coin;
+}
+/** MsgCreateValidator defines a SDK message for creating a new validator. */
+export interface MsgCreateValidatorAmino {
+    description?: DescriptionAmino;
+    commission?: CommissionRatesAmino;
+    min_self_delegation: string;
+    delegator_address: string;
+    validator_address: string;
+    pubkey?: AnyAmino;
+    value?: CoinAmino;
 }
 /** MsgCreateValidator defines a SDK message for creating a new validator. */
 export interface MsgCreateValidatorSDKType {
@@ -25,6 +35,9 @@ export interface MsgCreateValidatorSDKType {
 }
 /** MsgCreateValidatorResponse defines the Msg/CreateValidator response type. */
 export interface MsgCreateValidatorResponse {
+}
+/** MsgCreateValidatorResponse defines the Msg/CreateValidator response type. */
+export interface MsgCreateValidatorResponseAmino {
 }
 /** MsgCreateValidatorResponse defines the Msg/CreateValidator response type. */
 export interface MsgCreateValidatorResponseSDKType {
@@ -43,6 +56,19 @@ export interface MsgEditValidator {
     minSelfDelegation: string;
 }
 /** MsgEditValidator defines a SDK message for editing an existing validator. */
+export interface MsgEditValidatorAmino {
+    description?: DescriptionAmino;
+    validator_address: string;
+    /**
+     * We pass a reference to the new commission rate and min self delegation as
+     * it's not mandatory to update. If not updated, the deserialized rate will be
+     * zero with no way to distinguish if an update was intended.
+     * REF: #2373
+     */
+    commission_rate: string;
+    min_self_delegation: string;
+}
+/** MsgEditValidator defines a SDK message for editing an existing validator. */
 export interface MsgEditValidatorSDKType {
     description?: DescriptionSDKType;
     validator_address: string;
@@ -51,6 +77,9 @@ export interface MsgEditValidatorSDKType {
 }
 /** MsgEditValidatorResponse defines the Msg/EditValidator response type. */
 export interface MsgEditValidatorResponse {
+}
+/** MsgEditValidatorResponse defines the Msg/EditValidator response type. */
+export interface MsgEditValidatorResponseAmino {
 }
 /** MsgEditValidatorResponse defines the Msg/EditValidator response type. */
 export interface MsgEditValidatorResponseSDKType {
@@ -68,6 +97,15 @@ export interface MsgDelegate {
  * MsgDelegate defines a SDK message for performing a delegation of coins
  * from a delegator to a validator.
  */
+export interface MsgDelegateAmino {
+    delegator_address: string;
+    validator_address: string;
+    amount?: CoinAmino;
+}
+/**
+ * MsgDelegate defines a SDK message for performing a delegation of coins
+ * from a delegator to a validator.
+ */
 export interface MsgDelegateSDKType {
     delegator_address: string;
     validator_address: string;
@@ -75,6 +113,9 @@ export interface MsgDelegateSDKType {
 }
 /** MsgDelegateResponse defines the Msg/Delegate response type. */
 export interface MsgDelegateResponse {
+}
+/** MsgDelegateResponse defines the Msg/Delegate response type. */
+export interface MsgDelegateResponseAmino {
 }
 /** MsgDelegateResponse defines the Msg/Delegate response type. */
 export interface MsgDelegateResponseSDKType {
@@ -93,6 +134,16 @@ export interface MsgBeginRedelegate {
  * MsgBeginRedelegate defines a SDK message for performing a redelegation
  * of coins from a delegator and source validator to a destination validator.
  */
+export interface MsgBeginRedelegateAmino {
+    delegator_address: string;
+    validator_src_address: string;
+    validator_dst_address: string;
+    amount?: CoinAmino;
+}
+/**
+ * MsgBeginRedelegate defines a SDK message for performing a redelegation
+ * of coins from a delegator and source validator to a destination validator.
+ */
 export interface MsgBeginRedelegateSDKType {
     delegator_address: string;
     validator_src_address: string;
@@ -102,6 +153,10 @@ export interface MsgBeginRedelegateSDKType {
 /** MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type. */
 export interface MsgBeginRedelegateResponse {
     completionTime?: Timestamp;
+}
+/** MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type. */
+export interface MsgBeginRedelegateResponseAmino {
+    completion_time?: TimestampAmino;
 }
 /** MsgBeginRedelegateResponse defines the Msg/BeginRedelegate response type. */
 export interface MsgBeginRedelegateResponseSDKType {
@@ -120,6 +175,15 @@ export interface MsgUndelegate {
  * MsgUndelegate defines a SDK message for performing an undelegation from a
  * delegate and a validator.
  */
+export interface MsgUndelegateAmino {
+    delegator_address: string;
+    validator_address: string;
+    amount?: CoinAmino;
+}
+/**
+ * MsgUndelegate defines a SDK message for performing an undelegation from a
+ * delegate and a validator.
+ */
 export interface MsgUndelegateSDKType {
     delegator_address: string;
     validator_address: string;
@@ -128,6 +192,10 @@ export interface MsgUndelegateSDKType {
 /** MsgUndelegateResponse defines the Msg/Undelegate response type. */
 export interface MsgUndelegateResponse {
     completionTime?: Timestamp;
+}
+/** MsgUndelegateResponse defines the Msg/Undelegate response type. */
+export interface MsgUndelegateResponseAmino {
+    completion_time?: TimestampAmino;
 }
 /** MsgUndelegateResponse defines the Msg/Undelegate response type. */
 export interface MsgUndelegateResponseSDKType {
@@ -139,6 +207,8 @@ export declare const MsgCreateValidator: {
     fromJSON(object: any): MsgCreateValidator;
     toJSON(message: MsgCreateValidator): unknown;
     fromPartial(object: Partial<MsgCreateValidator>): MsgCreateValidator;
+    fromAmino(object: MsgCreateValidatorAmino): MsgCreateValidator;
+    toAmino(message: MsgCreateValidator): MsgCreateValidatorAmino;
 };
 export declare const MsgCreateValidatorResponse: {
     encode(_: MsgCreateValidatorResponse, writer?: _m0.Writer): _m0.Writer;
@@ -146,6 +216,8 @@ export declare const MsgCreateValidatorResponse: {
     fromJSON(_: any): MsgCreateValidatorResponse;
     toJSON(_: MsgCreateValidatorResponse): unknown;
     fromPartial(_: Partial<MsgCreateValidatorResponse>): MsgCreateValidatorResponse;
+    fromAmino(_: MsgCreateValidatorResponseAmino): MsgCreateValidatorResponse;
+    toAmino(_: MsgCreateValidatorResponse): MsgCreateValidatorResponseAmino;
 };
 export declare const MsgEditValidator: {
     encode(message: MsgEditValidator, writer?: _m0.Writer): _m0.Writer;
@@ -153,6 +225,8 @@ export declare const MsgEditValidator: {
     fromJSON(object: any): MsgEditValidator;
     toJSON(message: MsgEditValidator): unknown;
     fromPartial(object: Partial<MsgEditValidator>): MsgEditValidator;
+    fromAmino(object: MsgEditValidatorAmino): MsgEditValidator;
+    toAmino(message: MsgEditValidator): MsgEditValidatorAmino;
 };
 export declare const MsgEditValidatorResponse: {
     encode(_: MsgEditValidatorResponse, writer?: _m0.Writer): _m0.Writer;
@@ -160,6 +234,8 @@ export declare const MsgEditValidatorResponse: {
     fromJSON(_: any): MsgEditValidatorResponse;
     toJSON(_: MsgEditValidatorResponse): unknown;
     fromPartial(_: Partial<MsgEditValidatorResponse>): MsgEditValidatorResponse;
+    fromAmino(_: MsgEditValidatorResponseAmino): MsgEditValidatorResponse;
+    toAmino(_: MsgEditValidatorResponse): MsgEditValidatorResponseAmino;
 };
 export declare const MsgDelegate: {
     encode(message: MsgDelegate, writer?: _m0.Writer): _m0.Writer;
@@ -167,6 +243,8 @@ export declare const MsgDelegate: {
     fromJSON(object: any): MsgDelegate;
     toJSON(message: MsgDelegate): unknown;
     fromPartial(object: Partial<MsgDelegate>): MsgDelegate;
+    fromAmino(object: MsgDelegateAmino): MsgDelegate;
+    toAmino(message: MsgDelegate): MsgDelegateAmino;
 };
 export declare const MsgDelegateResponse: {
     encode(_: MsgDelegateResponse, writer?: _m0.Writer): _m0.Writer;
@@ -174,6 +252,8 @@ export declare const MsgDelegateResponse: {
     fromJSON(_: any): MsgDelegateResponse;
     toJSON(_: MsgDelegateResponse): unknown;
     fromPartial(_: Partial<MsgDelegateResponse>): MsgDelegateResponse;
+    fromAmino(_: MsgDelegateResponseAmino): MsgDelegateResponse;
+    toAmino(_: MsgDelegateResponse): MsgDelegateResponseAmino;
 };
 export declare const MsgBeginRedelegate: {
     encode(message: MsgBeginRedelegate, writer?: _m0.Writer): _m0.Writer;
@@ -181,6 +261,8 @@ export declare const MsgBeginRedelegate: {
     fromJSON(object: any): MsgBeginRedelegate;
     toJSON(message: MsgBeginRedelegate): unknown;
     fromPartial(object: Partial<MsgBeginRedelegate>): MsgBeginRedelegate;
+    fromAmino(object: MsgBeginRedelegateAmino): MsgBeginRedelegate;
+    toAmino(message: MsgBeginRedelegate): MsgBeginRedelegateAmino;
 };
 export declare const MsgBeginRedelegateResponse: {
     encode(message: MsgBeginRedelegateResponse, writer?: _m0.Writer): _m0.Writer;
@@ -188,6 +270,8 @@ export declare const MsgBeginRedelegateResponse: {
     fromJSON(object: any): MsgBeginRedelegateResponse;
     toJSON(message: MsgBeginRedelegateResponse): unknown;
     fromPartial(object: Partial<MsgBeginRedelegateResponse>): MsgBeginRedelegateResponse;
+    fromAmino(object: MsgBeginRedelegateResponseAmino): MsgBeginRedelegateResponse;
+    toAmino(message: MsgBeginRedelegateResponse): MsgBeginRedelegateResponseAmino;
 };
 export declare const MsgUndelegate: {
     encode(message: MsgUndelegate, writer?: _m0.Writer): _m0.Writer;
@@ -195,6 +279,8 @@ export declare const MsgUndelegate: {
     fromJSON(object: any): MsgUndelegate;
     toJSON(message: MsgUndelegate): unknown;
     fromPartial(object: Partial<MsgUndelegate>): MsgUndelegate;
+    fromAmino(object: MsgUndelegateAmino): MsgUndelegate;
+    toAmino(message: MsgUndelegate): MsgUndelegateAmino;
 };
 export declare const MsgUndelegateResponse: {
     encode(message: MsgUndelegateResponse, writer?: _m0.Writer): _m0.Writer;
@@ -202,5 +288,9 @@ export declare const MsgUndelegateResponse: {
     fromJSON(object: any): MsgUndelegateResponse;
     toJSON(message: MsgUndelegateResponse): unknown;
     fromPartial(object: Partial<MsgUndelegateResponse>): MsgUndelegateResponse;
+    fromAmino(object: MsgUndelegateResponseAmino): MsgUndelegateResponse;
+    toAmino(message: MsgUndelegateResponse): MsgUndelegateResponseAmino;
 };
 export declare const Cosmos_cryptoPubKey_InterfaceDecoder: (input: _m0.Reader | Uint8Array) => Any;
+export declare const Cosmos_cryptoPubKey_FromAmino: (content: AnyAmino) => Any;
+export declare const Cosmos_cryptoPubKey_ToAmino: (content: Any) => AnyAmino;

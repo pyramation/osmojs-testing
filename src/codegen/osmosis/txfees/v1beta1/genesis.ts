@@ -1,4 +1,4 @@
-import { FeeToken, FeeTokenSDKType } from "./feetoken";
+import { FeeToken, FeeTokenAmino, FeeTokenSDKType } from "./feetoken";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** GenesisState defines the txfees module's genesis state. */
@@ -6,6 +6,12 @@ import { isSet } from "../../../helpers";
 export interface GenesisState {
   basedenom: string;
   feetokens: FeeToken[];
+}
+/** GenesisState defines the txfees module's genesis state. */
+
+export interface GenesisStateAmino {
+  basedenom: string;
+  feetokens: FeeTokenAmino[];
 }
 /** GenesisState defines the txfees module's genesis state. */
 
@@ -85,6 +91,26 @@ export const GenesisState = {
     message.basedenom = object.basedenom ?? "";
     message.feetokens = object.feetokens?.map(e => FeeToken.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      basedenom: object.basedenom,
+      feetokens: Array.isArray(object?.feetokens) ? object.feetokens.map((e: any) => FeeToken.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.basedenom = message.basedenom;
+
+    if (message.feetokens) {
+      obj.feetokens = message.feetokens.map(e => e ? FeeToken.toAmino(e) : undefined);
+    } else {
+      obj.feetokens = [];
+    }
+
+    return obj;
   }
 
 };

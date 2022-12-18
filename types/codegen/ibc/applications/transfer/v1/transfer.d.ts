@@ -16,6 +16,19 @@ export interface DenomTrace {
  * DenomTrace contains the base denomination for ICS20 fungible tokens and the
  * source tracing information path.
  */
+export interface DenomTraceAmino {
+    /**
+     * path defines the chain of port/channel identifiers used for tracing the
+     * source of the fungible token.
+     */
+    path: string;
+    /** base denomination of the relayed fungible token. */
+    base_denom: string;
+}
+/**
+ * DenomTrace contains the base denomination for ICS20 fungible tokens and the
+ * source tracing information path.
+ */
 export interface DenomTraceSDKType {
     path: string;
     base_denom: string;
@@ -44,6 +57,24 @@ export interface Params {
  * TransfersEnabled parameter to true and then set the bank module's SendEnabled
  * parameter for the denomination to false.
  */
+export interface ParamsAmino {
+    /**
+     * send_enabled enables or disables all cross-chain token transfers from this
+     * chain.
+     */
+    send_enabled: boolean;
+    /**
+     * receive_enabled enables or disables all cross-chain token transfers to this
+     * chain.
+     */
+    receive_enabled: boolean;
+}
+/**
+ * Params defines the set of IBC transfer parameters.
+ * NOTE: To prevent a single token from being transferred, set the
+ * TransfersEnabled parameter to true and then set the bank module's SendEnabled
+ * parameter for the denomination to false.
+ */
 export interface ParamsSDKType {
     send_enabled: boolean;
     receive_enabled: boolean;
@@ -54,6 +85,8 @@ export declare const DenomTrace: {
     fromJSON(object: any): DenomTrace;
     toJSON(message: DenomTrace): unknown;
     fromPartial(object: Partial<DenomTrace>): DenomTrace;
+    fromAmino(object: DenomTraceAmino): DenomTrace;
+    toAmino(message: DenomTrace): DenomTraceAmino;
 };
 export declare const Params: {
     encode(message: Params, writer?: _m0.Writer): _m0.Writer;
@@ -61,4 +94,6 @@ export declare const Params: {
     fromJSON(object: any): Params;
     toJSON(message: Params): unknown;
     fromPartial(object: Partial<Params>): Params;
+    fromAmino(object: ParamsAmino): Params;
+    toAmino(message: Params): ParamsAmino;
 };

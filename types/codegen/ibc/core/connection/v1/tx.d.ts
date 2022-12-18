@@ -1,6 +1,6 @@
-import { Counterparty, CounterpartySDKType, Version, VersionSDKType } from "./connection";
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import { Height, HeightSDKType } from "../../client/v1/client";
+import { Counterparty, CounterpartyAmino, CounterpartySDKType, Version, VersionAmino, VersionSDKType } from "./connection";
+import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any";
+import { Height, HeightAmino, HeightSDKType } from "../../client/v1/client";
 import { Long } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
@@ -12,6 +12,17 @@ export interface MsgConnectionOpenInit {
     counterparty?: Counterparty;
     version?: Version;
     delayPeriod: Long;
+    signer: string;
+}
+/**
+ * MsgConnectionOpenInit defines the msg sent by an account on Chain A to
+ * initialize a connection with Chain B.
+ */
+export interface MsgConnectionOpenInitAmino {
+    client_id: string;
+    counterparty?: CounterpartyAmino;
+    version?: VersionAmino;
+    delay_period: string;
     signer: string;
 }
 /**
@@ -30,6 +41,12 @@ export interface MsgConnectionOpenInitSDKType {
  * type.
  */
 export interface MsgConnectionOpenInitResponse {
+}
+/**
+ * MsgConnectionOpenInitResponse defines the Msg/ConnectionOpenInit response
+ * type.
+ */
+export interface MsgConnectionOpenInitResponseAmino {
 }
 /**
  * MsgConnectionOpenInitResponse defines the Msg/ConnectionOpenInit response
@@ -69,6 +86,34 @@ export interface MsgConnectionOpenTry {
  * MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a
  * connection on Chain B.
  */
+export interface MsgConnectionOpenTryAmino {
+    client_id: string;
+    /**
+     * in the case of crossing hello's, when both chains call OpenInit, we need
+     * the connection identifier of the previous connection in state INIT
+     */
+    previous_connection_id: string;
+    client_state?: AnyAmino;
+    counterparty?: CounterpartyAmino;
+    delay_period: string;
+    counterparty_versions: VersionAmino[];
+    proof_height?: HeightAmino;
+    /**
+     * proof of the initialization the connection on Chain A: `UNITIALIZED ->
+     * INIT`
+     */
+    proof_init: Uint8Array;
+    /** proof of client state included in message */
+    proof_client: Uint8Array;
+    /** proof of client consensus state */
+    proof_consensus: Uint8Array;
+    consensus_height?: HeightAmino;
+    signer: string;
+}
+/**
+ * MsgConnectionOpenTry defines a msg sent by a Relayer to try to open a
+ * connection on Chain B.
+ */
 export interface MsgConnectionOpenTrySDKType {
     client_id: string;
     previous_connection_id: string;
@@ -85,6 +130,9 @@ export interface MsgConnectionOpenTrySDKType {
 }
 /** MsgConnectionOpenTryResponse defines the Msg/ConnectionOpenTry response type. */
 export interface MsgConnectionOpenTryResponse {
+}
+/** MsgConnectionOpenTryResponse defines the Msg/ConnectionOpenTry response type. */
+export interface MsgConnectionOpenTryResponseAmino {
 }
 /** MsgConnectionOpenTryResponse defines the Msg/ConnectionOpenTry response type. */
 export interface MsgConnectionOpenTryResponseSDKType {
@@ -115,6 +163,28 @@ export interface MsgConnectionOpenAck {
  * MsgConnectionOpenAck defines a msg sent by a Relayer to Chain A to
  * acknowledge the change of connection state to TRYOPEN on Chain B.
  */
+export interface MsgConnectionOpenAckAmino {
+    connection_id: string;
+    counterparty_connection_id: string;
+    version?: VersionAmino;
+    client_state?: AnyAmino;
+    proof_height?: HeightAmino;
+    /**
+     * proof of the initialization the connection on Chain B: `UNITIALIZED ->
+     * TRYOPEN`
+     */
+    proof_try: Uint8Array;
+    /** proof of client state included in message */
+    proof_client: Uint8Array;
+    /** proof of client consensus state */
+    proof_consensus: Uint8Array;
+    consensus_height?: HeightAmino;
+    signer: string;
+}
+/**
+ * MsgConnectionOpenAck defines a msg sent by a Relayer to Chain A to
+ * acknowledge the change of connection state to TRYOPEN on Chain B.
+ */
 export interface MsgConnectionOpenAckSDKType {
     connection_id: string;
     counterparty_connection_id: string;
@@ -131,6 +201,9 @@ export interface MsgConnectionOpenAckSDKType {
 export interface MsgConnectionOpenAckResponse {
 }
 /** MsgConnectionOpenAckResponse defines the Msg/ConnectionOpenAck response type. */
+export interface MsgConnectionOpenAckResponseAmino {
+}
+/** MsgConnectionOpenAckResponse defines the Msg/ConnectionOpenAck response type. */
 export interface MsgConnectionOpenAckResponseSDKType {
 }
 /**
@@ -142,6 +215,17 @@ export interface MsgConnectionOpenConfirm {
     /** proof for the change of the connection state on Chain A: `INIT -> OPEN` */
     proofAck: Uint8Array;
     proofHeight?: Height;
+    signer: string;
+}
+/**
+ * MsgConnectionOpenConfirm defines a msg sent by a Relayer to Chain B to
+ * acknowledge the change of connection state to OPEN on Chain A.
+ */
+export interface MsgConnectionOpenConfirmAmino {
+    connection_id: string;
+    /** proof for the change of the connection state on Chain A: `INIT -> OPEN` */
+    proof_ack: Uint8Array;
+    proof_height?: HeightAmino;
     signer: string;
 }
 /**
@@ -164,6 +248,12 @@ export interface MsgConnectionOpenConfirmResponse {
  * MsgConnectionOpenConfirmResponse defines the Msg/ConnectionOpenConfirm
  * response type.
  */
+export interface MsgConnectionOpenConfirmResponseAmino {
+}
+/**
+ * MsgConnectionOpenConfirmResponse defines the Msg/ConnectionOpenConfirm
+ * response type.
+ */
 export interface MsgConnectionOpenConfirmResponseSDKType {
 }
 export declare const MsgConnectionOpenInit: {
@@ -172,6 +262,8 @@ export declare const MsgConnectionOpenInit: {
     fromJSON(object: any): MsgConnectionOpenInit;
     toJSON(message: MsgConnectionOpenInit): unknown;
     fromPartial(object: Partial<MsgConnectionOpenInit>): MsgConnectionOpenInit;
+    fromAmino(object: MsgConnectionOpenInitAmino): MsgConnectionOpenInit;
+    toAmino(message: MsgConnectionOpenInit): MsgConnectionOpenInitAmino;
 };
 export declare const MsgConnectionOpenInitResponse: {
     encode(_: MsgConnectionOpenInitResponse, writer?: _m0.Writer): _m0.Writer;
@@ -179,6 +271,8 @@ export declare const MsgConnectionOpenInitResponse: {
     fromJSON(_: any): MsgConnectionOpenInitResponse;
     toJSON(_: MsgConnectionOpenInitResponse): unknown;
     fromPartial(_: Partial<MsgConnectionOpenInitResponse>): MsgConnectionOpenInitResponse;
+    fromAmino(_: MsgConnectionOpenInitResponseAmino): MsgConnectionOpenInitResponse;
+    toAmino(_: MsgConnectionOpenInitResponse): MsgConnectionOpenInitResponseAmino;
 };
 export declare const MsgConnectionOpenTry: {
     encode(message: MsgConnectionOpenTry, writer?: _m0.Writer): _m0.Writer;
@@ -186,6 +280,8 @@ export declare const MsgConnectionOpenTry: {
     fromJSON(object: any): MsgConnectionOpenTry;
     toJSON(message: MsgConnectionOpenTry): unknown;
     fromPartial(object: Partial<MsgConnectionOpenTry>): MsgConnectionOpenTry;
+    fromAmino(object: MsgConnectionOpenTryAmino): MsgConnectionOpenTry;
+    toAmino(message: MsgConnectionOpenTry): MsgConnectionOpenTryAmino;
 };
 export declare const MsgConnectionOpenTryResponse: {
     encode(_: MsgConnectionOpenTryResponse, writer?: _m0.Writer): _m0.Writer;
@@ -193,6 +289,8 @@ export declare const MsgConnectionOpenTryResponse: {
     fromJSON(_: any): MsgConnectionOpenTryResponse;
     toJSON(_: MsgConnectionOpenTryResponse): unknown;
     fromPartial(_: Partial<MsgConnectionOpenTryResponse>): MsgConnectionOpenTryResponse;
+    fromAmino(_: MsgConnectionOpenTryResponseAmino): MsgConnectionOpenTryResponse;
+    toAmino(_: MsgConnectionOpenTryResponse): MsgConnectionOpenTryResponseAmino;
 };
 export declare const MsgConnectionOpenAck: {
     encode(message: MsgConnectionOpenAck, writer?: _m0.Writer): _m0.Writer;
@@ -200,6 +298,8 @@ export declare const MsgConnectionOpenAck: {
     fromJSON(object: any): MsgConnectionOpenAck;
     toJSON(message: MsgConnectionOpenAck): unknown;
     fromPartial(object: Partial<MsgConnectionOpenAck>): MsgConnectionOpenAck;
+    fromAmino(object: MsgConnectionOpenAckAmino): MsgConnectionOpenAck;
+    toAmino(message: MsgConnectionOpenAck): MsgConnectionOpenAckAmino;
 };
 export declare const MsgConnectionOpenAckResponse: {
     encode(_: MsgConnectionOpenAckResponse, writer?: _m0.Writer): _m0.Writer;
@@ -207,6 +307,8 @@ export declare const MsgConnectionOpenAckResponse: {
     fromJSON(_: any): MsgConnectionOpenAckResponse;
     toJSON(_: MsgConnectionOpenAckResponse): unknown;
     fromPartial(_: Partial<MsgConnectionOpenAckResponse>): MsgConnectionOpenAckResponse;
+    fromAmino(_: MsgConnectionOpenAckResponseAmino): MsgConnectionOpenAckResponse;
+    toAmino(_: MsgConnectionOpenAckResponse): MsgConnectionOpenAckResponseAmino;
 };
 export declare const MsgConnectionOpenConfirm: {
     encode(message: MsgConnectionOpenConfirm, writer?: _m0.Writer): _m0.Writer;
@@ -214,6 +316,8 @@ export declare const MsgConnectionOpenConfirm: {
     fromJSON(object: any): MsgConnectionOpenConfirm;
     toJSON(message: MsgConnectionOpenConfirm): unknown;
     fromPartial(object: Partial<MsgConnectionOpenConfirm>): MsgConnectionOpenConfirm;
+    fromAmino(object: MsgConnectionOpenConfirmAmino): MsgConnectionOpenConfirm;
+    toAmino(message: MsgConnectionOpenConfirm): MsgConnectionOpenConfirmAmino;
 };
 export declare const MsgConnectionOpenConfirmResponse: {
     encode(_: MsgConnectionOpenConfirmResponse, writer?: _m0.Writer): _m0.Writer;
@@ -221,4 +325,6 @@ export declare const MsgConnectionOpenConfirmResponse: {
     fromJSON(_: any): MsgConnectionOpenConfirmResponse;
     toJSON(_: MsgConnectionOpenConfirmResponse): unknown;
     fromPartial(_: Partial<MsgConnectionOpenConfirmResponse>): MsgConnectionOpenConfirmResponse;
+    fromAmino(_: MsgConnectionOpenConfirmResponseAmino): MsgConnectionOpenConfirmResponse;
+    toAmino(_: MsgConnectionOpenConfirmResponse): MsgConnectionOpenConfirmResponseAmino;
 };

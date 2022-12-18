@@ -1,9 +1,15 @@
-import { ValidatorPreference, ValidatorPreferenceSDKType } from "./state";
+import { ValidatorPreference, ValidatorPreferenceAmino, ValidatorPreferenceSDKType } from "./state";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** Request type for UserValidatorPreferences. */
 
 export interface UserValidatorPreferencesRequest {
+  /** user account address */
+  address: string;
+}
+/** Request type for UserValidatorPreferences. */
+
+export interface UserValidatorPreferencesRequestAmino {
   /** user account address */
   address: string;
 }
@@ -16,6 +22,11 @@ export interface UserValidatorPreferencesRequestSDKType {
 
 export interface UserValidatorPreferencesResponse {
   preferences: ValidatorPreference[];
+}
+/** Response type the QueryUserValidatorPreferences query request */
+
+export interface UserValidatorPreferencesResponseAmino {
+  preferences: ValidatorPreferenceAmino[];
 }
 /** Response type the QueryUserValidatorPreferences query request */
 
@@ -76,6 +87,18 @@ export const UserValidatorPreferencesRequest = {
     const message = createBaseUserValidatorPreferencesRequest();
     message.address = object.address ?? "";
     return message;
+  },
+
+  fromAmino(object: UserValidatorPreferencesRequestAmino): UserValidatorPreferencesRequest {
+    return {
+      address: object.address
+    };
+  },
+
+  toAmino(message: UserValidatorPreferencesRequest): UserValidatorPreferencesRequestAmino {
+    const obj: any = {};
+    obj.address = message.address;
+    return obj;
   }
 
 };
@@ -139,6 +162,24 @@ export const UserValidatorPreferencesResponse = {
     const message = createBaseUserValidatorPreferencesResponse();
     message.preferences = object.preferences?.map(e => ValidatorPreference.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: UserValidatorPreferencesResponseAmino): UserValidatorPreferencesResponse {
+    return {
+      preferences: Array.isArray(object?.preferences) ? object.preferences.map((e: any) => ValidatorPreference.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: UserValidatorPreferencesResponse): UserValidatorPreferencesResponseAmino {
+    const obj: any = {};
+
+    if (message.preferences) {
+      obj.preferences = message.preferences.map(e => e ? ValidatorPreference.toAmino(e) : undefined);
+    } else {
+      obj.preferences = [];
+    }
+
+    return obj;
   }
 
 };

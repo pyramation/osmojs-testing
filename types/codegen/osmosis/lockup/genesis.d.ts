@@ -1,4 +1,4 @@
-import { PeriodLock, PeriodLockSDKType, SyntheticLock, SyntheticLockSDKType } from "./lock";
+import { PeriodLock, PeriodLockAmino, PeriodLockSDKType, SyntheticLock, SyntheticLockAmino, SyntheticLockSDKType } from "./lock";
 import { Long } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the lockup module's genesis state. */
@@ -6,6 +6,12 @@ export interface GenesisState {
     lastLockId: Long;
     locks: PeriodLock[];
     syntheticLocks: SyntheticLock[];
+}
+/** GenesisState defines the lockup module's genesis state. */
+export interface GenesisStateAmino {
+    last_lock_id: string;
+    locks: PeriodLockAmino[];
+    synthetic_locks: SyntheticLockAmino[];
 }
 /** GenesisState defines the lockup module's genesis state. */
 export interface GenesisStateSDKType {
@@ -19,4 +25,6 @@ export declare const GenesisState: {
     fromJSON(object: any): GenesisState;
     toJSON(message: GenesisState): unknown;
     fromPartial(object: Partial<GenesisState>): GenesisState;
+    fromAmino(object: GenesisStateAmino): GenesisState;
+    toAmino(message: GenesisState): GenesisStateAmino;
 };

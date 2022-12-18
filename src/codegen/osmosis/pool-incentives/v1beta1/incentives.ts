@@ -1,4 +1,4 @@
-import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long } from "../../../helpers";
 export interface Params {
@@ -10,11 +10,23 @@ export interface Params {
    */
   mintedDenom: string;
 }
+export interface ParamsAmino {
+  /**
+   * minted_denom is the denomination of the coin expected to be minted by the
+   * minting module. Pool-incentives module doesn’t actually mint the coin
+   * itself, but rather manages the distribution of coins that matches the
+   * defined minted_denom.
+   */
+  minted_denom: string;
+}
 export interface ParamsSDKType {
   minted_denom: string;
 }
 export interface LockableDurationsInfo {
   lockableDurations: Duration[];
+}
+export interface LockableDurationsInfoAmino {
+  lockable_durations: DurationAmino[];
 }
 export interface LockableDurationsInfoSDKType {
   lockable_durations: DurationSDKType[];
@@ -23,12 +35,20 @@ export interface DistrInfo {
   totalWeight: string;
   records: DistrRecord[];
 }
+export interface DistrInfoAmino {
+  total_weight: string;
+  records: DistrRecordAmino[];
+}
 export interface DistrInfoSDKType {
   total_weight: string;
   records: DistrRecordSDKType[];
 }
 export interface DistrRecord {
   gaugeId: Long;
+  weight: string;
+}
+export interface DistrRecordAmino {
+  gauge_id: string;
   weight: string;
 }
 export interface DistrRecordSDKType {
@@ -40,6 +60,11 @@ export interface PoolToGauge {
   gaugeId: Long;
   duration?: Duration;
 }
+export interface PoolToGaugeAmino {
+  pool_id: string;
+  gauge_id: string;
+  duration?: DurationAmino;
+}
 export interface PoolToGaugeSDKType {
   pool_id: Long;
   gauge_id: Long;
@@ -47,6 +72,9 @@ export interface PoolToGaugeSDKType {
 }
 export interface PoolToGauges {
   poolToGauge: PoolToGauge[];
+}
+export interface PoolToGaugesAmino {
+  pool_to_gauge: PoolToGaugeAmino[];
 }
 export interface PoolToGaugesSDKType {
   pool_to_gauge: PoolToGaugeSDKType[];
@@ -105,6 +133,18 @@ export const Params = {
     const message = createBaseParams();
     message.mintedDenom = object.mintedDenom ?? "";
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      mintedDenom: object.minted_denom
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+    obj.minted_denom = message.mintedDenom;
+    return obj;
   }
 
 };
@@ -168,6 +208,24 @@ export const LockableDurationsInfo = {
     const message = createBaseLockableDurationsInfo();
     message.lockableDurations = object.lockableDurations?.map(e => Duration.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: LockableDurationsInfoAmino): LockableDurationsInfo {
+    return {
+      lockableDurations: Array.isArray(object?.lockable_durations) ? object.lockable_durations.map((e: any) => Duration.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: LockableDurationsInfo): LockableDurationsInfoAmino {
+    const obj: any = {};
+
+    if (message.lockableDurations) {
+      obj.lockable_durations = message.lockableDurations.map(e => e ? Duration.toAmino(e) : undefined);
+    } else {
+      obj.lockable_durations = [];
+    }
+
+    return obj;
   }
 
 };
@@ -243,6 +301,26 @@ export const DistrInfo = {
     message.totalWeight = object.totalWeight ?? "";
     message.records = object.records?.map(e => DistrRecord.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: DistrInfoAmino): DistrInfo {
+    return {
+      totalWeight: object.total_weight,
+      records: Array.isArray(object?.records) ? object.records.map((e: any) => DistrRecord.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: DistrInfo): DistrInfoAmino {
+    const obj: any = {};
+    obj.total_weight = message.totalWeight;
+
+    if (message.records) {
+      obj.records = message.records.map(e => e ? DistrRecord.toAmino(e) : undefined);
+    } else {
+      obj.records = [];
+    }
+
+    return obj;
   }
 
 };
@@ -312,6 +390,20 @@ export const DistrRecord = {
     message.gaugeId = object.gaugeId !== undefined && object.gaugeId !== null ? Long.fromValue(object.gaugeId) : Long.UZERO;
     message.weight = object.weight ?? "";
     return message;
+  },
+
+  fromAmino(object: DistrRecordAmino): DistrRecord {
+    return {
+      gaugeId: Long.fromString(object.gauge_id),
+      weight: object.weight
+    };
+  },
+
+  toAmino(message: DistrRecord): DistrRecordAmino {
+    const obj: any = {};
+    obj.gauge_id = message.gaugeId ? message.gaugeId.toString() : undefined;
+    obj.weight = message.weight;
+    return obj;
   }
 
 };
@@ -393,6 +485,22 @@ export const PoolToGauge = {
     message.gaugeId = object.gaugeId !== undefined && object.gaugeId !== null ? Long.fromValue(object.gaugeId) : Long.UZERO;
     message.duration = object.duration !== undefined && object.duration !== null ? Duration.fromPartial(object.duration) : undefined;
     return message;
+  },
+
+  fromAmino(object: PoolToGaugeAmino): PoolToGauge {
+    return {
+      poolId: Long.fromString(object.pool_id),
+      gaugeId: Long.fromString(object.gauge_id),
+      duration: object?.duration ? Duration.fromAmino(object.duration) : undefined
+    };
+  },
+
+  toAmino(message: PoolToGauge): PoolToGaugeAmino {
+    const obj: any = {};
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.gauge_id = message.gaugeId ? message.gaugeId.toString() : undefined;
+    obj.duration = message.duration ? Duration.toAmino(message.duration) : undefined;
+    return obj;
   }
 
 };
@@ -456,6 +564,24 @@ export const PoolToGauges = {
     const message = createBasePoolToGauges();
     message.poolToGauge = object.poolToGauge?.map(e => PoolToGauge.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: PoolToGaugesAmino): PoolToGauges {
+    return {
+      poolToGauge: Array.isArray(object?.pool_to_gauge) ? object.pool_to_gauge.map((e: any) => PoolToGauge.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: PoolToGauges): PoolToGaugesAmino {
+    const obj: any = {};
+
+    if (message.poolToGauge) {
+      obj.pool_to_gauge = message.poolToGauge.map(e => e ? PoolToGauge.toAmino(e) : undefined);
+    } else {
+      obj.pool_to_gauge = [];
+    }
+
+    return obj;
   }
 
 };

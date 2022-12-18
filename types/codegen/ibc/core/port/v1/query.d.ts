@@ -1,4 +1,4 @@
-import { Order, Counterparty, CounterpartySDKType } from "../../channel/v1/channel";
+import { Order, Counterparty, CounterpartyAmino, CounterpartySDKType } from "../../channel/v1/channel";
 import * as _m0 from "protobufjs/minimal";
 /** QueryAppVersionRequest is the request type for the Query/AppVersion RPC method */
 export interface QueryAppVersionRequest {
@@ -12,6 +12,19 @@ export interface QueryAppVersionRequest {
     counterparty?: Counterparty;
     /** proposed version */
     proposedVersion: string;
+}
+/** QueryAppVersionRequest is the request type for the Query/AppVersion RPC method */
+export interface QueryAppVersionRequestAmino {
+    /** port unique identifier */
+    port_id: string;
+    /** connection unique identifier */
+    connection_id: string;
+    /** whether the channel is ordered or unordered */
+    ordering: Order;
+    /** counterparty channel end */
+    counterparty?: CounterpartyAmino;
+    /** proposed version */
+    proposed_version: string;
 }
 /** QueryAppVersionRequest is the request type for the Query/AppVersion RPC method */
 export interface QueryAppVersionRequestSDKType {
@@ -29,6 +42,13 @@ export interface QueryAppVersionResponse {
     version: string;
 }
 /** QueryAppVersionResponse is the response type for the Query/AppVersion RPC method. */
+export interface QueryAppVersionResponseAmino {
+    /** port id associated with the request identifiers */
+    port_id: string;
+    /** supported app version */
+    version: string;
+}
+/** QueryAppVersionResponse is the response type for the Query/AppVersion RPC method. */
 export interface QueryAppVersionResponseSDKType {
     port_id: string;
     version: string;
@@ -39,6 +59,8 @@ export declare const QueryAppVersionRequest: {
     fromJSON(object: any): QueryAppVersionRequest;
     toJSON(message: QueryAppVersionRequest): unknown;
     fromPartial(object: Partial<QueryAppVersionRequest>): QueryAppVersionRequest;
+    fromAmino(object: QueryAppVersionRequestAmino): QueryAppVersionRequest;
+    toAmino(message: QueryAppVersionRequest): QueryAppVersionRequestAmino;
 };
 export declare const QueryAppVersionResponse: {
     encode(message: QueryAppVersionResponse, writer?: _m0.Writer): _m0.Writer;
@@ -46,4 +68,6 @@ export declare const QueryAppVersionResponse: {
     fromJSON(object: any): QueryAppVersionResponse;
     toJSON(message: QueryAppVersionResponse): unknown;
     fromPartial(object: Partial<QueryAppVersionResponse>): QueryAppVersionResponse;
+    fromAmino(object: QueryAppVersionResponseAmino): QueryAppVersionResponse;
+    toAmino(message: QueryAppVersionResponse): QueryAppVersionResponseAmino;
 };

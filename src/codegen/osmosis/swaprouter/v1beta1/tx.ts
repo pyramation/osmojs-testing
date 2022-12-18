@@ -1,5 +1,5 @@
-import { SwapAmountInRoute, SwapAmountInRouteSDKType, SwapAmountOutRoute, SwapAmountOutRouteSDKType } from "./swap_route";
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { SwapAmountInRoute, SwapAmountInRouteAmino, SwapAmountInRouteSDKType, SwapAmountOutRoute, SwapAmountOutRouteAmino, SwapAmountOutRouteSDKType } from "./swap_route";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** ===================== MsgSwapExactAmountIn */
@@ -12,6 +12,14 @@ export interface MsgSwapExactAmountIn {
 }
 /** ===================== MsgSwapExactAmountIn */
 
+export interface MsgSwapExactAmountInAmino {
+  sender: string;
+  routes: SwapAmountInRouteAmino[];
+  token_in?: CoinAmino;
+  token_out_min_amount: string;
+}
+/** ===================== MsgSwapExactAmountIn */
+
 export interface MsgSwapExactAmountInSDKType {
   sender: string;
   routes: SwapAmountInRouteSDKType[];
@@ -20,6 +28,9 @@ export interface MsgSwapExactAmountInSDKType {
 }
 export interface MsgSwapExactAmountInResponse {
   tokenOutAmount: string;
+}
+export interface MsgSwapExactAmountInResponseAmino {
+  token_out_amount: string;
 }
 export interface MsgSwapExactAmountInResponseSDKType {
   token_out_amount: string;
@@ -34,6 +45,14 @@ export interface MsgSwapExactAmountOut {
 }
 /** ===================== MsgSwapExactAmountOut */
 
+export interface MsgSwapExactAmountOutAmino {
+  sender: string;
+  routes: SwapAmountOutRouteAmino[];
+  token_in_max_amount: string;
+  token_out?: CoinAmino;
+}
+/** ===================== MsgSwapExactAmountOut */
+
 export interface MsgSwapExactAmountOutSDKType {
   sender: string;
   routes: SwapAmountOutRouteSDKType[];
@@ -42,6 +61,9 @@ export interface MsgSwapExactAmountOutSDKType {
 }
 export interface MsgSwapExactAmountOutResponse {
   tokenInAmount: string;
+}
+export interface MsgSwapExactAmountOutResponseAmino {
+  token_in_amount: string;
 }
 export interface MsgSwapExactAmountOutResponseSDKType {
   token_in_amount: string;
@@ -142,6 +164,30 @@ export const MsgSwapExactAmountIn = {
     message.tokenIn = object.tokenIn !== undefined && object.tokenIn !== null ? Coin.fromPartial(object.tokenIn) : undefined;
     message.tokenOutMinAmount = object.tokenOutMinAmount ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgSwapExactAmountInAmino): MsgSwapExactAmountIn {
+    return {
+      sender: object.sender,
+      routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountInRoute.fromAmino(e)) : [],
+      tokenIn: object?.token_in ? Coin.fromAmino(object.token_in) : undefined,
+      tokenOutMinAmount: object.token_out_min_amount
+    };
+  },
+
+  toAmino(message: MsgSwapExactAmountIn): MsgSwapExactAmountInAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+
+    if (message.routes) {
+      obj.routes = message.routes.map(e => e ? SwapAmountInRoute.toAmino(e) : undefined);
+    } else {
+      obj.routes = [];
+    }
+
+    obj.token_in = message.tokenIn ? Coin.toAmino(message.tokenIn) : undefined;
+    obj.token_out_min_amount = message.tokenOutMinAmount;
+    return obj;
   }
 
 };
@@ -199,6 +245,18 @@ export const MsgSwapExactAmountInResponse = {
     const message = createBaseMsgSwapExactAmountInResponse();
     message.tokenOutAmount = object.tokenOutAmount ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgSwapExactAmountInResponseAmino): MsgSwapExactAmountInResponse {
+    return {
+      tokenOutAmount: object.token_out_amount
+    };
+  },
+
+  toAmino(message: MsgSwapExactAmountInResponse): MsgSwapExactAmountInResponseAmino {
+    const obj: any = {};
+    obj.token_out_amount = message.tokenOutAmount;
+    return obj;
   }
 
 };
@@ -298,6 +356,30 @@ export const MsgSwapExactAmountOut = {
     message.tokenInMaxAmount = object.tokenInMaxAmount ?? "";
     message.tokenOut = object.tokenOut !== undefined && object.tokenOut !== null ? Coin.fromPartial(object.tokenOut) : undefined;
     return message;
+  },
+
+  fromAmino(object: MsgSwapExactAmountOutAmino): MsgSwapExactAmountOut {
+    return {
+      sender: object.sender,
+      routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountOutRoute.fromAmino(e)) : [],
+      tokenInMaxAmount: object.token_in_max_amount,
+      tokenOut: object?.token_out ? Coin.fromAmino(object.token_out) : undefined
+    };
+  },
+
+  toAmino(message: MsgSwapExactAmountOut): MsgSwapExactAmountOutAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+
+    if (message.routes) {
+      obj.routes = message.routes.map(e => e ? SwapAmountOutRoute.toAmino(e) : undefined);
+    } else {
+      obj.routes = [];
+    }
+
+    obj.token_in_max_amount = message.tokenInMaxAmount;
+    obj.token_out = message.tokenOut ? Coin.toAmino(message.tokenOut) : undefined;
+    return obj;
   }
 
 };
@@ -355,6 +437,18 @@ export const MsgSwapExactAmountOutResponse = {
     const message = createBaseMsgSwapExactAmountOutResponse();
     message.tokenInAmount = object.tokenInAmount ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgSwapExactAmountOutResponseAmino): MsgSwapExactAmountOutResponse {
+    return {
+      tokenInAmount: object.token_in_amount
+    };
+  },
+
+  toAmino(message: MsgSwapExactAmountOutResponse): MsgSwapExactAmountOutResponseAmino {
+    const obj: any = {};
+    obj.token_in_amount = message.tokenInAmount;
+    return obj;
   }
 
 };

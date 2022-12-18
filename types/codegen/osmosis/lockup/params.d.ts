@@ -2,6 +2,9 @@ import * as _m0 from "protobufjs/minimal";
 export interface Params {
     forceUnlockAllowedAddresses: string[];
 }
+export interface ParamsAmino {
+    force_unlock_allowed_addresses: string[];
+}
 export interface ParamsSDKType {
     force_unlock_allowed_addresses: string[];
 }
@@ -11,4 +14,6 @@ export declare const Params: {
     fromJSON(object: any): Params;
     toJSON(message: Params): unknown;
     fromPartial(object: Partial<Params>): Params;
+    fromAmino(object: ParamsAmino): Params;
+    toAmino(message: Params): ParamsAmino;
 };

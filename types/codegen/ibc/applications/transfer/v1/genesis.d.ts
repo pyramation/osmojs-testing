@@ -1,10 +1,16 @@
-import { DenomTrace, DenomTraceSDKType, Params, ParamsSDKType } from "./transfer";
+import { DenomTrace, DenomTraceAmino, DenomTraceSDKType, Params, ParamsAmino, ParamsSDKType } from "./transfer";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the ibc-transfer genesis state */
 export interface GenesisState {
     portId: string;
     denomTraces: DenomTrace[];
     params?: Params;
+}
+/** GenesisState defines the ibc-transfer genesis state */
+export interface GenesisStateAmino {
+    port_id: string;
+    denom_traces: DenomTraceAmino[];
+    params?: ParamsAmino;
 }
 /** GenesisState defines the ibc-transfer genesis state */
 export interface GenesisStateSDKType {
@@ -18,4 +24,6 @@ export declare const GenesisState: {
     fromJSON(object: any): GenesisState;
     toJSON(message: GenesisState): unknown;
     fromPartial(object: Partial<GenesisState>): GenesisState;
+    fromAmino(object: GenesisStateAmino): GenesisState;
+    toAmino(message: GenesisState): GenesisStateAmino;
 };

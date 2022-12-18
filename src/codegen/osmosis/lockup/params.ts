@@ -2,6 +2,9 @@ import * as _m0 from "protobufjs/minimal";
 export interface Params {
   forceUnlockAllowedAddresses: string[];
 }
+export interface ParamsAmino {
+  force_unlock_allowed_addresses: string[];
+}
 export interface ParamsSDKType {
   force_unlock_allowed_addresses: string[];
 }
@@ -65,6 +68,24 @@ export const Params = {
     const message = createBaseParams();
     message.forceUnlockAllowedAddresses = object.forceUnlockAllowedAddresses?.map(e => e) || [];
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      forceUnlockAllowedAddresses: Array.isArray(object?.force_unlock_allowed_addresses) ? object.force_unlock_allowed_addresses.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+
+    if (message.forceUnlockAllowedAddresses) {
+      obj.force_unlock_allowed_addresses = message.forceUnlockAllowedAddresses.map(e => e);
+    } else {
+      obj.force_unlock_allowed_addresses = [];
+    }
+
+    return obj;
   }
 
 };

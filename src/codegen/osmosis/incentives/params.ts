@@ -11,6 +11,15 @@ export interface Params {
 }
 /** Params holds parameters for the incentives module */
 
+export interface ParamsAmino {
+  /**
+   * distr_epoch_identifier is what epoch type distribution will be triggered by
+   * (day, week, etc.)
+   */
+  distr_epoch_identifier: string;
+}
+/** Params holds parameters for the incentives module */
+
 export interface ParamsSDKType {
   distr_epoch_identifier: string;
 }
@@ -68,6 +77,18 @@ export const Params = {
     const message = createBaseParams();
     message.distrEpochIdentifier = object.distrEpochIdentifier ?? "";
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      distrEpochIdentifier: object.distr_epoch_identifier
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+    obj.distr_epoch_identifier = message.distrEpochIdentifier;
+    return obj;
   }
 
 };

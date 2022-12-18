@@ -20,6 +20,7 @@ export enum PoolType {
   UNRECOGNIZED = -1,
 }
 export const PoolTypeSDKType = PoolType;
+export const PoolTypeAmino = PoolType;
 export function poolTypeFromJSON(object: any): PoolType {
   switch (object) {
     case 0:
@@ -66,6 +67,17 @@ export function poolTypeToJSON(object: PoolType): string {
 export interface ModuleRoute {
   /** pool_type specifies the type of the pool */
   poolType: PoolType;
+}
+/**
+ * ModuleRouter defines a route encapsulating pool type.
+ * It is used as the value of a mapping from pool id to the pool type,
+ * allowing the swap router to know which module to route swaps to given the
+ * pool id.
+ */
+
+export interface ModuleRouteAmino {
+  /** pool_type specifies the type of the pool */
+  pool_type: PoolType;
 }
 /**
  * ModuleRouter defines a route encapsulating pool type.
@@ -131,6 +143,18 @@ export const ModuleRoute = {
     const message = createBaseModuleRoute();
     message.poolType = object.poolType ?? 0;
     return message;
+  },
+
+  fromAmino(object: ModuleRouteAmino): ModuleRoute {
+    return {
+      poolType: isSet(object.pool_type) ? poolTypeFromJSON(object.pool_type) : 0
+    };
+  },
+
+  toAmino(message: ModuleRoute): ModuleRouteAmino {
+    const obj: any = {};
+    message.poolType !== undefined && (obj.pool_type = poolTypeToJSON(message.poolType));
+    return obj;
   }
 
 };

@@ -1,4 +1,4 @@
-import { Any, AnySDKType } from "../../../google/protobuf/any";
+import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
 import { Long } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
@@ -12,6 +12,17 @@ export interface BaseAccount {
     pubKey?: Any;
     accountNumber: Long;
     sequence: Long;
+}
+/**
+ * BaseAccount defines a base account type. It contains all the necessary fields
+ * for basic account functionality. Any custom account type should extend this
+ * type for additional functionality (e.g. vesting).
+ */
+export interface BaseAccountAmino {
+    address: string;
+    pub_key?: AnyAmino;
+    account_number: string;
+    sequence: string;
 }
 /**
  * BaseAccount defines a base account type. It contains all the necessary fields
@@ -33,6 +44,12 @@ export interface ModuleAccount {
     permissions: string[];
 }
 /** ModuleAccount defines an account for modules that holds coins on a pool. */
+export interface ModuleAccountAmino {
+    base_account?: BaseAccountAmino;
+    name: string;
+    permissions: string[];
+}
+/** ModuleAccount defines an account for modules that holds coins on a pool. */
 export interface ModuleAccountSDKType {
     $typeUrl?: string;
     base_account?: BaseAccountSDKType;
@@ -48,6 +65,14 @@ export interface Params {
     sigVerifyCostSecp256k1: Long;
 }
 /** Params defines the parameters for the auth module. */
+export interface ParamsAmino {
+    max_memo_characters: string;
+    tx_sig_limit: string;
+    tx_size_cost_per_byte: string;
+    sig_verify_cost_ed25519: string;
+    sig_verify_cost_secp256k1: string;
+}
+/** Params defines the parameters for the auth module. */
 export interface ParamsSDKType {
     max_memo_characters: Long;
     tx_sig_limit: Long;
@@ -61,6 +86,8 @@ export declare const BaseAccount: {
     fromJSON(object: any): BaseAccount;
     toJSON(message: BaseAccount): unknown;
     fromPartial(object: Partial<BaseAccount>): BaseAccount;
+    fromAmino(object: BaseAccountAmino): BaseAccount;
+    toAmino(message: BaseAccount): BaseAccountAmino;
 };
 export declare const ModuleAccount: {
     encode(message: ModuleAccount, writer?: _m0.Writer): _m0.Writer;
@@ -68,6 +95,8 @@ export declare const ModuleAccount: {
     fromJSON(object: any): ModuleAccount;
     toJSON(message: ModuleAccount): unknown;
     fromPartial(object: Partial<ModuleAccount>): ModuleAccount;
+    fromAmino(object: ModuleAccountAmino): ModuleAccount;
+    toAmino(message: ModuleAccount): ModuleAccountAmino;
 };
 export declare const Params: {
     encode(message: Params, writer?: _m0.Writer): _m0.Writer;
@@ -75,4 +104,6 @@ export declare const Params: {
     fromJSON(object: any): Params;
     toJSON(message: Params): unknown;
     fromPartial(object: Partial<Params>): Params;
+    fromAmino(object: ParamsAmino): Params;
+    toAmino(message: Params): ParamsAmino;
 };

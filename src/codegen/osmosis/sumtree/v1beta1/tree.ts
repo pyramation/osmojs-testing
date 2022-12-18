@@ -3,10 +3,17 @@ import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
 export interface Node {
   children: Child[];
 }
+export interface NodeAmino {
+  children: ChildAmino[];
+}
 export interface NodeSDKType {
   children: ChildSDKType[];
 }
 export interface Child {
+  index: Uint8Array;
+  accumulation: string;
+}
+export interface ChildAmino {
   index: Uint8Array;
   accumulation: string;
 }
@@ -16,6 +23,9 @@ export interface ChildSDKType {
 }
 export interface Leaf {
   leaf?: Child;
+}
+export interface LeafAmino {
+  leaf?: ChildAmino;
 }
 export interface LeafSDKType {
   leaf?: ChildSDKType;
@@ -80,6 +90,24 @@ export const Node = {
     const message = createBaseNode();
     message.children = object.children?.map(e => Child.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: NodeAmino): Node {
+    return {
+      children: Array.isArray(object?.children) ? object.children.map((e: any) => Child.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: Node): NodeAmino {
+    const obj: any = {};
+
+    if (message.children) {
+      obj.children = message.children.map(e => e ? Child.toAmino(e) : undefined);
+    } else {
+      obj.children = [];
+    }
+
+    return obj;
   }
 
 };
@@ -149,6 +177,20 @@ export const Child = {
     message.index = object.index ?? new Uint8Array();
     message.accumulation = object.accumulation ?? "";
     return message;
+  },
+
+  fromAmino(object: ChildAmino): Child {
+    return {
+      index: object.index,
+      accumulation: object.accumulation
+    };
+  },
+
+  toAmino(message: Child): ChildAmino {
+    const obj: any = {};
+    obj.index = message.index;
+    obj.accumulation = message.accumulation;
+    return obj;
   }
 
 };
@@ -206,6 +248,18 @@ export const Leaf = {
     const message = createBaseLeaf();
     message.leaf = object.leaf !== undefined && object.leaf !== null ? Child.fromPartial(object.leaf) : undefined;
     return message;
+  },
+
+  fromAmino(object: LeafAmino): Leaf {
+    return {
+      leaf: object?.leaf ? Child.fromAmino(object.leaf) : undefined
+    };
+  },
+
+  toAmino(message: Leaf): LeafAmino {
+    const obj: any = {};
+    obj.leaf = message.leaf ? Child.toAmino(message.leaf) : undefined;
+    return obj;
   }
 
 };

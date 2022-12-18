@@ -1,5 +1,5 @@
-import { ValidatorPreference, ValidatorPreferenceSDKType } from "./state";
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { ValidatorPreference, ValidatorPreferenceAmino, ValidatorPreferenceSDKType } from "./state";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** MsgCreateValidatorSetPreference is a list that holds validator-set. */
@@ -13,11 +13,21 @@ export interface MsgSetValidatorSetPreference {
 }
 /** MsgCreateValidatorSetPreference is a list that holds validator-set. */
 
+export interface MsgSetValidatorSetPreferenceAmino {
+  /** delegator is the user who is trying to create a validator-set. */
+  delegator: string;
+  /** list of {valAddr, weight} to delegate to */
+
+  preferences: ValidatorPreferenceAmino[];
+}
+/** MsgCreateValidatorSetPreference is a list that holds validator-set. */
+
 export interface MsgSetValidatorSetPreferenceSDKType {
   delegator: string;
   preferences: ValidatorPreferenceSDKType[];
 }
 export interface MsgSetValidatorSetPreferenceResponse {}
+export interface MsgSetValidatorSetPreferenceResponseAmino {}
 export interface MsgSetValidatorSetPreferenceResponseSDKType {}
 /**
  * MsgDelegateToValidatorSet allows users to delegate to an existing
@@ -41,11 +51,29 @@ export interface MsgDelegateToValidatorSet {
  * validator-set
  */
 
+export interface MsgDelegateToValidatorSetAmino {
+  /** delegator is the user who is trying to delegate. */
+  delegator: string;
+  /**
+   * the amount of tokens the user is trying to delegate.
+   * For ex: delegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC
+   * -> 0.2} our staking logic would attempt to delegate 5osmo to A , 3osmo to
+   * B, 2osmo to C.
+   */
+
+  coin?: CoinAmino;
+}
+/**
+ * MsgDelegateToValidatorSet allows users to delegate to an existing
+ * validator-set
+ */
+
 export interface MsgDelegateToValidatorSetSDKType {
   delegator: string;
   coin?: CoinSDKType;
 }
 export interface MsgDelegateToValidatorSetResponse {}
+export interface MsgDelegateToValidatorSetResponseAmino {}
 export interface MsgDelegateToValidatorSetResponseSDKType {}
 export interface MsgUndelegateFromValidatorSet {
   /** delegator is the user who is trying to undelegate. */
@@ -60,11 +88,25 @@ export interface MsgUndelegateFromValidatorSet {
 
   coin?: Coin;
 }
+export interface MsgUndelegateFromValidatorSetAmino {
+  /** delegator is the user who is trying to undelegate. */
+  delegator: string;
+  /**
+   * the amount the user wants to undelegate
+   * For ex: Undelegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3,
+   * ValC
+   * -> 0.2} our undelegate logic would attempt to undelegate 5osmo from A ,
+   * 3osmo from B, 2osmo from C
+   */
+
+  coin?: CoinAmino;
+}
 export interface MsgUndelegateFromValidatorSetSDKType {
   delegator: string;
   coin?: CoinSDKType;
 }
 export interface MsgUndelegateFromValidatorSetResponse {}
+export interface MsgUndelegateFromValidatorSetResponseAmino {}
 export interface MsgUndelegateFromValidatorSetResponseSDKType {}
 export interface MsgRedelegateValidatorSet {
   /** delegator is the user who is trying to create a validator-set. */
@@ -73,11 +115,19 @@ export interface MsgRedelegateValidatorSet {
 
   preferences: ValidatorPreference[];
 }
+export interface MsgRedelegateValidatorSetAmino {
+  /** delegator is the user who is trying to create a validator-set. */
+  delegator: string;
+  /** list of {valAddr, weight} to delegate to */
+
+  preferences: ValidatorPreferenceAmino[];
+}
 export interface MsgRedelegateValidatorSetSDKType {
   delegator: string;
   preferences: ValidatorPreferenceSDKType[];
 }
 export interface MsgRedelegateValidatorSetResponse {}
+export interface MsgRedelegateValidatorSetResponseAmino {}
 export interface MsgRedelegateValidatorSetResponseSDKType {}
 /**
  * MsgWithdrawDelegationRewards allows user to claim staking rewards from the
@@ -93,10 +143,20 @@ export interface MsgWithdrawDelegationRewards {
  * validator set.
  */
 
+export interface MsgWithdrawDelegationRewardsAmino {
+  /** delegator is the user who is trying to claim staking rewards. */
+  delegator: string;
+}
+/**
+ * MsgWithdrawDelegationRewards allows user to claim staking rewards from the
+ * validator set.
+ */
+
 export interface MsgWithdrawDelegationRewardsSDKType {
   delegator: string;
 }
 export interface MsgWithdrawDelegationRewardsResponse {}
+export interface MsgWithdrawDelegationRewardsResponseAmino {}
 export interface MsgWithdrawDelegationRewardsResponseSDKType {}
 
 function createBaseMsgSetValidatorSetPreference(): MsgSetValidatorSetPreference {
@@ -170,6 +230,26 @@ export const MsgSetValidatorSetPreference = {
     message.delegator = object.delegator ?? "";
     message.preferences = object.preferences?.map(e => ValidatorPreference.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: MsgSetValidatorSetPreferenceAmino): MsgSetValidatorSetPreference {
+    return {
+      delegator: object.delegator,
+      preferences: Array.isArray(object?.preferences) ? object.preferences.map((e: any) => ValidatorPreference.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: MsgSetValidatorSetPreference): MsgSetValidatorSetPreferenceAmino {
+    const obj: any = {};
+    obj.delegator = message.delegator;
+
+    if (message.preferences) {
+      obj.preferences = message.preferences.map(e => e ? ValidatorPreference.toAmino(e) : undefined);
+    } else {
+      obj.preferences = [];
+    }
+
+    return obj;
   }
 
 };
@@ -213,6 +293,15 @@ export const MsgSetValidatorSetPreferenceResponse = {
   fromPartial(_: Partial<MsgSetValidatorSetPreferenceResponse>): MsgSetValidatorSetPreferenceResponse {
     const message = createBaseMsgSetValidatorSetPreferenceResponse();
     return message;
+  },
+
+  fromAmino(_: MsgSetValidatorSetPreferenceResponseAmino): MsgSetValidatorSetPreferenceResponse {
+    return {};
+  },
+
+  toAmino(_: MsgSetValidatorSetPreferenceResponse): MsgSetValidatorSetPreferenceResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -282,6 +371,20 @@ export const MsgDelegateToValidatorSet = {
     message.delegator = object.delegator ?? "";
     message.coin = object.coin !== undefined && object.coin !== null ? Coin.fromPartial(object.coin) : undefined;
     return message;
+  },
+
+  fromAmino(object: MsgDelegateToValidatorSetAmino): MsgDelegateToValidatorSet {
+    return {
+      delegator: object.delegator,
+      coin: object?.coin ? Coin.fromAmino(object.coin) : undefined
+    };
+  },
+
+  toAmino(message: MsgDelegateToValidatorSet): MsgDelegateToValidatorSetAmino {
+    const obj: any = {};
+    obj.delegator = message.delegator;
+    obj.coin = message.coin ? Coin.toAmino(message.coin) : undefined;
+    return obj;
   }
 
 };
@@ -325,6 +428,15 @@ export const MsgDelegateToValidatorSetResponse = {
   fromPartial(_: Partial<MsgDelegateToValidatorSetResponse>): MsgDelegateToValidatorSetResponse {
     const message = createBaseMsgDelegateToValidatorSetResponse();
     return message;
+  },
+
+  fromAmino(_: MsgDelegateToValidatorSetResponseAmino): MsgDelegateToValidatorSetResponse {
+    return {};
+  },
+
+  toAmino(_: MsgDelegateToValidatorSetResponse): MsgDelegateToValidatorSetResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -394,6 +506,20 @@ export const MsgUndelegateFromValidatorSet = {
     message.delegator = object.delegator ?? "";
     message.coin = object.coin !== undefined && object.coin !== null ? Coin.fromPartial(object.coin) : undefined;
     return message;
+  },
+
+  fromAmino(object: MsgUndelegateFromValidatorSetAmino): MsgUndelegateFromValidatorSet {
+    return {
+      delegator: object.delegator,
+      coin: object?.coin ? Coin.fromAmino(object.coin) : undefined
+    };
+  },
+
+  toAmino(message: MsgUndelegateFromValidatorSet): MsgUndelegateFromValidatorSetAmino {
+    const obj: any = {};
+    obj.delegator = message.delegator;
+    obj.coin = message.coin ? Coin.toAmino(message.coin) : undefined;
+    return obj;
   }
 
 };
@@ -437,6 +563,15 @@ export const MsgUndelegateFromValidatorSetResponse = {
   fromPartial(_: Partial<MsgUndelegateFromValidatorSetResponse>): MsgUndelegateFromValidatorSetResponse {
     const message = createBaseMsgUndelegateFromValidatorSetResponse();
     return message;
+  },
+
+  fromAmino(_: MsgUndelegateFromValidatorSetResponseAmino): MsgUndelegateFromValidatorSetResponse {
+    return {};
+  },
+
+  toAmino(_: MsgUndelegateFromValidatorSetResponse): MsgUndelegateFromValidatorSetResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -512,6 +647,26 @@ export const MsgRedelegateValidatorSet = {
     message.delegator = object.delegator ?? "";
     message.preferences = object.preferences?.map(e => ValidatorPreference.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: MsgRedelegateValidatorSetAmino): MsgRedelegateValidatorSet {
+    return {
+      delegator: object.delegator,
+      preferences: Array.isArray(object?.preferences) ? object.preferences.map((e: any) => ValidatorPreference.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: MsgRedelegateValidatorSet): MsgRedelegateValidatorSetAmino {
+    const obj: any = {};
+    obj.delegator = message.delegator;
+
+    if (message.preferences) {
+      obj.preferences = message.preferences.map(e => e ? ValidatorPreference.toAmino(e) : undefined);
+    } else {
+      obj.preferences = [];
+    }
+
+    return obj;
   }
 
 };
@@ -555,6 +710,15 @@ export const MsgRedelegateValidatorSetResponse = {
   fromPartial(_: Partial<MsgRedelegateValidatorSetResponse>): MsgRedelegateValidatorSetResponse {
     const message = createBaseMsgRedelegateValidatorSetResponse();
     return message;
+  },
+
+  fromAmino(_: MsgRedelegateValidatorSetResponseAmino): MsgRedelegateValidatorSetResponse {
+    return {};
+  },
+
+  toAmino(_: MsgRedelegateValidatorSetResponse): MsgRedelegateValidatorSetResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -612,6 +776,18 @@ export const MsgWithdrawDelegationRewards = {
     const message = createBaseMsgWithdrawDelegationRewards();
     message.delegator = object.delegator ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgWithdrawDelegationRewardsAmino): MsgWithdrawDelegationRewards {
+    return {
+      delegator: object.delegator
+    };
+  },
+
+  toAmino(message: MsgWithdrawDelegationRewards): MsgWithdrawDelegationRewardsAmino {
+    const obj: any = {};
+    obj.delegator = message.delegator;
+    return obj;
   }
 
 };
@@ -655,6 +831,15 @@ export const MsgWithdrawDelegationRewardsResponse = {
   fromPartial(_: Partial<MsgWithdrawDelegationRewardsResponse>): MsgWithdrawDelegationRewardsResponse {
     const message = createBaseMsgWithdrawDelegationRewardsResponse();
     return message;
+  },
+
+  fromAmino(_: MsgWithdrawDelegationRewardsResponseAmino): MsgWithdrawDelegationRewardsResponse {
+    return {};
+  },
+
+  toAmino(_: MsgWithdrawDelegationRewardsResponse): MsgWithdrawDelegationRewardsResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };

@@ -1,5 +1,5 @@
-import { Channel, ChannelSDKType, Packet, PacketSDKType } from "./channel";
-import { Height, HeightSDKType } from "../../client/v1/client";
+import { Channel, ChannelAmino, ChannelSDKType, Packet, PacketAmino, PacketSDKType } from "./channel";
+import { Height, HeightAmino, HeightSDKType } from "../../client/v1/client";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, bytesFromBase64, base64FromBytes, Long } from "../../../../helpers";
 /**
@@ -17,6 +17,16 @@ export interface MsgChannelOpenInit {
  * is called by a relayer on Chain A.
  */
 
+export interface MsgChannelOpenInitAmino {
+  port_id: string;
+  channel?: ChannelAmino;
+  signer: string;
+}
+/**
+ * MsgChannelOpenInit defines an sdk.Msg to initialize a channel handshake. It
+ * is called by a relayer on Chain A.
+ */
+
 export interface MsgChannelOpenInitSDKType {
   port_id: string;
   channel?: ChannelSDKType;
@@ -25,6 +35,9 @@ export interface MsgChannelOpenInitSDKType {
 /** MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type. */
 
 export interface MsgChannelOpenInitResponse {}
+/** MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type. */
+
+export interface MsgChannelOpenInitResponseAmino {}
 /** MsgChannelOpenInitResponse defines the Msg/ChannelOpenInit response type. */
 
 export interface MsgChannelOpenInitResponseSDKType {}
@@ -52,6 +65,25 @@ export interface MsgChannelOpenTry {
  * on Chain B.
  */
 
+export interface MsgChannelOpenTryAmino {
+  port_id: string;
+  /**
+   * in the case of crossing hello's, when both chains call OpenInit, we need
+   * the channel identifier of the previous channel in state INIT
+   */
+
+  previous_channel_id: string;
+  channel?: ChannelAmino;
+  counterparty_version: string;
+  proof_init: Uint8Array;
+  proof_height?: HeightAmino;
+  signer: string;
+}
+/**
+ * MsgChannelOpenInit defines a msg sent by a Relayer to try to open a channel
+ * on Chain B.
+ */
+
 export interface MsgChannelOpenTrySDKType {
   port_id: string;
   previous_channel_id: string;
@@ -64,6 +96,9 @@ export interface MsgChannelOpenTrySDKType {
 /** MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type. */
 
 export interface MsgChannelOpenTryResponse {}
+/** MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type. */
+
+export interface MsgChannelOpenTryResponseAmino {}
 /** MsgChannelOpenTryResponse defines the Msg/ChannelOpenTry response type. */
 
 export interface MsgChannelOpenTryResponseSDKType {}
@@ -86,6 +121,20 @@ export interface MsgChannelOpenAck {
  * the change of channel state to TRYOPEN on Chain B.
  */
 
+export interface MsgChannelOpenAckAmino {
+  port_id: string;
+  channel_id: string;
+  counterparty_channel_id: string;
+  counterparty_version: string;
+  proof_try: Uint8Array;
+  proof_height?: HeightAmino;
+  signer: string;
+}
+/**
+ * MsgChannelOpenAck defines a msg sent by a Relayer to Chain A to acknowledge
+ * the change of channel state to TRYOPEN on Chain B.
+ */
+
 export interface MsgChannelOpenAckSDKType {
   port_id: string;
   channel_id: string;
@@ -100,6 +149,9 @@ export interface MsgChannelOpenAckSDKType {
 export interface MsgChannelOpenAckResponse {}
 /** MsgChannelOpenAckResponse defines the Msg/ChannelOpenAck response type. */
 
+export interface MsgChannelOpenAckResponseAmino {}
+/** MsgChannelOpenAckResponse defines the Msg/ChannelOpenAck response type. */
+
 export interface MsgChannelOpenAckResponseSDKType {}
 /**
  * MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain B to
@@ -111,6 +163,18 @@ export interface MsgChannelOpenConfirm {
   channelId: string;
   proofAck: Uint8Array;
   proofHeight?: Height;
+  signer: string;
+}
+/**
+ * MsgChannelOpenConfirm defines a msg sent by a Relayer to Chain B to
+ * acknowledge the change of channel state to OPEN on Chain A.
+ */
+
+export interface MsgChannelOpenConfirmAmino {
+  port_id: string;
+  channel_id: string;
+  proof_ack: Uint8Array;
+  proof_height?: HeightAmino;
   signer: string;
 }
 /**
@@ -136,6 +200,12 @@ export interface MsgChannelOpenConfirmResponse {}
  * type.
  */
 
+export interface MsgChannelOpenConfirmResponseAmino {}
+/**
+ * MsgChannelOpenConfirmResponse defines the Msg/ChannelOpenConfirm response
+ * type.
+ */
+
 export interface MsgChannelOpenConfirmResponseSDKType {}
 /**
  * MsgChannelCloseInit defines a msg sent by a Relayer to Chain A
@@ -145,6 +215,16 @@ export interface MsgChannelOpenConfirmResponseSDKType {}
 export interface MsgChannelCloseInit {
   portId: string;
   channelId: string;
+  signer: string;
+}
+/**
+ * MsgChannelCloseInit defines a msg sent by a Relayer to Chain A
+ * to close a channel with Chain B.
+ */
+
+export interface MsgChannelCloseInitAmino {
+  port_id: string;
+  channel_id: string;
   signer: string;
 }
 /**
@@ -162,6 +242,9 @@ export interface MsgChannelCloseInitSDKType {
 export interface MsgChannelCloseInitResponse {}
 /** MsgChannelCloseInitResponse defines the Msg/ChannelCloseInit response type. */
 
+export interface MsgChannelCloseInitResponseAmino {}
+/** MsgChannelCloseInitResponse defines the Msg/ChannelCloseInit response type. */
+
 export interface MsgChannelCloseInitResponseSDKType {}
 /**
  * MsgChannelCloseConfirm defines a msg sent by a Relayer to Chain B
@@ -173,6 +256,18 @@ export interface MsgChannelCloseConfirm {
   channelId: string;
   proofInit: Uint8Array;
   proofHeight?: Height;
+  signer: string;
+}
+/**
+ * MsgChannelCloseConfirm defines a msg sent by a Relayer to Chain B
+ * to acknowledge the change of channel state to CLOSED on Chain A.
+ */
+
+export interface MsgChannelCloseConfirmAmino {
+  port_id: string;
+  channel_id: string;
+  proof_init: Uint8Array;
+  proof_height?: HeightAmino;
   signer: string;
 }
 /**
@@ -198,6 +293,12 @@ export interface MsgChannelCloseConfirmResponse {}
  * type.
  */
 
+export interface MsgChannelCloseConfirmResponseAmino {}
+/**
+ * MsgChannelCloseConfirmResponse defines the Msg/ChannelCloseConfirm response
+ * type.
+ */
+
 export interface MsgChannelCloseConfirmResponseSDKType {}
 /** MsgRecvPacket receives incoming IBC packet */
 
@@ -205,6 +306,14 @@ export interface MsgRecvPacket {
   packet?: Packet;
   proofCommitment: Uint8Array;
   proofHeight?: Height;
+  signer: string;
+}
+/** MsgRecvPacket receives incoming IBC packet */
+
+export interface MsgRecvPacketAmino {
+  packet?: PacketAmino;
+  proof_commitment: Uint8Array;
+  proof_height?: HeightAmino;
   signer: string;
 }
 /** MsgRecvPacket receives incoming IBC packet */
@@ -220,6 +329,9 @@ export interface MsgRecvPacketSDKType {
 export interface MsgRecvPacketResponse {}
 /** MsgRecvPacketResponse defines the Msg/RecvPacket response type. */
 
+export interface MsgRecvPacketResponseAmino {}
+/** MsgRecvPacketResponse defines the Msg/RecvPacket response type. */
+
 export interface MsgRecvPacketResponseSDKType {}
 /** MsgTimeout receives timed-out packet */
 
@@ -228,6 +340,15 @@ export interface MsgTimeout {
   proofUnreceived: Uint8Array;
   proofHeight?: Height;
   nextSequenceRecv: Long;
+  signer: string;
+}
+/** MsgTimeout receives timed-out packet */
+
+export interface MsgTimeoutAmino {
+  packet?: PacketAmino;
+  proof_unreceived: Uint8Array;
+  proof_height?: HeightAmino;
+  next_sequence_recv: string;
   signer: string;
 }
 /** MsgTimeout receives timed-out packet */
@@ -244,6 +365,9 @@ export interface MsgTimeoutSDKType {
 export interface MsgTimeoutResponse {}
 /** MsgTimeoutResponse defines the Msg/Timeout response type. */
 
+export interface MsgTimeoutResponseAmino {}
+/** MsgTimeoutResponse defines the Msg/Timeout response type. */
+
 export interface MsgTimeoutResponseSDKType {}
 /** MsgTimeoutOnClose timed-out packet upon counterparty channel closure. */
 
@@ -253,6 +377,16 @@ export interface MsgTimeoutOnClose {
   proofClose: Uint8Array;
   proofHeight?: Height;
   nextSequenceRecv: Long;
+  signer: string;
+}
+/** MsgTimeoutOnClose timed-out packet upon counterparty channel closure. */
+
+export interface MsgTimeoutOnCloseAmino {
+  packet?: PacketAmino;
+  proof_unreceived: Uint8Array;
+  proof_close: Uint8Array;
+  proof_height?: HeightAmino;
+  next_sequence_recv: string;
   signer: string;
 }
 /** MsgTimeoutOnClose timed-out packet upon counterparty channel closure. */
@@ -270,6 +404,9 @@ export interface MsgTimeoutOnCloseSDKType {
 export interface MsgTimeoutOnCloseResponse {}
 /** MsgTimeoutOnCloseResponse defines the Msg/TimeoutOnClose response type. */
 
+export interface MsgTimeoutOnCloseResponseAmino {}
+/** MsgTimeoutOnCloseResponse defines the Msg/TimeoutOnClose response type. */
+
 export interface MsgTimeoutOnCloseResponseSDKType {}
 /** MsgAcknowledgement receives incoming IBC acknowledgement */
 
@@ -278,6 +415,15 @@ export interface MsgAcknowledgement {
   acknowledgement: Uint8Array;
   proofAcked: Uint8Array;
   proofHeight?: Height;
+  signer: string;
+}
+/** MsgAcknowledgement receives incoming IBC acknowledgement */
+
+export interface MsgAcknowledgementAmino {
+  packet?: PacketAmino;
+  acknowledgement: Uint8Array;
+  proof_acked: Uint8Array;
+  proof_height?: HeightAmino;
   signer: string;
 }
 /** MsgAcknowledgement receives incoming IBC acknowledgement */
@@ -292,6 +438,9 @@ export interface MsgAcknowledgementSDKType {
 /** MsgAcknowledgementResponse defines the Msg/Acknowledgement response type. */
 
 export interface MsgAcknowledgementResponse {}
+/** MsgAcknowledgementResponse defines the Msg/Acknowledgement response type. */
+
+export interface MsgAcknowledgementResponseAmino {}
 /** MsgAcknowledgementResponse defines the Msg/Acknowledgement response type. */
 
 export interface MsgAcknowledgementResponseSDKType {}
@@ -373,6 +522,22 @@ export const MsgChannelOpenInit = {
     message.channel = object.channel !== undefined && object.channel !== null ? Channel.fromPartial(object.channel) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgChannelOpenInitAmino): MsgChannelOpenInit {
+    return {
+      portId: object.port_id,
+      channel: object?.channel ? Channel.fromAmino(object.channel) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgChannelOpenInit): MsgChannelOpenInitAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel = message.channel ? Channel.toAmino(message.channel) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -416,6 +581,15 @@ export const MsgChannelOpenInitResponse = {
   fromPartial(_: Partial<MsgChannelOpenInitResponse>): MsgChannelOpenInitResponse {
     const message = createBaseMsgChannelOpenInitResponse();
     return message;
+  },
+
+  fromAmino(_: MsgChannelOpenInitResponseAmino): MsgChannelOpenInitResponse {
+    return {};
+  },
+
+  toAmino(_: MsgChannelOpenInitResponse): MsgChannelOpenInitResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -545,6 +719,30 @@ export const MsgChannelOpenTry = {
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgChannelOpenTryAmino): MsgChannelOpenTry {
+    return {
+      portId: object.port_id,
+      previousChannelId: object.previous_channel_id,
+      channel: object?.channel ? Channel.fromAmino(object.channel) : undefined,
+      counterpartyVersion: object.counterparty_version,
+      proofInit: object.proof_init,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgChannelOpenTry): MsgChannelOpenTryAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.previous_channel_id = message.previousChannelId;
+    obj.channel = message.channel ? Channel.toAmino(message.channel) : undefined;
+    obj.counterparty_version = message.counterpartyVersion;
+    obj.proof_init = message.proofInit;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -588,6 +786,15 @@ export const MsgChannelOpenTryResponse = {
   fromPartial(_: Partial<MsgChannelOpenTryResponse>): MsgChannelOpenTryResponse {
     const message = createBaseMsgChannelOpenTryResponse();
     return message;
+  },
+
+  fromAmino(_: MsgChannelOpenTryResponseAmino): MsgChannelOpenTryResponse {
+    return {};
+  },
+
+  toAmino(_: MsgChannelOpenTryResponse): MsgChannelOpenTryResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -717,6 +924,30 @@ export const MsgChannelOpenAck = {
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgChannelOpenAckAmino): MsgChannelOpenAck {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      counterpartyChannelId: object.counterparty_channel_id,
+      counterpartyVersion: object.counterparty_version,
+      proofTry: object.proof_try,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgChannelOpenAck): MsgChannelOpenAckAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.counterparty_channel_id = message.counterpartyChannelId;
+    obj.counterparty_version = message.counterpartyVersion;
+    obj.proof_try = message.proofTry;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -760,6 +991,15 @@ export const MsgChannelOpenAckResponse = {
   fromPartial(_: Partial<MsgChannelOpenAckResponse>): MsgChannelOpenAckResponse {
     const message = createBaseMsgChannelOpenAckResponse();
     return message;
+  },
+
+  fromAmino(_: MsgChannelOpenAckResponseAmino): MsgChannelOpenAckResponse {
+    return {};
+  },
+
+  toAmino(_: MsgChannelOpenAckResponse): MsgChannelOpenAckResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -865,6 +1105,26 @@ export const MsgChannelOpenConfirm = {
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgChannelOpenConfirmAmino): MsgChannelOpenConfirm {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      proofAck: object.proof_ack,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgChannelOpenConfirm): MsgChannelOpenConfirmAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.proof_ack = message.proofAck;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -908,6 +1168,15 @@ export const MsgChannelOpenConfirmResponse = {
   fromPartial(_: Partial<MsgChannelOpenConfirmResponse>): MsgChannelOpenConfirmResponse {
     const message = createBaseMsgChannelOpenConfirmResponse();
     return message;
+  },
+
+  fromAmino(_: MsgChannelOpenConfirmResponseAmino): MsgChannelOpenConfirmResponse {
+    return {};
+  },
+
+  toAmino(_: MsgChannelOpenConfirmResponse): MsgChannelOpenConfirmResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -989,6 +1258,22 @@ export const MsgChannelCloseInit = {
     message.channelId = object.channelId ?? "";
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgChannelCloseInitAmino): MsgChannelCloseInit {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgChannelCloseInit): MsgChannelCloseInitAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -1032,6 +1317,15 @@ export const MsgChannelCloseInitResponse = {
   fromPartial(_: Partial<MsgChannelCloseInitResponse>): MsgChannelCloseInitResponse {
     const message = createBaseMsgChannelCloseInitResponse();
     return message;
+  },
+
+  fromAmino(_: MsgChannelCloseInitResponseAmino): MsgChannelCloseInitResponse {
+    return {};
+  },
+
+  toAmino(_: MsgChannelCloseInitResponse): MsgChannelCloseInitResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -1137,6 +1431,26 @@ export const MsgChannelCloseConfirm = {
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgChannelCloseConfirmAmino): MsgChannelCloseConfirm {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      proofInit: object.proof_init,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgChannelCloseConfirm): MsgChannelCloseConfirmAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.proof_init = message.proofInit;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -1180,6 +1494,15 @@ export const MsgChannelCloseConfirmResponse = {
   fromPartial(_: Partial<MsgChannelCloseConfirmResponse>): MsgChannelCloseConfirmResponse {
     const message = createBaseMsgChannelCloseConfirmResponse();
     return message;
+  },
+
+  fromAmino(_: MsgChannelCloseConfirmResponseAmino): MsgChannelCloseConfirmResponse {
+    return {};
+  },
+
+  toAmino(_: MsgChannelCloseConfirmResponse): MsgChannelCloseConfirmResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -1273,6 +1596,24 @@ export const MsgRecvPacket = {
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgRecvPacketAmino): MsgRecvPacket {
+    return {
+      packet: object?.packet ? Packet.fromAmino(object.packet) : undefined,
+      proofCommitment: object.proof_commitment,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgRecvPacket): MsgRecvPacketAmino {
+    const obj: any = {};
+    obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
+    obj.proof_commitment = message.proofCommitment;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -1316,6 +1657,15 @@ export const MsgRecvPacketResponse = {
   fromPartial(_: Partial<MsgRecvPacketResponse>): MsgRecvPacketResponse {
     const message = createBaseMsgRecvPacketResponse();
     return message;
+  },
+
+  fromAmino(_: MsgRecvPacketResponseAmino): MsgRecvPacketResponse {
+    return {};
+  },
+
+  toAmino(_: MsgRecvPacketResponse): MsgRecvPacketResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -1421,6 +1771,26 @@ export const MsgTimeout = {
     message.nextSequenceRecv = object.nextSequenceRecv !== undefined && object.nextSequenceRecv !== null ? Long.fromValue(object.nextSequenceRecv) : Long.UZERO;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgTimeoutAmino): MsgTimeout {
+    return {
+      packet: object?.packet ? Packet.fromAmino(object.packet) : undefined,
+      proofUnreceived: object.proof_unreceived,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      nextSequenceRecv: Long.fromString(object.next_sequence_recv),
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgTimeout): MsgTimeoutAmino {
+    const obj: any = {};
+    obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
+    obj.proof_unreceived = message.proofUnreceived;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.next_sequence_recv = message.nextSequenceRecv ? message.nextSequenceRecv.toString() : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -1464,6 +1834,15 @@ export const MsgTimeoutResponse = {
   fromPartial(_: Partial<MsgTimeoutResponse>): MsgTimeoutResponse {
     const message = createBaseMsgTimeoutResponse();
     return message;
+  },
+
+  fromAmino(_: MsgTimeoutResponseAmino): MsgTimeoutResponse {
+    return {};
+  },
+
+  toAmino(_: MsgTimeoutResponse): MsgTimeoutResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -1581,6 +1960,28 @@ export const MsgTimeoutOnClose = {
     message.nextSequenceRecv = object.nextSequenceRecv !== undefined && object.nextSequenceRecv !== null ? Long.fromValue(object.nextSequenceRecv) : Long.UZERO;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgTimeoutOnCloseAmino): MsgTimeoutOnClose {
+    return {
+      packet: object?.packet ? Packet.fromAmino(object.packet) : undefined,
+      proofUnreceived: object.proof_unreceived,
+      proofClose: object.proof_close,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      nextSequenceRecv: Long.fromString(object.next_sequence_recv),
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgTimeoutOnClose): MsgTimeoutOnCloseAmino {
+    const obj: any = {};
+    obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
+    obj.proof_unreceived = message.proofUnreceived;
+    obj.proof_close = message.proofClose;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.next_sequence_recv = message.nextSequenceRecv ? message.nextSequenceRecv.toString() : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -1624,6 +2025,15 @@ export const MsgTimeoutOnCloseResponse = {
   fromPartial(_: Partial<MsgTimeoutOnCloseResponse>): MsgTimeoutOnCloseResponse {
     const message = createBaseMsgTimeoutOnCloseResponse();
     return message;
+  },
+
+  fromAmino(_: MsgTimeoutOnCloseResponseAmino): MsgTimeoutOnCloseResponse {
+    return {};
+  },
+
+  toAmino(_: MsgTimeoutOnCloseResponse): MsgTimeoutOnCloseResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -1729,6 +2139,26 @@ export const MsgAcknowledgement = {
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     message.signer = object.signer ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgAcknowledgementAmino): MsgAcknowledgement {
+    return {
+      packet: object?.packet ? Packet.fromAmino(object.packet) : undefined,
+      acknowledgement: object.acknowledgement,
+      proofAcked: object.proof_acked,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined,
+      signer: object.signer
+    };
+  },
+
+  toAmino(message: MsgAcknowledgement): MsgAcknowledgementAmino {
+    const obj: any = {};
+    obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
+    obj.acknowledgement = message.acknowledgement;
+    obj.proof_acked = message.proofAcked;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.signer = message.signer;
+    return obj;
   }
 
 };
@@ -1772,6 +2202,15 @@ export const MsgAcknowledgementResponse = {
   fromPartial(_: Partial<MsgAcknowledgementResponse>): MsgAcknowledgementResponse {
     const message = createBaseMsgAcknowledgementResponse();
     return message;
+  },
+
+  fromAmino(_: MsgAcknowledgementResponseAmino): MsgAcknowledgementResponse {
+    return {};
+  },
+
+  toAmino(_: MsgAcknowledgementResponse): MsgAcknowledgementResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };

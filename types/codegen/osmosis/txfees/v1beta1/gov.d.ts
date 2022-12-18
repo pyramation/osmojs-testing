@@ -1,4 +1,4 @@
-import { FeeToken, FeeTokenSDKType } from "./feetoken";
+import { FeeToken, FeeTokenAmino, FeeTokenSDKType } from "./feetoken";
 import * as _m0 from "protobufjs/minimal";
 /**
  * UpdateFeeTokenProposal is a gov Content type for adding a new whitelisted fee
@@ -20,6 +20,18 @@ export interface UpdateFeeTokenProposal {
  * used to update the Pool to associate with the denom. If Pool ID is set to 0,
  * it will remove the denom from the whitelisted set.
  */
+export interface UpdateFeeTokenProposalAmino {
+    title: string;
+    description: string;
+    feetoken?: FeeTokenAmino;
+}
+/**
+ * UpdateFeeTokenProposal is a gov Content type for adding a new whitelisted fee
+ * token. It must specify a denom along with gamm pool ID to use as a spot price
+ * calculator. It can be used to add a new denom to the whitelist It can also be
+ * used to update the Pool to associate with the denom. If Pool ID is set to 0,
+ * it will remove the denom from the whitelisted set.
+ */
 export interface UpdateFeeTokenProposalSDKType {
     $typeUrl?: string;
     title: string;
@@ -32,4 +44,6 @@ export declare const UpdateFeeTokenProposal: {
     fromJSON(object: any): UpdateFeeTokenProposal;
     toJSON(message: UpdateFeeTokenProposal): unknown;
     fromPartial(object: Partial<UpdateFeeTokenProposal>): UpdateFeeTokenProposal;
+    fromAmino(object: UpdateFeeTokenProposalAmino): UpdateFeeTokenProposal;
+    toAmino(message: UpdateFeeTokenProposal): UpdateFeeTokenProposalAmino;
 };

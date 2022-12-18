@@ -8,6 +8,12 @@ export interface Params {
 }
 /** Params defines the parameters for the module. */
 
+export interface ParamsAmino {
+  /** Boolean whether the module is going to be enabled */
+  enabled: boolean;
+}
+/** Params defines the parameters for the module. */
+
 export interface ParamsSDKType {
   enabled: boolean;
 }
@@ -65,6 +71,18 @@ export const Params = {
     const message = createBaseParams();
     message.enabled = object.enabled ?? false;
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      enabled: object.enabled
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+    obj.enabled = message.enabled;
+    return obj;
   }
 
 };

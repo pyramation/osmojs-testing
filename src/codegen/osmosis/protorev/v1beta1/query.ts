@@ -1,11 +1,14 @@
-import { Params, ParamsSDKType } from "./params";
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import { PoolStatistics, PoolStatisticsSDKType, TokenPairArbRoutes, TokenPairArbRoutesSDKType } from "./protorev";
+import { Params, ParamsAmino, ParamsSDKType } from "./params";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { PoolStatistics, PoolStatisticsAmino, PoolStatisticsSDKType, TokenPairArbRoutes, TokenPairArbRoutesAmino, TokenPairArbRoutesSDKType } from "./protorev";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long } from "../../../helpers";
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 export interface QueryParamsRequest {}
+/** QueryParamsRequest is request type for the Query/Params RPC method. */
+
+export interface QueryParamsRequestAmino {}
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 
 export interface QueryParamsRequestSDKType {}
@@ -14,6 +17,12 @@ export interface QueryParamsRequestSDKType {}
 export interface QueryParamsResponse {
   /** params holds all the parameters of this module. */
   params?: Params;
+}
+/** QueryParamsResponse is response type for the Query/Params RPC method. */
+
+export interface QueryParamsResponseAmino {
+  /** params holds all the parameters of this module. */
+  params?: ParamsAmino;
 }
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 
@@ -26,6 +35,12 @@ export interface QueryParamsResponseSDKType {
  */
 
 export interface QueryGetProtoRevNumberOfTradesRequest {}
+/**
+ * QueryGetProtoRevNumberOfTradesRequest is request type for the
+ * Query/GetProtoRevNumberOfTrades RPC method.
+ */
+
+export interface QueryGetProtoRevNumberOfTradesRequestAmino {}
 /**
  * QueryGetProtoRevNumberOfTradesRequest is request type for the
  * Query/GetProtoRevNumberOfTrades RPC method.
@@ -46,6 +61,15 @@ export interface QueryGetProtoRevNumberOfTradesResponse {
  * Query/GetProtoRevNumberOfTrades RPC method.
  */
 
+export interface QueryGetProtoRevNumberOfTradesResponseAmino {
+  /** number_of_trades is the number of trades the module has executed */
+  number_of_trades: string;
+}
+/**
+ * QueryGetProtoRevNumberOfTradesResponse is response type for the
+ * Query/GetProtoRevNumberOfTrades RPC method.
+ */
+
 export interface QueryGetProtoRevNumberOfTradesResponseSDKType {
   number_of_trades: string;
 }
@@ -55,6 +79,15 @@ export interface QueryGetProtoRevNumberOfTradesResponseSDKType {
  */
 
 export interface QueryGetProtoRevProfitsByDenomRequest {
+  /** denom is the denom to query profits by */
+  denom: string;
+}
+/**
+ * QueryGetProtoRevProfitsByDenomRequest is request type for the
+ * Query/GetProtoRevProfitsByDenom RPC method.
+ */
+
+export interface QueryGetProtoRevProfitsByDenomRequestAmino {
   /** denom is the denom to query profits by */
   denom: string;
 }
@@ -80,6 +113,15 @@ export interface QueryGetProtoRevProfitsByDenomResponse {
  * Query/GetProtoRevProfitsByDenom RPC method.
  */
 
+export interface QueryGetProtoRevProfitsByDenomResponseAmino {
+  /** profit is the profits of the module by the selected denom */
+  profit?: CoinAmino;
+}
+/**
+ * QueryGetProtoRevProfitsByDenomResponse is response type for the
+ * Query/GetProtoRevProfitsByDenom RPC method.
+ */
+
 export interface QueryGetProtoRevProfitsByDenomResponseSDKType {
   profit?: CoinSDKType;
 }
@@ -89,6 +131,12 @@ export interface QueryGetProtoRevProfitsByDenomResponseSDKType {
  */
 
 export interface QueryGetProtoRevAllProfitsRequest {}
+/**
+ * QueryGetProtoRevAllProfitsRequest is request type for the
+ * Query/GetProtoRevAllProfits RPC method.
+ */
+
+export interface QueryGetProtoRevAllProfitsRequestAmino {}
 /**
  * QueryGetProtoRevAllProfitsRequest is request type for the
  * Query/GetProtoRevAllProfits RPC method.
@@ -109,6 +157,15 @@ export interface QueryGetProtoRevAllProfitsResponse {
  * Query/GetProtoRevAllProfits RPC method.
  */
 
+export interface QueryGetProtoRevAllProfitsResponseAmino {
+  /** profits is a list of all of the profits from the module */
+  profits: CoinAmino[];
+}
+/**
+ * QueryGetProtoRevAllProfitsResponse is response type for the
+ * Query/GetProtoRevAllProfits RPC method.
+ */
+
 export interface QueryGetProtoRevAllProfitsResponseSDKType {
   profits: CoinSDKType[];
 }
@@ -120,6 +177,15 @@ export interface QueryGetProtoRevAllProfitsResponseSDKType {
 export interface QueryGetProtoRevStatisticsByPoolRequest {
   /** pool_id is the pool id to query statistics by */
   poolId: Long;
+}
+/**
+ * QueryGetProtoRevStatisticsByPoolRequest is request type for the
+ * Query/GetProtoRevStatisticsByPool RPC method.
+ */
+
+export interface QueryGetProtoRevStatisticsByPoolRequestAmino {
+  /** pool_id is the pool id to query statistics by */
+  pool_id: string;
 }
 /**
  * QueryGetProtoRevStatisticsByPoolRequest is request type for the
@@ -146,6 +212,18 @@ export interface QueryGetProtoRevStatisticsByPoolResponse {
  * Query/GetProtoRevStatisticsByPool RPC method.
  */
 
+export interface QueryGetProtoRevStatisticsByPoolResponseAmino {
+  /**
+   * statistics contains the number of trades the module has executed after a
+   * swap on a given pool and the profits from the trades
+   */
+  statistics?: PoolStatisticsAmino;
+}
+/**
+ * QueryGetProtoRevStatisticsByPoolResponse is response type for the
+ * Query/GetProtoRevStatisticsByPool RPC method.
+ */
+
 export interface QueryGetProtoRevStatisticsByPoolResponseSDKType {
   statistics?: PoolStatisticsSDKType;
 }
@@ -155,6 +233,12 @@ export interface QueryGetProtoRevStatisticsByPoolResponseSDKType {
  */
 
 export interface QueryGetProtoRevAllStatisticsRequest {}
+/**
+ * QueryGetProtoRevAllStatisticsRequest is request type for the
+ * Query/GetProtoRevAllStatistics RPC method.
+ */
+
+export interface QueryGetProtoRevAllStatisticsRequestAmino {}
 /**
  * QueryGetProtoRevAllStatisticsRequest is request type for the
  * Query/GetProtoRevAllStatistics RPC method.
@@ -178,6 +262,18 @@ export interface QueryGetProtoRevAllStatisticsResponse {
  * Query/GetProtoRevAllStatistics RPC method.
  */
 
+export interface QueryGetProtoRevAllStatisticsResponseAmino {
+  /**
+   * statistics contains the number of trades the module has executed after a
+   * swap on a given pool and the profits from the trades for all pools
+   */
+  statistics: PoolStatisticsAmino[];
+}
+/**
+ * QueryGetProtoRevAllStatisticsResponse is response type for the
+ * Query/GetProtoRevAllStatistics RPC method.
+ */
+
 export interface QueryGetProtoRevAllStatisticsResponseSDKType {
   statistics: PoolStatisticsSDKType[];
 }
@@ -187,6 +283,12 @@ export interface QueryGetProtoRevAllStatisticsResponseSDKType {
  */
 
 export interface QueryGetProtoRevTokenPairArbRoutesRequest {}
+/**
+ * QueryGetProtoRevTokenPairArbRoutesRequest is request type for the
+ * Query/GetProtoRevTokenPairArbRoutes RPC method.
+ */
+
+export interface QueryGetProtoRevTokenPairArbRoutesRequestAmino {}
 /**
  * QueryGetProtoRevTokenPairArbRoutesRequest is request type for the
  * Query/GetProtoRevTokenPairArbRoutes RPC method.
@@ -204,6 +306,18 @@ export interface QueryGetProtoRevTokenPairArbRoutesResponse {
    * arbitraging
    */
   routes: TokenPairArbRoutes[];
+}
+/**
+ * QueryGetProtoRevTokenPairArbRoutesResponse is response type for the
+ * Query/GetProtoRevTokenPairArbRoutes RPC method.
+ */
+
+export interface QueryGetProtoRevTokenPairArbRoutesResponseAmino {
+  /**
+   * routes is a list of all of the hot routes that the module is currently
+   * arbitraging
+   */
+  routes: TokenPairArbRoutesAmino[];
 }
 /**
  * QueryGetProtoRevTokenPairArbRoutesResponse is response type for the
@@ -253,6 +367,15 @@ export const QueryParamsRequest = {
   fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
+  },
+
+  fromAmino(_: QueryParamsRequestAmino): QueryParamsRequest {
+    return {};
+  },
+
+  toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -310,6 +433,18 @@ export const QueryParamsResponse = {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryParamsResponseAmino): QueryParamsResponse {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+
+  toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
   }
 
 };
@@ -353,6 +488,15 @@ export const QueryGetProtoRevNumberOfTradesRequest = {
   fromPartial(_: Partial<QueryGetProtoRevNumberOfTradesRequest>): QueryGetProtoRevNumberOfTradesRequest {
     const message = createBaseQueryGetProtoRevNumberOfTradesRequest();
     return message;
+  },
+
+  fromAmino(_: QueryGetProtoRevNumberOfTradesRequestAmino): QueryGetProtoRevNumberOfTradesRequest {
+    return {};
+  },
+
+  toAmino(_: QueryGetProtoRevNumberOfTradesRequest): QueryGetProtoRevNumberOfTradesRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -410,6 +554,18 @@ export const QueryGetProtoRevNumberOfTradesResponse = {
     const message = createBaseQueryGetProtoRevNumberOfTradesResponse();
     message.numberOfTrades = object.numberOfTrades ?? "";
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevNumberOfTradesResponseAmino): QueryGetProtoRevNumberOfTradesResponse {
+    return {
+      numberOfTrades: object.number_of_trades
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevNumberOfTradesResponse): QueryGetProtoRevNumberOfTradesResponseAmino {
+    const obj: any = {};
+    obj.number_of_trades = message.numberOfTrades;
+    return obj;
   }
 
 };
@@ -467,6 +623,18 @@ export const QueryGetProtoRevProfitsByDenomRequest = {
     const message = createBaseQueryGetProtoRevProfitsByDenomRequest();
     message.denom = object.denom ?? "";
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevProfitsByDenomRequestAmino): QueryGetProtoRevProfitsByDenomRequest {
+    return {
+      denom: object.denom
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevProfitsByDenomRequest): QueryGetProtoRevProfitsByDenomRequestAmino {
+    const obj: any = {};
+    obj.denom = message.denom;
+    return obj;
   }
 
 };
@@ -524,6 +692,18 @@ export const QueryGetProtoRevProfitsByDenomResponse = {
     const message = createBaseQueryGetProtoRevProfitsByDenomResponse();
     message.profit = object.profit !== undefined && object.profit !== null ? Coin.fromPartial(object.profit) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevProfitsByDenomResponseAmino): QueryGetProtoRevProfitsByDenomResponse {
+    return {
+      profit: object?.profit ? Coin.fromAmino(object.profit) : undefined
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevProfitsByDenomResponse): QueryGetProtoRevProfitsByDenomResponseAmino {
+    const obj: any = {};
+    obj.profit = message.profit ? Coin.toAmino(message.profit) : undefined;
+    return obj;
   }
 
 };
@@ -567,6 +747,15 @@ export const QueryGetProtoRevAllProfitsRequest = {
   fromPartial(_: Partial<QueryGetProtoRevAllProfitsRequest>): QueryGetProtoRevAllProfitsRequest {
     const message = createBaseQueryGetProtoRevAllProfitsRequest();
     return message;
+  },
+
+  fromAmino(_: QueryGetProtoRevAllProfitsRequestAmino): QueryGetProtoRevAllProfitsRequest {
+    return {};
+  },
+
+  toAmino(_: QueryGetProtoRevAllProfitsRequest): QueryGetProtoRevAllProfitsRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -630,6 +819,24 @@ export const QueryGetProtoRevAllProfitsResponse = {
     const message = createBaseQueryGetProtoRevAllProfitsResponse();
     message.profits = object.profits?.map(e => Coin.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevAllProfitsResponseAmino): QueryGetProtoRevAllProfitsResponse {
+    return {
+      profits: Array.isArray(object?.profits) ? object.profits.map((e: any) => Coin.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevAllProfitsResponse): QueryGetProtoRevAllProfitsResponseAmino {
+    const obj: any = {};
+
+    if (message.profits) {
+      obj.profits = message.profits.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.profits = [];
+    }
+
+    return obj;
   }
 
 };
@@ -687,6 +894,18 @@ export const QueryGetProtoRevStatisticsByPoolRequest = {
     const message = createBaseQueryGetProtoRevStatisticsByPoolRequest();
     message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevStatisticsByPoolRequestAmino): QueryGetProtoRevStatisticsByPoolRequest {
+    return {
+      poolId: Long.fromString(object.pool_id)
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevStatisticsByPoolRequest): QueryGetProtoRevStatisticsByPoolRequestAmino {
+    const obj: any = {};
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -744,6 +963,18 @@ export const QueryGetProtoRevStatisticsByPoolResponse = {
     const message = createBaseQueryGetProtoRevStatisticsByPoolResponse();
     message.statistics = object.statistics !== undefined && object.statistics !== null ? PoolStatistics.fromPartial(object.statistics) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevStatisticsByPoolResponseAmino): QueryGetProtoRevStatisticsByPoolResponse {
+    return {
+      statistics: object?.statistics ? PoolStatistics.fromAmino(object.statistics) : undefined
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevStatisticsByPoolResponse): QueryGetProtoRevStatisticsByPoolResponseAmino {
+    const obj: any = {};
+    obj.statistics = message.statistics ? PoolStatistics.toAmino(message.statistics) : undefined;
+    return obj;
   }
 
 };
@@ -787,6 +1018,15 @@ export const QueryGetProtoRevAllStatisticsRequest = {
   fromPartial(_: Partial<QueryGetProtoRevAllStatisticsRequest>): QueryGetProtoRevAllStatisticsRequest {
     const message = createBaseQueryGetProtoRevAllStatisticsRequest();
     return message;
+  },
+
+  fromAmino(_: QueryGetProtoRevAllStatisticsRequestAmino): QueryGetProtoRevAllStatisticsRequest {
+    return {};
+  },
+
+  toAmino(_: QueryGetProtoRevAllStatisticsRequest): QueryGetProtoRevAllStatisticsRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -850,6 +1090,24 @@ export const QueryGetProtoRevAllStatisticsResponse = {
     const message = createBaseQueryGetProtoRevAllStatisticsResponse();
     message.statistics = object.statistics?.map(e => PoolStatistics.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevAllStatisticsResponseAmino): QueryGetProtoRevAllStatisticsResponse {
+    return {
+      statistics: Array.isArray(object?.statistics) ? object.statistics.map((e: any) => PoolStatistics.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevAllStatisticsResponse): QueryGetProtoRevAllStatisticsResponseAmino {
+    const obj: any = {};
+
+    if (message.statistics) {
+      obj.statistics = message.statistics.map(e => e ? PoolStatistics.toAmino(e) : undefined);
+    } else {
+      obj.statistics = [];
+    }
+
+    return obj;
   }
 
 };
@@ -893,6 +1151,15 @@ export const QueryGetProtoRevTokenPairArbRoutesRequest = {
   fromPartial(_: Partial<QueryGetProtoRevTokenPairArbRoutesRequest>): QueryGetProtoRevTokenPairArbRoutesRequest {
     const message = createBaseQueryGetProtoRevTokenPairArbRoutesRequest();
     return message;
+  },
+
+  fromAmino(_: QueryGetProtoRevTokenPairArbRoutesRequestAmino): QueryGetProtoRevTokenPairArbRoutesRequest {
+    return {};
+  },
+
+  toAmino(_: QueryGetProtoRevTokenPairArbRoutesRequest): QueryGetProtoRevTokenPairArbRoutesRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -956,6 +1223,24 @@ export const QueryGetProtoRevTokenPairArbRoutesResponse = {
     const message = createBaseQueryGetProtoRevTokenPairArbRoutesResponse();
     message.routes = object.routes?.map(e => TokenPairArbRoutes.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: QueryGetProtoRevTokenPairArbRoutesResponseAmino): QueryGetProtoRevTokenPairArbRoutesResponse {
+    return {
+      routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => TokenPairArbRoutes.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: QueryGetProtoRevTokenPairArbRoutesResponse): QueryGetProtoRevTokenPairArbRoutesResponseAmino {
+    const obj: any = {};
+
+    if (message.routes) {
+      obj.routes = message.routes.map(e => e ? TokenPairArbRoutes.toAmino(e) : undefined);
+    } else {
+      obj.routes = [];
+    }
+
+    return obj;
   }
 
 };

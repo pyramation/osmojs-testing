@@ -1,4 +1,4 @@
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long } from "../../../helpers";
 /** TokenPairArbRoutes tracks all of the hot routes for a given pair of tokens */
@@ -15,6 +15,18 @@ export interface TokenPairArbRoutes {
 }
 /** TokenPairArbRoutes tracks all of the hot routes for a given pair of tokens */
 
+export interface TokenPairArbRoutesAmino {
+  /** Stores all of the possible hot paths for a given pair of tokens */
+  arb_routes: RouteAmino[];
+  /** Token denomination of the first asset */
+
+  token_in: string;
+  /** Token denomination of the second asset */
+
+  token_out: string;
+}
+/** TokenPairArbRoutes tracks all of the hot routes for a given pair of tokens */
+
 export interface TokenPairArbRoutesSDKType {
   arb_routes: RouteSDKType[];
   token_in: string;
@@ -28,6 +40,15 @@ export interface Route {
    * -> right)
    */
   trades: Trade[];
+}
+/** Route is a hot route for a given pair of tokens */
+
+export interface RouteAmino {
+  /**
+   * The pool IDs that are travered in the directed cyclic graph (traversed left
+   * -> right)
+   */
+  trades: TradeAmino[];
 }
 /** Route is a hot route for a given pair of tokens */
 
@@ -51,6 +72,21 @@ export interface Trade {
 }
 /** Trade is a single trade in a route */
 
+export interface TradeAmino {
+  /**
+   * The pool IDs that are travered in the directed cyclic graph (traversed left
+   * -> right)
+   */
+  pool: string;
+  /** The denom of token A that is traded */
+
+  token_in: string;
+  /** The denom of token B that is traded */
+
+  token_out: string;
+}
+/** Trade is a single trade in a route */
+
 export interface TradeSDKType {
   pool: Long;
   token_in: string;
@@ -70,6 +106,21 @@ export interface PoolStatistics {
   /** pool_id is the id of the pool */
 
   poolId: Long;
+}
+/**
+ * PoolStatistics contains the number of trades the module has executed after a
+ * swap on a given pool and the profits from the trades
+ */
+
+export interface PoolStatisticsAmino {
+  /** profits is the total profit from all trades on this pool */
+  profits: CoinAmino[];
+  /** number_of_trades is the number of trades the module has executed */
+
+  number_of_trades: string;
+  /** pool_id is the id of the pool */
+
+  pool_id: string;
 }
 /**
  * PoolStatistics contains the number of trades the module has executed after a
@@ -165,6 +216,28 @@ export const TokenPairArbRoutes = {
     message.tokenIn = object.tokenIn ?? "";
     message.tokenOut = object.tokenOut ?? "";
     return message;
+  },
+
+  fromAmino(object: TokenPairArbRoutesAmino): TokenPairArbRoutes {
+    return {
+      arbRoutes: Array.isArray(object?.arb_routes) ? object.arb_routes.map((e: any) => Route.fromAmino(e)) : [],
+      tokenIn: object.token_in,
+      tokenOut: object.token_out
+    };
+  },
+
+  toAmino(message: TokenPairArbRoutes): TokenPairArbRoutesAmino {
+    const obj: any = {};
+
+    if (message.arbRoutes) {
+      obj.arb_routes = message.arbRoutes.map(e => e ? Route.toAmino(e) : undefined);
+    } else {
+      obj.arb_routes = [];
+    }
+
+    obj.token_in = message.tokenIn;
+    obj.token_out = message.tokenOut;
+    return obj;
   }
 
 };
@@ -228,6 +301,24 @@ export const Route = {
     const message = createBaseRoute();
     message.trades = object.trades?.map(e => Trade.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: RouteAmino): Route {
+    return {
+      trades: Array.isArray(object?.trades) ? object.trades.map((e: any) => Trade.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: Route): RouteAmino {
+    const obj: any = {};
+
+    if (message.trades) {
+      obj.trades = message.trades.map(e => e ? Trade.toAmino(e) : undefined);
+    } else {
+      obj.trades = [];
+    }
+
+    return obj;
   }
 
 };
@@ -309,6 +400,22 @@ export const Trade = {
     message.tokenIn = object.tokenIn ?? "";
     message.tokenOut = object.tokenOut ?? "";
     return message;
+  },
+
+  fromAmino(object: TradeAmino): Trade {
+    return {
+      pool: Long.fromString(object.pool),
+      tokenIn: object.token_in,
+      tokenOut: object.token_out
+    };
+  },
+
+  toAmino(message: Trade): TradeAmino {
+    const obj: any = {};
+    obj.pool = message.pool ? message.pool.toString() : undefined;
+    obj.token_in = message.tokenIn;
+    obj.token_out = message.tokenOut;
+    return obj;
   }
 
 };
@@ -396,6 +503,28 @@ export const PoolStatistics = {
     message.numberOfTrades = object.numberOfTrades ?? "";
     message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: PoolStatisticsAmino): PoolStatistics {
+    return {
+      profits: Array.isArray(object?.profits) ? object.profits.map((e: any) => Coin.fromAmino(e)) : [],
+      numberOfTrades: object.number_of_trades,
+      poolId: Long.fromString(object.pool_id)
+    };
+  },
+
+  toAmino(message: PoolStatistics): PoolStatisticsAmino {
+    const obj: any = {};
+
+    if (message.profits) {
+      obj.profits = message.profits.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.profits = [];
+    }
+
+    obj.number_of_trades = message.numberOfTrades;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    return obj;
   }
 
 };

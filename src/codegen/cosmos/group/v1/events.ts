@@ -9,6 +9,12 @@ export interface EventCreateGroup {
 }
 /** EventCreateGroup is an event emitted when a group is created. */
 
+export interface EventCreateGroupAmino {
+  /** group_id is the unique ID of the group. */
+  group_id: string;
+}
+/** EventCreateGroup is an event emitted when a group is created. */
+
 export interface EventCreateGroupSDKType {
   group_id: Long;
 }
@@ -20,12 +26,24 @@ export interface EventUpdateGroup {
 }
 /** EventUpdateGroup is an event emitted when a group is updated. */
 
+export interface EventUpdateGroupAmino {
+  /** group_id is the unique ID of the group. */
+  group_id: string;
+}
+/** EventUpdateGroup is an event emitted when a group is updated. */
+
 export interface EventUpdateGroupSDKType {
   group_id: Long;
 }
 /** EventCreateGroupPolicy is an event emitted when a group policy is created. */
 
 export interface EventCreateGroupPolicy {
+  /** address is the account address of the group policy. */
+  address: string;
+}
+/** EventCreateGroupPolicy is an event emitted when a group policy is created. */
+
+export interface EventCreateGroupPolicyAmino {
   /** address is the account address of the group policy. */
   address: string;
 }
@@ -42,6 +60,12 @@ export interface EventUpdateGroupPolicy {
 }
 /** EventUpdateGroupPolicy is an event emitted when a group policy is updated. */
 
+export interface EventUpdateGroupPolicyAmino {
+  /** address is the account address of the group policy. */
+  address: string;
+}
+/** EventUpdateGroupPolicy is an event emitted when a group policy is updated. */
+
 export interface EventUpdateGroupPolicySDKType {
   address: string;
 }
@@ -50,6 +74,12 @@ export interface EventUpdateGroupPolicySDKType {
 export interface EventSubmitProposal {
   /** proposal_id is the unique ID of the proposal. */
   proposalId: Long;
+}
+/** EventSubmitProposal is an event emitted when a proposal is created. */
+
+export interface EventSubmitProposalAmino {
+  /** proposal_id is the unique ID of the proposal. */
+  proposal_id: string;
 }
 /** EventSubmitProposal is an event emitted when a proposal is created. */
 
@@ -64,6 +94,12 @@ export interface EventWithdrawProposal {
 }
 /** EventWithdrawProposal is an event emitted when a proposal is withdrawn. */
 
+export interface EventWithdrawProposalAmino {
+  /** proposal_id is the unique ID of the proposal. */
+  proposal_id: string;
+}
+/** EventWithdrawProposal is an event emitted when a proposal is withdrawn. */
+
 export interface EventWithdrawProposalSDKType {
   proposal_id: Long;
 }
@@ -72,6 +108,12 @@ export interface EventWithdrawProposalSDKType {
 export interface EventVote {
   /** proposal_id is the unique ID of the proposal. */
   proposalId: Long;
+}
+/** EventVote is an event emitted when a voter votes on a proposal. */
+
+export interface EventVoteAmino {
+  /** proposal_id is the unique ID of the proposal. */
+  proposal_id: string;
 }
 /** EventVote is an event emitted when a voter votes on a proposal. */
 
@@ -89,6 +131,15 @@ export interface EventExec {
 }
 /** EventExec is an event emitted when a proposal is executed. */
 
+export interface EventExecAmino {
+  /** proposal_id is the unique ID of the proposal. */
+  proposal_id: string;
+  /** result is the proposal execution result. */
+
+  result: ProposalExecutorResult;
+}
+/** EventExec is an event emitted when a proposal is executed. */
+
 export interface EventExecSDKType {
   proposal_id: Long;
   result: ProposalExecutorResult;
@@ -98,6 +149,15 @@ export interface EventExecSDKType {
 export interface EventLeaveGroup {
   /** group_id is the unique ID of the group. */
   groupId: Long;
+  /** address is the account address of the group member. */
+
+  address: string;
+}
+/** EventLeaveGroup is an event emitted when group member leaves the group. */
+
+export interface EventLeaveGroupAmino {
+  /** group_id is the unique ID of the group. */
+  group_id: string;
   /** address is the account address of the group member. */
 
   address: string;
@@ -162,6 +222,18 @@ export const EventCreateGroup = {
     const message = createBaseEventCreateGroup();
     message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: EventCreateGroupAmino): EventCreateGroup {
+    return {
+      groupId: Long.fromString(object.group_id)
+    };
+  },
+
+  toAmino(message: EventCreateGroup): EventCreateGroupAmino {
+    const obj: any = {};
+    obj.group_id = message.groupId ? message.groupId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -219,6 +291,18 @@ export const EventUpdateGroup = {
     const message = createBaseEventUpdateGroup();
     message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: EventUpdateGroupAmino): EventUpdateGroup {
+    return {
+      groupId: Long.fromString(object.group_id)
+    };
+  },
+
+  toAmino(message: EventUpdateGroup): EventUpdateGroupAmino {
+    const obj: any = {};
+    obj.group_id = message.groupId ? message.groupId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -276,6 +360,18 @@ export const EventCreateGroupPolicy = {
     const message = createBaseEventCreateGroupPolicy();
     message.address = object.address ?? "";
     return message;
+  },
+
+  fromAmino(object: EventCreateGroupPolicyAmino): EventCreateGroupPolicy {
+    return {
+      address: object.address
+    };
+  },
+
+  toAmino(message: EventCreateGroupPolicy): EventCreateGroupPolicyAmino {
+    const obj: any = {};
+    obj.address = message.address;
+    return obj;
   }
 
 };
@@ -333,6 +429,18 @@ export const EventUpdateGroupPolicy = {
     const message = createBaseEventUpdateGroupPolicy();
     message.address = object.address ?? "";
     return message;
+  },
+
+  fromAmino(object: EventUpdateGroupPolicyAmino): EventUpdateGroupPolicy {
+    return {
+      address: object.address
+    };
+  },
+
+  toAmino(message: EventUpdateGroupPolicy): EventUpdateGroupPolicyAmino {
+    const obj: any = {};
+    obj.address = message.address;
+    return obj;
   }
 
 };
@@ -390,6 +498,18 @@ export const EventSubmitProposal = {
     const message = createBaseEventSubmitProposal();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: EventSubmitProposalAmino): EventSubmitProposal {
+    return {
+      proposalId: Long.fromString(object.proposal_id)
+    };
+  },
+
+  toAmino(message: EventSubmitProposal): EventSubmitProposalAmino {
+    const obj: any = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -447,6 +567,18 @@ export const EventWithdrawProposal = {
     const message = createBaseEventWithdrawProposal();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: EventWithdrawProposalAmino): EventWithdrawProposal {
+    return {
+      proposalId: Long.fromString(object.proposal_id)
+    };
+  },
+
+  toAmino(message: EventWithdrawProposal): EventWithdrawProposalAmino {
+    const obj: any = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -504,6 +636,18 @@ export const EventVote = {
     const message = createBaseEventVote();
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: EventVoteAmino): EventVote {
+    return {
+      proposalId: Long.fromString(object.proposal_id)
+    };
+  },
+
+  toAmino(message: EventVote): EventVoteAmino {
+    const obj: any = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -573,6 +717,20 @@ export const EventExec = {
     message.proposalId = object.proposalId !== undefined && object.proposalId !== null ? Long.fromValue(object.proposalId) : Long.UZERO;
     message.result = object.result ?? 0;
     return message;
+  },
+
+  fromAmino(object: EventExecAmino): EventExec {
+    return {
+      proposalId: Long.fromString(object.proposal_id),
+      result: isSet(object.result) ? proposalExecutorResultFromJSON(object.result) : 0
+    };
+  },
+
+  toAmino(message: EventExec): EventExecAmino {
+    const obj: any = {};
+    obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
+    message.result !== undefined && (obj.result = proposalExecutorResultToJSON(message.result));
+    return obj;
   }
 
 };
@@ -642,6 +800,20 @@ export const EventLeaveGroup = {
     message.groupId = object.groupId !== undefined && object.groupId !== null ? Long.fromValue(object.groupId) : Long.UZERO;
     message.address = object.address ?? "";
     return message;
+  },
+
+  fromAmino(object: EventLeaveGroupAmino): EventLeaveGroup {
+    return {
+      groupId: Long.fromString(object.group_id),
+      address: object.address
+    };
+  },
+
+  toAmino(message: EventLeaveGroup): EventLeaveGroupAmino {
+    const obj: any = {};
+    obj.group_id = message.groupId ? message.groupId.toString() : undefined;
+    obj.address = message.address;
+    return obj;
   }
 
 };

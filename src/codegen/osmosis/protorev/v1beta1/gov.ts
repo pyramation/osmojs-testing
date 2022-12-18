@@ -16,6 +16,16 @@ export interface SetProtoRevEnabledProposal {
  * protorev module is enabled
  */
 
+export interface SetProtoRevEnabledProposalAmino {
+  title: string;
+  description: string;
+  enabled: boolean;
+}
+/**
+ * SetProtoRevEnabledProposal is a gov Content type to update whether the
+ * protorev module is enabled
+ */
+
 export interface SetProtoRevEnabledProposalSDKType {
   $typeUrl?: string;
   title: string;
@@ -30,6 +40,17 @@ export interface SetProtoRevEnabledProposalSDKType {
 
 export interface SetProtoRevAdminAccountProposal {
   $typeUrl?: string;
+  title: string;
+  description: string;
+  account: string;
+}
+/**
+ * SetProtoRevAdminAccountProposal is a gov Content type to set the admin
+ * account that will receive permissions to alter hot routes and set the
+ * developer address that will be receiving a share of profits from the module
+ */
+
+export interface SetProtoRevAdminAccountProposalAmino {
   title: string;
   description: string;
   account: string;
@@ -125,6 +146,22 @@ export const SetProtoRevEnabledProposal = {
     message.description = object.description ?? "";
     message.enabled = object.enabled ?? false;
     return message;
+  },
+
+  fromAmino(object: SetProtoRevEnabledProposalAmino): SetProtoRevEnabledProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      enabled: object.enabled
+    };
+  },
+
+  toAmino(message: SetProtoRevEnabledProposal): SetProtoRevEnabledProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.enabled = message.enabled;
+    return obj;
   }
 
 };
@@ -207,6 +244,22 @@ export const SetProtoRevAdminAccountProposal = {
     message.description = object.description ?? "";
     message.account = object.account ?? "";
     return message;
+  },
+
+  fromAmino(object: SetProtoRevAdminAccountProposalAmino): SetProtoRevAdminAccountProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      account: object.account
+    };
+  },
+
+  toAmino(message: SetProtoRevAdminAccountProposal): SetProtoRevAdminAccountProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.account = message.account;
+    return obj;
   }
 
 };

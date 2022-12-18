@@ -1,4 +1,4 @@
-import { SuperfluidAsset, SuperfluidAssetSDKType } from "../superfluid";
+import { SuperfluidAsset, SuperfluidAssetAmino, SuperfluidAssetSDKType } from "../superfluid";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long } from "../../../helpers";
 /**
@@ -11,6 +11,16 @@ export interface SetSuperfluidAssetsProposal {
   title: string;
   description: string;
   assets: SuperfluidAsset[];
+}
+/**
+ * SetSuperfluidAssetsProposal is a gov Content type to update the superfluid
+ * assets
+ */
+
+export interface SetSuperfluidAssetsProposalAmino {
+  title: string;
+  description: string;
+  assets: SuperfluidAssetAmino[];
 }
 /**
  * SetSuperfluidAssetsProposal is a gov Content type to update the superfluid
@@ -39,6 +49,16 @@ export interface RemoveSuperfluidAssetsProposal {
  * assets by denom
  */
 
+export interface RemoveSuperfluidAssetsProposalAmino {
+  title: string;
+  description: string;
+  superfluid_asset_denoms: string[];
+}
+/**
+ * RemoveSuperfluidAssetsProposal is a gov Content type to remove the superfluid
+ * assets by denom
+ */
+
 export interface RemoveSuperfluidAssetsProposalSDKType {
   $typeUrl?: string;
   title: string;
@@ -56,6 +76,17 @@ export interface UpdateUnpoolWhiteListProposal {
   description: string;
   ids: Long[];
   isOverwrite: boolean;
+}
+/**
+ * UpdateUnpoolWhiteListProposal is a gov Content type to update the
+ * allowed list of pool ids.
+ */
+
+export interface UpdateUnpoolWhiteListProposalAmino {
+  title: string;
+  description: string;
+  ids: string[];
+  is_overwrite: boolean;
 }
 /**
  * UpdateUnpoolWhiteListProposal is a gov Content type to update the
@@ -154,6 +185,28 @@ export const SetSuperfluidAssetsProposal = {
     message.description = object.description ?? "";
     message.assets = object.assets?.map(e => SuperfluidAsset.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: SetSuperfluidAssetsProposalAmino): SetSuperfluidAssetsProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      assets: Array.isArray(object?.assets) ? object.assets.map((e: any) => SuperfluidAsset.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: SetSuperfluidAssetsProposal): SetSuperfluidAssetsProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+
+    if (message.assets) {
+      obj.assets = message.assets.map(e => e ? SuperfluidAsset.toAmino(e) : undefined);
+    } else {
+      obj.assets = [];
+    }
+
+    return obj;
   }
 
 };
@@ -242,6 +295,28 @@ export const RemoveSuperfluidAssetsProposal = {
     message.description = object.description ?? "";
     message.superfluidAssetDenoms = object.superfluidAssetDenoms?.map(e => e) || [];
     return message;
+  },
+
+  fromAmino(object: RemoveSuperfluidAssetsProposalAmino): RemoveSuperfluidAssetsProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      superfluidAssetDenoms: Array.isArray(object?.superfluid_asset_denoms) ? object.superfluid_asset_denoms.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: RemoveSuperfluidAssetsProposal): RemoveSuperfluidAssetsProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+
+    if (message.superfluidAssetDenoms) {
+      obj.superfluid_asset_denoms = message.superfluidAssetDenoms.map(e => e);
+    } else {
+      obj.superfluid_asset_denoms = [];
+    }
+
+    return obj;
   }
 
 };
@@ -355,6 +430,30 @@ export const UpdateUnpoolWhiteListProposal = {
     message.ids = object.ids?.map(e => Long.fromValue(e)) || [];
     message.isOverwrite = object.isOverwrite ?? false;
     return message;
+  },
+
+  fromAmino(object: UpdateUnpoolWhiteListProposalAmino): UpdateUnpoolWhiteListProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      ids: Array.isArray(object?.ids) ? object.ids.map((e: any) => e) : [],
+      isOverwrite: object.is_overwrite
+    };
+  },
+
+  toAmino(message: UpdateUnpoolWhiteListProposal): UpdateUnpoolWhiteListProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+
+    if (message.ids) {
+      obj.ids = message.ids.map(e => e);
+    } else {
+      obj.ids = [];
+    }
+
+    obj.is_overwrite = message.isOverwrite;
+    return obj;
   }
 
 };

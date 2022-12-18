@@ -1,4 +1,4 @@
-import { IdentifiedClientState, IdentifiedClientStateSDKType, ClientConsensusStates, ClientConsensusStatesSDKType, Params, ParamsSDKType } from "./client";
+import { IdentifiedClientState, IdentifiedClientStateAmino, IdentifiedClientStateSDKType, ClientConsensusStates, ClientConsensusStatesAmino, ClientConsensusStatesSDKType, Params, ParamsAmino, ParamsSDKType } from "./client";
 import { Long, isSet, bytesFromBase64, base64FromBytes } from "../../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the ibc client submodule's genesis state. */
@@ -19,6 +19,25 @@ export interface GenesisState {
   /** the sequence for the next generated client identifier */
 
   nextClientSequence: Long;
+}
+/** GenesisState defines the ibc client submodule's genesis state. */
+
+export interface GenesisStateAmino {
+  /** client states with their corresponding identifiers */
+  clients: IdentifiedClientStateAmino[];
+  /** consensus states from each client */
+
+  clients_consensus: ClientConsensusStatesAmino[];
+  /** metadata from each client */
+
+  clients_metadata: IdentifiedGenesisMetadataAmino[];
+  params?: ParamsAmino;
+  /** create localhost on initialization */
+
+  create_localhost: boolean;
+  /** the sequence for the next generated client identifier */
+
+  next_client_sequence: string;
 }
 /** GenesisState defines the ibc client submodule's genesis state. */
 
@@ -47,6 +66,18 @@ export interface GenesisMetadata {
  * with ExportMetadata
  */
 
+export interface GenesisMetadataAmino {
+  /** store key of metadata without clientID-prefix */
+  key: Uint8Array;
+  /** metadata value */
+
+  value: Uint8Array;
+}
+/**
+ * GenesisMetadata defines the genesis type for metadata that clients may return
+ * with ExportMetadata
+ */
+
 export interface GenesisMetadataSDKType {
   key: Uint8Array;
   value: Uint8Array;
@@ -59,6 +90,15 @@ export interface GenesisMetadataSDKType {
 export interface IdentifiedGenesisMetadata {
   clientId: string;
   clientMetadata: GenesisMetadata[];
+}
+/**
+ * IdentifiedGenesisMetadata has the client metadata with the corresponding
+ * client id.
+ */
+
+export interface IdentifiedGenesisMetadataAmino {
+  client_id: string;
+  client_metadata: GenesisMetadataAmino[];
 }
 /**
  * IdentifiedGenesisMetadata has the client metadata with the corresponding
@@ -199,6 +239,44 @@ export const GenesisState = {
     message.createLocalhost = object.createLocalhost ?? false;
     message.nextClientSequence = object.nextClientSequence !== undefined && object.nextClientSequence !== null ? Long.fromValue(object.nextClientSequence) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      clients: Array.isArray(object?.clients) ? object.clients.map((e: any) => IdentifiedClientState.fromAmino(e)) : [],
+      clientsConsensus: Array.isArray(object?.clients_consensus) ? object.clients_consensus.map((e: any) => ClientConsensusStates.fromAmino(e)) : [],
+      clientsMetadata: Array.isArray(object?.clients_metadata) ? object.clients_metadata.map((e: any) => IdentifiedGenesisMetadata.fromAmino(e)) : [],
+      params: object?.params ? Params.fromAmino(object.params) : undefined,
+      createLocalhost: object.create_localhost,
+      nextClientSequence: Long.fromString(object.next_client_sequence)
+    };
+  },
+
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+
+    if (message.clients) {
+      obj.clients = message.clients.map(e => e ? IdentifiedClientState.toAmino(e) : undefined);
+    } else {
+      obj.clients = [];
+    }
+
+    if (message.clientsConsensus) {
+      obj.clients_consensus = message.clientsConsensus.map(e => e ? ClientConsensusStates.toAmino(e) : undefined);
+    } else {
+      obj.clients_consensus = [];
+    }
+
+    if (message.clientsMetadata) {
+      obj.clients_metadata = message.clientsMetadata.map(e => e ? IdentifiedGenesisMetadata.toAmino(e) : undefined);
+    } else {
+      obj.clients_metadata = [];
+    }
+
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    obj.create_localhost = message.createLocalhost;
+    obj.next_client_sequence = message.nextClientSequence ? message.nextClientSequence.toString() : undefined;
+    return obj;
   }
 
 };
@@ -268,6 +346,20 @@ export const GenesisMetadata = {
     message.key = object.key ?? new Uint8Array();
     message.value = object.value ?? new Uint8Array();
     return message;
+  },
+
+  fromAmino(object: GenesisMetadataAmino): GenesisMetadata {
+    return {
+      key: object.key,
+      value: object.value
+    };
+  },
+
+  toAmino(message: GenesisMetadata): GenesisMetadataAmino {
+    const obj: any = {};
+    obj.key = message.key;
+    obj.value = message.value;
+    return obj;
   }
 
 };
@@ -343,6 +435,26 @@ export const IdentifiedGenesisMetadata = {
     message.clientId = object.clientId ?? "";
     message.clientMetadata = object.clientMetadata?.map(e => GenesisMetadata.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: IdentifiedGenesisMetadataAmino): IdentifiedGenesisMetadata {
+    return {
+      clientId: object.client_id,
+      clientMetadata: Array.isArray(object?.client_metadata) ? object.client_metadata.map((e: any) => GenesisMetadata.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: IdentifiedGenesisMetadata): IdentifiedGenesisMetadataAmino {
+    const obj: any = {};
+    obj.client_id = message.clientId;
+
+    if (message.clientMetadata) {
+      obj.client_metadata = message.clientMetadata.map(e => e ? GenesisMetadata.toAmino(e) : undefined);
+    } else {
+      obj.client_metadata = [];
+    }
+
+    return obj;
   }
 
 };

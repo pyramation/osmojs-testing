@@ -1,5 +1,5 @@
 import { Downtime, downtimeFromJSON, downtimeToJSON } from "./downtime_duration";
-import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /**
@@ -16,12 +16,24 @@ export interface RecoveredSinceDowntimeOfLengthRequest {
  * since the chain has been down for $DOWNTIME_DURATION.
  */
 
+export interface RecoveredSinceDowntimeOfLengthRequestAmino {
+  downtime: Downtime;
+  recovery?: DurationAmino;
+}
+/**
+ * Query for has it been at least $RECOVERY_DURATION units of time,
+ * since the chain has been down for $DOWNTIME_DURATION.
+ */
+
 export interface RecoveredSinceDowntimeOfLengthRequestSDKType {
   downtime: Downtime;
   recovery?: DurationSDKType;
 }
 export interface RecoveredSinceDowntimeOfLengthResponse {
   succesfullyRecovered: boolean;
+}
+export interface RecoveredSinceDowntimeOfLengthResponseAmino {
+  succesfully_recovered: boolean;
 }
 export interface RecoveredSinceDowntimeOfLengthResponseSDKType {
   succesfully_recovered: boolean;
@@ -92,6 +104,20 @@ export const RecoveredSinceDowntimeOfLengthRequest = {
     message.downtime = object.downtime ?? 0;
     message.recovery = object.recovery !== undefined && object.recovery !== null ? Duration.fromPartial(object.recovery) : undefined;
     return message;
+  },
+
+  fromAmino(object: RecoveredSinceDowntimeOfLengthRequestAmino): RecoveredSinceDowntimeOfLengthRequest {
+    return {
+      downtime: isSet(object.downtime) ? downtimeFromJSON(object.downtime) : 0,
+      recovery: object?.recovery ? Duration.fromAmino(object.recovery) : undefined
+    };
+  },
+
+  toAmino(message: RecoveredSinceDowntimeOfLengthRequest): RecoveredSinceDowntimeOfLengthRequestAmino {
+    const obj: any = {};
+    message.downtime !== undefined && (obj.downtime = downtimeToJSON(message.downtime));
+    obj.recovery = message.recovery ? Duration.toAmino(message.recovery) : undefined;
+    return obj;
   }
 
 };
@@ -149,6 +175,18 @@ export const RecoveredSinceDowntimeOfLengthResponse = {
     const message = createBaseRecoveredSinceDowntimeOfLengthResponse();
     message.succesfullyRecovered = object.succesfullyRecovered ?? false;
     return message;
+  },
+
+  fromAmino(object: RecoveredSinceDowntimeOfLengthResponseAmino): RecoveredSinceDowntimeOfLengthResponse {
+    return {
+      succesfullyRecovered: object.succesfully_recovered
+    };
+  },
+
+  toAmino(message: RecoveredSinceDowntimeOfLengthResponse): RecoveredSinceDowntimeOfLengthResponseAmino {
+    const obj: any = {};
+    obj.succesfully_recovered = message.succesfullyRecovered;
+    return obj;
   }
 
 };

@@ -1,4 +1,4 @@
-import { Height, HeightSDKType } from "../../../core/client/v1/client";
+import { Height, HeightAmino, HeightSDKType } from "../../../core/client/v1/client";
 import * as _m0 from "protobufjs/minimal";
 /**
  * ClientState defines a loopback (localhost) client. It requires (read-only)
@@ -14,6 +14,16 @@ export interface ClientState {
  * ClientState defines a loopback (localhost) client. It requires (read-only)
  * access to keys outside the client prefix.
  */
+export interface ClientStateAmino {
+    /** self chain ID */
+    chain_id: string;
+    /** self latest block height */
+    height?: HeightAmino;
+}
+/**
+ * ClientState defines a loopback (localhost) client. It requires (read-only)
+ * access to keys outside the client prefix.
+ */
 export interface ClientStateSDKType {
     chain_id: string;
     height?: HeightSDKType;
@@ -24,4 +34,6 @@ export declare const ClientState: {
     fromJSON(object: any): ClientState;
     toJSON(message: ClientState): unknown;
     fromPartial(object: Partial<ClientState>): ClientState;
+    fromAmino(object: ClientStateAmino): ClientState;
+    toAmino(message: ClientState): ClientStateAmino;
 };

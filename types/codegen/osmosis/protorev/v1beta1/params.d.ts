@@ -5,6 +5,11 @@ export interface Params {
     enabled: boolean;
 }
 /** Params defines the parameters for the module. */
+export interface ParamsAmino {
+    /** Boolean whether the module is going to be enabled */
+    enabled: boolean;
+}
+/** Params defines the parameters for the module. */
 export interface ParamsSDKType {
     enabled: boolean;
 }
@@ -14,4 +19,6 @@ export declare const Params: {
     fromJSON(object: any): Params;
     toJSON(message: Params): unknown;
     fromPartial(object: Partial<Params>): Params;
+    fromAmino(object: ParamsAmino): Params;
+    toAmino(message: Params): ParamsAmino;
 };

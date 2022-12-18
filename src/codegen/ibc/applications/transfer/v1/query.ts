@@ -1,5 +1,5 @@
-import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
-import { DenomTrace, DenomTraceSDKType, Params, ParamsSDKType } from "./transfer";
+import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
+import { DenomTrace, DenomTraceAmino, DenomTraceSDKType, Params, ParamsAmino, ParamsSDKType } from "./transfer";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../../helpers";
 /**
@@ -8,6 +8,15 @@ import { isSet } from "../../../../helpers";
  */
 
 export interface QueryDenomTraceRequest {
+  /** hash (in hex format) of the denomination trace information. */
+  hash: string;
+}
+/**
+ * QueryDenomTraceRequest is the request type for the Query/DenomTrace RPC
+ * method
+ */
+
+export interface QueryDenomTraceRequestAmino {
   /** hash (in hex format) of the denomination trace information. */
   hash: string;
 }
@@ -33,6 +42,15 @@ export interface QueryDenomTraceResponse {
  * method.
  */
 
+export interface QueryDenomTraceResponseAmino {
+  /** denom_trace returns the requested denomination trace information. */
+  denom_trace?: DenomTraceAmino;
+}
+/**
+ * QueryDenomTraceResponse is the response type for the Query/DenomTrace RPC
+ * method.
+ */
+
 export interface QueryDenomTraceResponseSDKType {
   denom_trace?: DenomTraceSDKType;
 }
@@ -44,6 +62,15 @@ export interface QueryDenomTraceResponseSDKType {
 export interface QueryDenomTracesRequest {
   /** pagination defines an optional pagination for the request. */
   pagination?: PageRequest;
+}
+/**
+ * QueryConnectionsRequest is the request type for the Query/DenomTraces RPC
+ * method
+ */
+
+export interface QueryDenomTracesRequestAmino {
+  /** pagination defines an optional pagination for the request. */
+  pagination?: PageRequestAmino;
 }
 /**
  * QueryConnectionsRequest is the request type for the Query/DenomTraces RPC
@@ -70,6 +97,18 @@ export interface QueryDenomTracesResponse {
  * method.
  */
 
+export interface QueryDenomTracesResponseAmino {
+  /** denom_traces returns all denominations trace information. */
+  denom_traces: DenomTraceAmino[];
+  /** pagination defines the pagination in the response. */
+
+  pagination?: PageResponseAmino;
+}
+/**
+ * QueryConnectionsResponse is the response type for the Query/DenomTraces RPC
+ * method.
+ */
+
 export interface QueryDenomTracesResponseSDKType {
   denom_traces: DenomTraceSDKType[];
   pagination?: PageResponseSDKType;
@@ -79,12 +118,21 @@ export interface QueryDenomTracesResponseSDKType {
 export interface QueryParamsRequest {}
 /** QueryParamsRequest is the request type for the Query/Params RPC method. */
 
+export interface QueryParamsRequestAmino {}
+/** QueryParamsRequest is the request type for the Query/Params RPC method. */
+
 export interface QueryParamsRequestSDKType {}
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 
 export interface QueryParamsResponse {
   /** params defines the parameters of the module. */
   params?: Params;
+}
+/** QueryParamsResponse is the response type for the Query/Params RPC method. */
+
+export interface QueryParamsResponseAmino {
+  /** params defines the parameters of the module. */
+  params?: ParamsAmino;
 }
 /** QueryParamsResponse is the response type for the Query/Params RPC method. */
 
@@ -145,6 +193,18 @@ export const QueryDenomTraceRequest = {
     const message = createBaseQueryDenomTraceRequest();
     message.hash = object.hash ?? "";
     return message;
+  },
+
+  fromAmino(object: QueryDenomTraceRequestAmino): QueryDenomTraceRequest {
+    return {
+      hash: object.hash
+    };
+  },
+
+  toAmino(message: QueryDenomTraceRequest): QueryDenomTraceRequestAmino {
+    const obj: any = {};
+    obj.hash = message.hash;
+    return obj;
   }
 
 };
@@ -202,6 +262,18 @@ export const QueryDenomTraceResponse = {
     const message = createBaseQueryDenomTraceResponse();
     message.denomTrace = object.denomTrace !== undefined && object.denomTrace !== null ? DenomTrace.fromPartial(object.denomTrace) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryDenomTraceResponseAmino): QueryDenomTraceResponse {
+    return {
+      denomTrace: object?.denom_trace ? DenomTrace.fromAmino(object.denom_trace) : undefined
+    };
+  },
+
+  toAmino(message: QueryDenomTraceResponse): QueryDenomTraceResponseAmino {
+    const obj: any = {};
+    obj.denom_trace = message.denomTrace ? DenomTrace.toAmino(message.denomTrace) : undefined;
+    return obj;
   }
 
 };
@@ -259,6 +331,18 @@ export const QueryDenomTracesRequest = {
     const message = createBaseQueryDenomTracesRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryDenomTracesRequestAmino): QueryDenomTracesRequest {
+    return {
+      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+
+  toAmino(message: QueryDenomTracesRequest): QueryDenomTracesRequestAmino {
+    const obj: any = {};
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
   }
 
 };
@@ -334,6 +418,26 @@ export const QueryDenomTracesResponse = {
     message.denomTraces = object.denomTraces?.map(e => DenomTrace.fromPartial(e)) || [];
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryDenomTracesResponseAmino): QueryDenomTracesResponse {
+    return {
+      denomTraces: Array.isArray(object?.denom_traces) ? object.denom_traces.map((e: any) => DenomTrace.fromAmino(e)) : [],
+      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined
+    };
+  },
+
+  toAmino(message: QueryDenomTracesResponse): QueryDenomTracesResponseAmino {
+    const obj: any = {};
+
+    if (message.denomTraces) {
+      obj.denom_traces = message.denomTraces.map(e => e ? DenomTrace.toAmino(e) : undefined);
+    } else {
+      obj.denom_traces = [];
+    }
+
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    return obj;
   }
 
 };
@@ -377,6 +481,15 @@ export const QueryParamsRequest = {
   fromPartial(_: Partial<QueryParamsRequest>): QueryParamsRequest {
     const message = createBaseQueryParamsRequest();
     return message;
+  },
+
+  fromAmino(_: QueryParamsRequestAmino): QueryParamsRequest {
+    return {};
+  },
+
+  toAmino(_: QueryParamsRequest): QueryParamsRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -434,6 +547,18 @@ export const QueryParamsResponse = {
     const message = createBaseQueryParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryParamsResponseAmino): QueryParamsResponse {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+
+  toAmino(message: QueryParamsResponse): QueryParamsResponseAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
   }
 
 };

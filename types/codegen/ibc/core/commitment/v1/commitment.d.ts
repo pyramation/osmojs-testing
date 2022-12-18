@@ -1,10 +1,17 @@
-import { CommitmentProof, CommitmentProofSDKType } from "../../../../confio/proofs";
+import { CommitmentProof, CommitmentProofAmino, CommitmentProofSDKType } from "../../../../confio/proofs";
 import * as _m0 from "protobufjs/minimal";
 /**
  * MerkleRoot defines a merkle root hash.
  * In the Cosmos SDK, the AppHash of a block header becomes the root.
  */
 export interface MerkleRoot {
+    hash: Uint8Array;
+}
+/**
+ * MerkleRoot defines a merkle root hash.
+ * In the Cosmos SDK, the AppHash of a block header becomes the root.
+ */
+export interface MerkleRootAmino {
     hash: Uint8Array;
 }
 /**
@@ -27,6 +34,14 @@ export interface MerklePrefix {
  * The constructed key from the Path and the key will be append(Path.KeyPath,
  * append(Path.KeyPrefix, key...))
  */
+export interface MerklePrefixAmino {
+    key_prefix: Uint8Array;
+}
+/**
+ * MerklePrefix is merkle path prefixed to the key.
+ * The constructed key from the Path and the key will be append(Path.KeyPath,
+ * append(Path.KeyPrefix, key...))
+ */
 export interface MerklePrefixSDKType {
     key_prefix: Uint8Array;
 }
@@ -37,6 +52,14 @@ export interface MerklePrefixSDKType {
  */
 export interface MerklePath {
     keyPath: string[];
+}
+/**
+ * MerklePath is the path used to verify commitment proofs, which can be an
+ * arbitrary structured object (defined by a commitment type).
+ * MerklePath is represented from root-to-leaf
+ */
+export interface MerklePathAmino {
+    key_path: string[];
 }
 /**
  * MerklePath is the path used to verify commitment proofs, which can be an
@@ -63,6 +86,16 @@ export interface MerkleProof {
  * should be succinct.
  * MerkleProofs are ordered from leaf-to-root
  */
+export interface MerkleProofAmino {
+    proofs: CommitmentProofAmino[];
+}
+/**
+ * MerkleProof is a wrapper type over a chain of CommitmentProofs.
+ * It demonstrates membership or non-membership for an element or set of
+ * elements, verifiable in conjunction with a known commitment root. Proofs
+ * should be succinct.
+ * MerkleProofs are ordered from leaf-to-root
+ */
 export interface MerkleProofSDKType {
     proofs: CommitmentProofSDKType[];
 }
@@ -72,6 +105,8 @@ export declare const MerkleRoot: {
     fromJSON(object: any): MerkleRoot;
     toJSON(message: MerkleRoot): unknown;
     fromPartial(object: Partial<MerkleRoot>): MerkleRoot;
+    fromAmino(object: MerkleRootAmino): MerkleRoot;
+    toAmino(message: MerkleRoot): MerkleRootAmino;
 };
 export declare const MerklePrefix: {
     encode(message: MerklePrefix, writer?: _m0.Writer): _m0.Writer;
@@ -79,6 +114,8 @@ export declare const MerklePrefix: {
     fromJSON(object: any): MerklePrefix;
     toJSON(message: MerklePrefix): unknown;
     fromPartial(object: Partial<MerklePrefix>): MerklePrefix;
+    fromAmino(object: MerklePrefixAmino): MerklePrefix;
+    toAmino(message: MerklePrefix): MerklePrefixAmino;
 };
 export declare const MerklePath: {
     encode(message: MerklePath, writer?: _m0.Writer): _m0.Writer;
@@ -86,6 +123,8 @@ export declare const MerklePath: {
     fromJSON(object: any): MerklePath;
     toJSON(message: MerklePath): unknown;
     fromPartial(object: Partial<MerklePath>): MerklePath;
+    fromAmino(object: MerklePathAmino): MerklePath;
+    toAmino(message: MerklePath): MerklePathAmino;
 };
 export declare const MerkleProof: {
     encode(message: MerkleProof, writer?: _m0.Writer): _m0.Writer;
@@ -93,4 +132,6 @@ export declare const MerkleProof: {
     fromJSON(object: any): MerkleProof;
     toJSON(message: MerkleProof): unknown;
     fromPartial(object: Partial<MerkleProof>): MerkleProof;
+    fromAmino(object: MerkleProofAmino): MerkleProof;
+    toAmino(message: MerkleProof): MerkleProofAmino;
 };

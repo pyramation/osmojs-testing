@@ -1,5 +1,5 @@
-import { SwapAmountInRoute, SwapAmountInRouteSDKType, SwapAmountOutRoute, SwapAmountOutRouteSDKType } from "./swap_route";
-import { Params, ParamsSDKType } from "./genesis";
+import { SwapAmountInRoute, SwapAmountInRouteAmino, SwapAmountInRouteSDKType, SwapAmountOutRoute, SwapAmountOutRouteAmino, SwapAmountOutRouteSDKType } from "./swap_route";
+import { Params, ParamsAmino, ParamsSDKType } from "./genesis";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long } from "../../../helpers";
 /** =============================== Params */
@@ -7,9 +7,15 @@ import { isSet, Long } from "../../../helpers";
 export interface ParamsRequest {}
 /** =============================== Params */
 
+export interface ParamsRequestAmino {}
+/** =============================== Params */
+
 export interface ParamsRequestSDKType {}
 export interface ParamsResponse {
   params?: Params;
+}
+export interface ParamsResponseAmino {
+  params?: ParamsAmino;
 }
 export interface ParamsResponseSDKType {
   params?: ParamsSDKType;
@@ -25,6 +31,15 @@ export interface EstimateSwapExactAmountInRequest {
 }
 /** =============================== EstimateSwapExactAmountIn */
 
+export interface EstimateSwapExactAmountInRequestAmino {
+  /** TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE */
+  sender: string;
+  pool_id: string;
+  token_in: string;
+  routes: SwapAmountInRouteAmino[];
+}
+/** =============================== EstimateSwapExactAmountIn */
+
 export interface EstimateSwapExactAmountInRequestSDKType {
   sender: string;
   pool_id: Long;
@@ -33,6 +48,9 @@ export interface EstimateSwapExactAmountInRequestSDKType {
 }
 export interface EstimateSwapExactAmountInResponse {
   tokenOutAmount: string;
+}
+export interface EstimateSwapExactAmountInResponseAmino {
+  token_out_amount: string;
 }
 export interface EstimateSwapExactAmountInResponseSDKType {
   token_out_amount: string;
@@ -48,6 +66,15 @@ export interface EstimateSwapExactAmountOutRequest {
 }
 /** =============================== EstimateSwapExactAmountOut */
 
+export interface EstimateSwapExactAmountOutRequestAmino {
+  /** TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE */
+  sender: string;
+  pool_id: string;
+  routes: SwapAmountOutRouteAmino[];
+  token_out: string;
+}
+/** =============================== EstimateSwapExactAmountOut */
+
 export interface EstimateSwapExactAmountOutRequestSDKType {
   sender: string;
   pool_id: Long;
@@ -57,6 +84,9 @@ export interface EstimateSwapExactAmountOutRequestSDKType {
 export interface EstimateSwapExactAmountOutResponse {
   tokenInAmount: string;
 }
+export interface EstimateSwapExactAmountOutResponseAmino {
+  token_in_amount: string;
+}
 export interface EstimateSwapExactAmountOutResponseSDKType {
   token_in_amount: string;
 }
@@ -65,9 +95,15 @@ export interface EstimateSwapExactAmountOutResponseSDKType {
 export interface NumPoolsRequest {}
 /** =============================== NumPools */
 
+export interface NumPoolsRequestAmino {}
+/** =============================== NumPools */
+
 export interface NumPoolsRequestSDKType {}
 export interface NumPoolsResponse {
   numPools: Long;
+}
+export interface NumPoolsResponseAmino {
+  num_pools: string;
 }
 export interface NumPoolsResponseSDKType {
   num_pools: Long;
@@ -112,6 +148,15 @@ export const ParamsRequest = {
   fromPartial(_: Partial<ParamsRequest>): ParamsRequest {
     const message = createBaseParamsRequest();
     return message;
+  },
+
+  fromAmino(_: ParamsRequestAmino): ParamsRequest {
+    return {};
+  },
+
+  toAmino(_: ParamsRequest): ParamsRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -169,6 +214,18 @@ export const ParamsResponse = {
     const message = createBaseParamsResponse();
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+
+  fromAmino(object: ParamsResponseAmino): ParamsResponse {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+
+  toAmino(message: ParamsResponse): ParamsResponseAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
   }
 
 };
@@ -268,6 +325,30 @@ export const EstimateSwapExactAmountInRequest = {
     message.tokenIn = object.tokenIn ?? "";
     message.routes = object.routes?.map(e => SwapAmountInRoute.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: EstimateSwapExactAmountInRequestAmino): EstimateSwapExactAmountInRequest {
+    return {
+      sender: object.sender,
+      poolId: Long.fromString(object.pool_id),
+      tokenIn: object.token_in,
+      routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountInRoute.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: EstimateSwapExactAmountInRequest): EstimateSwapExactAmountInRequestAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.token_in = message.tokenIn;
+
+    if (message.routes) {
+      obj.routes = message.routes.map(e => e ? SwapAmountInRoute.toAmino(e) : undefined);
+    } else {
+      obj.routes = [];
+    }
+
+    return obj;
   }
 
 };
@@ -325,6 +406,18 @@ export const EstimateSwapExactAmountInResponse = {
     const message = createBaseEstimateSwapExactAmountInResponse();
     message.tokenOutAmount = object.tokenOutAmount ?? "";
     return message;
+  },
+
+  fromAmino(object: EstimateSwapExactAmountInResponseAmino): EstimateSwapExactAmountInResponse {
+    return {
+      tokenOutAmount: object.token_out_amount
+    };
+  },
+
+  toAmino(message: EstimateSwapExactAmountInResponse): EstimateSwapExactAmountInResponseAmino {
+    const obj: any = {};
+    obj.token_out_amount = message.tokenOutAmount;
+    return obj;
   }
 
 };
@@ -424,6 +517,30 @@ export const EstimateSwapExactAmountOutRequest = {
     message.routes = object.routes?.map(e => SwapAmountOutRoute.fromPartial(e)) || [];
     message.tokenOut = object.tokenOut ?? "";
     return message;
+  },
+
+  fromAmino(object: EstimateSwapExactAmountOutRequestAmino): EstimateSwapExactAmountOutRequest {
+    return {
+      sender: object.sender,
+      poolId: Long.fromString(object.pool_id),
+      routes: Array.isArray(object?.routes) ? object.routes.map((e: any) => SwapAmountOutRoute.fromAmino(e)) : [],
+      tokenOut: object.token_out
+    };
+  },
+
+  toAmino(message: EstimateSwapExactAmountOutRequest): EstimateSwapExactAmountOutRequestAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+
+    if (message.routes) {
+      obj.routes = message.routes.map(e => e ? SwapAmountOutRoute.toAmino(e) : undefined);
+    } else {
+      obj.routes = [];
+    }
+
+    obj.token_out = message.tokenOut;
+    return obj;
   }
 
 };
@@ -481,6 +598,18 @@ export const EstimateSwapExactAmountOutResponse = {
     const message = createBaseEstimateSwapExactAmountOutResponse();
     message.tokenInAmount = object.tokenInAmount ?? "";
     return message;
+  },
+
+  fromAmino(object: EstimateSwapExactAmountOutResponseAmino): EstimateSwapExactAmountOutResponse {
+    return {
+      tokenInAmount: object.token_in_amount
+    };
+  },
+
+  toAmino(message: EstimateSwapExactAmountOutResponse): EstimateSwapExactAmountOutResponseAmino {
+    const obj: any = {};
+    obj.token_in_amount = message.tokenInAmount;
+    return obj;
   }
 
 };
@@ -524,6 +653,15 @@ export const NumPoolsRequest = {
   fromPartial(_: Partial<NumPoolsRequest>): NumPoolsRequest {
     const message = createBaseNumPoolsRequest();
     return message;
+  },
+
+  fromAmino(_: NumPoolsRequestAmino): NumPoolsRequest {
+    return {};
+  },
+
+  toAmino(_: NumPoolsRequest): NumPoolsRequestAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -581,6 +719,18 @@ export const NumPoolsResponse = {
     const message = createBaseNumPoolsResponse();
     message.numPools = object.numPools !== undefined && object.numPools !== null ? Long.fromValue(object.numPools) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: NumPoolsResponseAmino): NumPoolsResponse {
+    return {
+      numPools: Long.fromString(object.num_pools)
+    };
+  },
+
+  toAmino(message: NumPoolsResponse): NumPoolsResponseAmino {
+    const obj: any = {};
+    obj.num_pools = message.numPools ? message.numPools.toString() : undefined;
+    return obj;
   }
 
 };

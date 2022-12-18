@@ -1,5 +1,5 @@
-import { Params, ParamsSDKType } from "./params";
-import { TokenPairArbRoutes, TokenPairArbRoutesSDKType } from "./protorev";
+import { Params, ParamsAmino, ParamsSDKType } from "./params";
+import { TokenPairArbRoutes, TokenPairArbRoutesAmino, TokenPairArbRoutesSDKType } from "./protorev";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** GenesisState defines the protorev module's genesis state. */
@@ -10,6 +10,15 @@ export interface GenesisState {
   /** Hot routes that are configured on genesis */
 
   tokenPairs: TokenPairArbRoutes[];
+}
+/** GenesisState defines the protorev module's genesis state. */
+
+export interface GenesisStateAmino {
+  /** Module Parameters */
+  params?: ParamsAmino;
+  /** Hot routes that are configured on genesis */
+
+  token_pairs: TokenPairArbRoutesAmino[];
 }
 /** GenesisState defines the protorev module's genesis state. */
 
@@ -89,6 +98,26 @@ export const GenesisState = {
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     message.tokenPairs = object.tokenPairs?.map(e => TokenPairArbRoutes.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      params: object?.params ? Params.fromAmino(object.params) : undefined,
+      tokenPairs: Array.isArray(object?.token_pairs) ? object.token_pairs.map((e: any) => TokenPairArbRoutes.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+
+    if (message.tokenPairs) {
+      obj.token_pairs = message.tokenPairs.map(e => e ? TokenPairArbRoutes.toAmino(e) : undefined);
+    } else {
+      obj.token_pairs = [];
+    }
+
+    return obj;
   }
 
 };

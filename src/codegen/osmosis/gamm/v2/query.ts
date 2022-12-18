@@ -15,6 +15,16 @@ export interface QuerySpotPriceRequest {
  * query.
  */
 
+export interface QuerySpotPriceRequestAmino {
+  pool_id: string;
+  base_asset_denom: string;
+  quote_asset_denom: string;
+}
+/**
+ * QuerySpotPriceRequest defines the gRPC request structure for a SpotPrice
+ * query.
+ */
+
 export interface QuerySpotPriceRequestSDKType {
   pool_id: Long;
   base_asset_denom: string;
@@ -28,6 +38,15 @@ export interface QuerySpotPriceRequestSDKType {
 export interface QuerySpotPriceResponse {
   /** String of the Dec. Ex) 10.203uatom */
   spotPrice: string;
+}
+/**
+ * QuerySpotPriceResponse defines the gRPC response structure for a SpotPrice
+ * query.
+ */
+
+export interface QuerySpotPriceResponseAmino {
+  /** String of the Dec. Ex) 10.203uatom */
+  spot_price: string;
 }
 /**
  * QuerySpotPriceResponse defines the gRPC response structure for a SpotPrice
@@ -115,6 +134,22 @@ export const QuerySpotPriceRequest = {
     message.baseAssetDenom = object.baseAssetDenom ?? "";
     message.quoteAssetDenom = object.quoteAssetDenom ?? "";
     return message;
+  },
+
+  fromAmino(object: QuerySpotPriceRequestAmino): QuerySpotPriceRequest {
+    return {
+      poolId: Long.fromString(object.pool_id),
+      baseAssetDenom: object.base_asset_denom,
+      quoteAssetDenom: object.quote_asset_denom
+    };
+  },
+
+  toAmino(message: QuerySpotPriceRequest): QuerySpotPriceRequestAmino {
+    const obj: any = {};
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    obj.base_asset_denom = message.baseAssetDenom;
+    obj.quote_asset_denom = message.quoteAssetDenom;
+    return obj;
   }
 
 };
@@ -172,6 +207,18 @@ export const QuerySpotPriceResponse = {
     const message = createBaseQuerySpotPriceResponse();
     message.spotPrice = object.spotPrice ?? "";
     return message;
+  },
+
+  fromAmino(object: QuerySpotPriceResponseAmino): QuerySpotPriceResponse {
+    return {
+      spotPrice: object.spot_price
+    };
+  },
+
+  toAmino(message: QuerySpotPriceResponse): QuerySpotPriceResponseAmino {
+    const obj: any = {};
+    obj.spot_price = message.spotPrice;
+    return obj;
   }
 
 };

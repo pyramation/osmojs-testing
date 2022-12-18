@@ -1,10 +1,15 @@
-import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
+import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../../helpers";
 /** Params holds parameters for the swaprouter module */
 
 export interface Params {
   poolCreationFee: Coin[];
+}
+/** Params holds parameters for the swaprouter module */
+
+export interface ParamsAmino {
+  pool_creation_fee: CoinAmino[];
 }
 /** Params holds parameters for the swaprouter module */
 
@@ -19,6 +24,15 @@ export interface GenesisState {
   /** params is the container of swaprouter parameters. */
 
   params?: Params;
+}
+/** GenesisState defines the swaprouter module's genesis state. */
+
+export interface GenesisStateAmino {
+  /** the next_pool_id */
+  next_pool_id: string;
+  /** params is the container of swaprouter parameters. */
+
+  params?: ParamsAmino;
 }
 /** GenesisState defines the swaprouter module's genesis state. */
 
@@ -86,6 +100,24 @@ export const Params = {
     const message = createBaseParams();
     message.poolCreationFee = object.poolCreationFee?.map(e => Coin.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      poolCreationFee: Array.isArray(object?.pool_creation_fee) ? object.pool_creation_fee.map((e: any) => Coin.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+
+    if (message.poolCreationFee) {
+      obj.pool_creation_fee = message.poolCreationFee.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.pool_creation_fee = [];
+    }
+
+    return obj;
   }
 
 };
@@ -155,6 +187,20 @@ export const GenesisState = {
     message.nextPoolId = object.nextPoolId !== undefined && object.nextPoolId !== null ? Long.fromValue(object.nextPoolId) : Long.UZERO;
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      nextPoolId: Long.fromString(object.next_pool_id),
+      params: object?.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.next_pool_id = message.nextPoolId ? message.nextPoolId.toString() : undefined;
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
   }
 
 };

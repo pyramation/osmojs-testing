@@ -1,7 +1,7 @@
-import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
-import { Channel, ChannelSDKType, IdentifiedChannel, IdentifiedChannelSDKType, PacketState, PacketStateSDKType } from "./channel";
-import { Height, HeightSDKType, IdentifiedClientState, IdentifiedClientStateSDKType } from "../../client/v1/client";
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
+import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageResponseAmino, PageResponseSDKType } from "../../../../cosmos/base/query/v1beta1/pagination";
+import { Channel, ChannelAmino, ChannelSDKType, IdentifiedChannel, IdentifiedChannelAmino, IdentifiedChannelSDKType, PacketState, PacketStateAmino, PacketStateSDKType } from "./channel";
+import { Height, HeightAmino, HeightSDKType, IdentifiedClientState, IdentifiedClientStateAmino, IdentifiedClientStateSDKType } from "../../client/v1/client";
+import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, bytesFromBase64, base64FromBytes, Long } from "../../../../helpers";
 /** QueryChannelRequest is the request type for the Query/Channel RPC method */
@@ -12,6 +12,15 @@ export interface QueryChannelRequest {
   /** channel unique identifier */
 
   channelId: string;
+}
+/** QueryChannelRequest is the request type for the Query/Channel RPC method */
+
+export interface QueryChannelRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
 }
 /** QueryChannelRequest is the request type for the Query/Channel RPC method */
 
@@ -41,6 +50,22 @@ export interface QueryChannelResponse {
  * proof was retrieved.
  */
 
+export interface QueryChannelResponseAmino {
+  /** channel associated with the request identifiers */
+  channel?: ChannelAmino;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
+}
+/**
+ * QueryChannelResponse is the response type for the Query/Channel RPC method.
+ * Besides the Channel end, it includes a proof and the height from which the
+ * proof was retrieved.
+ */
+
 export interface QueryChannelResponseSDKType {
   channel?: ChannelSDKType;
   proof: Uint8Array;
@@ -51,6 +76,12 @@ export interface QueryChannelResponseSDKType {
 export interface QueryChannelsRequest {
   /** pagination request */
   pagination?: PageRequest;
+}
+/** QueryChannelsRequest is the request type for the Query/Channels RPC method */
+
+export interface QueryChannelsRequestAmino {
+  /** pagination request */
+  pagination?: PageRequestAmino;
 }
 /** QueryChannelsRequest is the request type for the Query/Channels RPC method */
 
@@ -71,6 +102,18 @@ export interface QueryChannelsResponse {
 }
 /** QueryChannelsResponse is the response type for the Query/Channels RPC method. */
 
+export interface QueryChannelsResponseAmino {
+  /** list of stored channels of the chain. */
+  channels: IdentifiedChannelAmino[];
+  /** pagination response */
+
+  pagination?: PageResponseAmino;
+  /** query block height */
+
+  height?: HeightAmino;
+}
+/** QueryChannelsResponse is the response type for the Query/Channels RPC method. */
+
 export interface QueryChannelsResponseSDKType {
   channels: IdentifiedChannelSDKType[];
   pagination?: PageResponseSDKType;
@@ -87,6 +130,18 @@ export interface QueryConnectionChannelsRequest {
   /** pagination request */
 
   pagination?: PageRequest;
+}
+/**
+ * QueryConnectionChannelsRequest is the request type for the
+ * Query/QueryConnectionChannels RPC method
+ */
+
+export interface QueryConnectionChannelsRequestAmino {
+  /** connection unique identifier */
+  connection: string;
+  /** pagination request */
+
+  pagination?: PageRequestAmino;
 }
 /**
  * QueryConnectionChannelsRequest is the request type for the
@@ -117,6 +172,21 @@ export interface QueryConnectionChannelsResponse {
  * Query/QueryConnectionChannels RPC method
  */
 
+export interface QueryConnectionChannelsResponseAmino {
+  /** list of channels associated with a connection. */
+  channels: IdentifiedChannelAmino[];
+  /** pagination response */
+
+  pagination?: PageResponseAmino;
+  /** query block height */
+
+  height?: HeightAmino;
+}
+/**
+ * QueryConnectionChannelsResponse is the Response type for the
+ * Query/QueryConnectionChannels RPC method
+ */
+
 export interface QueryConnectionChannelsResponseSDKType {
   channels: IdentifiedChannelSDKType[];
   pagination?: PageResponseSDKType;
@@ -133,6 +203,18 @@ export interface QueryChannelClientStateRequest {
   /** channel unique identifier */
 
   channelId: string;
+}
+/**
+ * QueryChannelClientStateRequest is the request type for the Query/ClientState
+ * RPC method
+ */
+
+export interface QueryChannelClientStateRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
 }
 /**
  * QueryChannelClientStateRequest is the request type for the Query/ClientState
@@ -163,6 +245,21 @@ export interface QueryChannelClientStateResponse {
  * Query/QueryChannelClientState RPC method
  */
 
+export interface QueryChannelClientStateResponseAmino {
+  /** client state associated with the channel */
+  identified_client_state?: IdentifiedClientStateAmino;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
+}
+/**
+ * QueryChannelClientStateResponse is the Response type for the
+ * Query/QueryChannelClientState RPC method
+ */
+
 export interface QueryChannelClientStateResponseSDKType {
   identified_client_state?: IdentifiedClientStateSDKType;
   proof: Uint8Array;
@@ -185,6 +282,24 @@ export interface QueryChannelConsensusStateRequest {
   /** revision height of the consensus state */
 
   revisionHeight: Long;
+}
+/**
+ * QueryChannelConsensusStateRequest is the request type for the
+ * Query/ConsensusState RPC method
+ */
+
+export interface QueryChannelConsensusStateRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** revision number of the consensus state */
+
+  revision_number: string;
+  /** revision height of the consensus state */
+
+  revision_height: string;
 }
 /**
  * QueryChannelConsensusStateRequest is the request type for the
@@ -220,6 +335,24 @@ export interface QueryChannelConsensusStateResponse {
  * Query/QueryChannelClientState RPC method
  */
 
+export interface QueryChannelConsensusStateResponseAmino {
+  /** consensus state associated with the channel */
+  consensus_state?: AnyAmino;
+  /** client ID associated with the consensus state */
+
+  client_id: string;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
+}
+/**
+ * QueryChannelClientStateResponse is the Response type for the
+ * Query/QueryChannelClientState RPC method
+ */
+
 export interface QueryChannelConsensusStateResponseSDKType {
   consensus_state?: AnySDKType;
   client_id: string;
@@ -240,6 +373,21 @@ export interface QueryPacketCommitmentRequest {
   /** packet sequence */
 
   sequence: Long;
+}
+/**
+ * QueryPacketCommitmentRequest is the request type for the
+ * Query/PacketCommitment RPC method
+ */
+
+export interface QueryPacketCommitmentRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** packet sequence */
+
+  sequence: string;
 }
 /**
  * QueryPacketCommitmentRequest is the request type for the
@@ -273,6 +421,22 @@ export interface QueryPacketCommitmentResponse {
  * retrieved
  */
 
+export interface QueryPacketCommitmentResponseAmino {
+  /** packet associated with the request fields */
+  commitment: Uint8Array;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
+}
+/**
+ * QueryPacketCommitmentResponse defines the client query response for a packet
+ * which also includes a proof and the height from which the proof was
+ * retrieved
+ */
+
 export interface QueryPacketCommitmentResponseSDKType {
   commitment: Uint8Array;
   proof: Uint8Array;
@@ -292,6 +456,21 @@ export interface QueryPacketCommitmentsRequest {
   /** pagination request */
 
   pagination?: PageRequest;
+}
+/**
+ * QueryPacketCommitmentsRequest is the request type for the
+ * Query/QueryPacketCommitments RPC method
+ */
+
+export interface QueryPacketCommitmentsRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** pagination request */
+
+  pagination?: PageRequestAmino;
 }
 /**
  * QueryPacketCommitmentsRequest is the request type for the
@@ -322,6 +501,20 @@ export interface QueryPacketCommitmentsResponse {
  * Query/QueryPacketCommitments RPC method
  */
 
+export interface QueryPacketCommitmentsResponseAmino {
+  commitments: PacketStateAmino[];
+  /** pagination response */
+
+  pagination?: PageResponseAmino;
+  /** query block height */
+
+  height?: HeightAmino;
+}
+/**
+ * QueryPacketCommitmentsResponse is the request type for the
+ * Query/QueryPacketCommitments RPC method
+ */
+
 export interface QueryPacketCommitmentsResponseSDKType {
   commitments: PacketStateSDKType[];
   pagination?: PageResponseSDKType;
@@ -341,6 +534,21 @@ export interface QueryPacketReceiptRequest {
   /** packet sequence */
 
   sequence: Long;
+}
+/**
+ * QueryPacketReceiptRequest is the request type for the
+ * Query/PacketReceipt RPC method
+ */
+
+export interface QueryPacketReceiptRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** packet sequence */
+
+  sequence: string;
 }
 /**
  * QueryPacketReceiptRequest is the request type for the
@@ -374,6 +582,22 @@ export interface QueryPacketReceiptResponse {
  * retrieved
  */
 
+export interface QueryPacketReceiptResponseAmino {
+  /** success flag for if receipt exists */
+  received: boolean;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
+}
+/**
+ * QueryPacketReceiptResponse defines the client query response for a packet
+ * receipt which also includes a proof, and the height from which the proof was
+ * retrieved
+ */
+
 export interface QueryPacketReceiptResponseSDKType {
   received: boolean;
   proof: Uint8Array;
@@ -393,6 +617,21 @@ export interface QueryPacketAcknowledgementRequest {
   /** packet sequence */
 
   sequence: Long;
+}
+/**
+ * QueryPacketAcknowledgementRequest is the request type for the
+ * Query/PacketAcknowledgement RPC method
+ */
+
+export interface QueryPacketAcknowledgementRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** packet sequence */
+
+  sequence: string;
 }
 /**
  * QueryPacketAcknowledgementRequest is the request type for the
@@ -419,6 +658,22 @@ export interface QueryPacketAcknowledgementResponse {
   /** height at which the proof was retrieved */
 
   proofHeight?: Height;
+}
+/**
+ * QueryPacketAcknowledgementResponse defines the client query response for a
+ * packet which also includes a proof and the height from which the
+ * proof was retrieved
+ */
+
+export interface QueryPacketAcknowledgementResponseAmino {
+  /** packet associated with the request fields */
+  acknowledgement: Uint8Array;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
 }
 /**
  * QueryPacketAcknowledgementResponse defines the client query response for a
@@ -454,6 +709,24 @@ export interface QueryPacketAcknowledgementsRequest {
  * Query/QueryPacketCommitments RPC method
  */
 
+export interface QueryPacketAcknowledgementsRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** pagination request */
+
+  pagination?: PageRequestAmino;
+  /** list of packet sequences */
+
+  packet_commitment_sequences: string[];
+}
+/**
+ * QueryPacketAcknowledgementsRequest is the request type for the
+ * Query/QueryPacketCommitments RPC method
+ */
+
 export interface QueryPacketAcknowledgementsRequestSDKType {
   port_id: string;
   channel_id: string;
@@ -473,6 +746,20 @@ export interface QueryPacketAcknowledgementsResponse {
   /** query block height */
 
   height?: Height;
+}
+/**
+ * QueryPacketAcknowledgemetsResponse is the request type for the
+ * Query/QueryPacketAcknowledgements RPC method
+ */
+
+export interface QueryPacketAcknowledgementsResponseAmino {
+  acknowledgements: PacketStateAmino[];
+  /** pagination response */
+
+  pagination?: PageResponseAmino;
+  /** query block height */
+
+  height?: HeightAmino;
 }
 /**
  * QueryPacketAcknowledgemetsResponse is the request type for the
@@ -504,6 +791,21 @@ export interface QueryUnreceivedPacketsRequest {
  * Query/UnreceivedPackets RPC method
  */
 
+export interface QueryUnreceivedPacketsRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** list of packet sequences */
+
+  packet_commitment_sequences: string[];
+}
+/**
+ * QueryUnreceivedPacketsRequest is the request type for the
+ * Query/UnreceivedPackets RPC method
+ */
+
 export interface QueryUnreceivedPacketsRequestSDKType {
   port_id: string;
   channel_id: string;
@@ -520,6 +822,18 @@ export interface QueryUnreceivedPacketsResponse {
   /** query block height */
 
   height?: Height;
+}
+/**
+ * QueryUnreceivedPacketsResponse is the response type for the
+ * Query/UnreceivedPacketCommitments RPC method
+ */
+
+export interface QueryUnreceivedPacketsResponseAmino {
+  /** list of unreceived packet sequences */
+  sequences: string[];
+  /** query block height */
+
+  height?: HeightAmino;
 }
 /**
  * QueryUnreceivedPacketsResponse is the response type for the
@@ -550,6 +864,21 @@ export interface QueryUnreceivedAcksRequest {
  * Query/UnreceivedAcks RPC method
  */
 
+export interface QueryUnreceivedAcksRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+  /** list of acknowledgement sequences */
+
+  packet_ack_sequences: string[];
+}
+/**
+ * QueryUnreceivedAcks is the request type for the
+ * Query/UnreceivedAcks RPC method
+ */
+
 export interface QueryUnreceivedAcksRequestSDKType {
   port_id: string;
   channel_id: string;
@@ -566,6 +895,18 @@ export interface QueryUnreceivedAcksResponse {
   /** query block height */
 
   height?: Height;
+}
+/**
+ * QueryUnreceivedAcksResponse is the response type for the
+ * Query/UnreceivedAcks RPC method
+ */
+
+export interface QueryUnreceivedAcksResponseAmino {
+  /** list of unreceived acknowledgement sequences */
+  sequences: string[];
+  /** query block height */
+
+  height?: HeightAmino;
 }
 /**
  * QueryUnreceivedAcksResponse is the response type for the
@@ -593,6 +934,18 @@ export interface QueryNextSequenceReceiveRequest {
  * Query/QueryNextSequenceReceiveRequest RPC method
  */
 
+export interface QueryNextSequenceReceiveRequestAmino {
+  /** port unique identifier */
+  port_id: string;
+  /** channel unique identifier */
+
+  channel_id: string;
+}
+/**
+ * QueryNextSequenceReceiveRequest is the request type for the
+ * Query/QueryNextSequenceReceiveRequest RPC method
+ */
+
 export interface QueryNextSequenceReceiveRequestSDKType {
   port_id: string;
   channel_id: string;
@@ -611,6 +964,21 @@ export interface QueryNextSequenceReceiveResponse {
   /** height at which the proof was retrieved */
 
   proofHeight?: Height;
+}
+/**
+ * QuerySequenceResponse is the request type for the
+ * Query/QueryNextSequenceReceiveResponse RPC method
+ */
+
+export interface QueryNextSequenceReceiveResponseAmino {
+  /** next sequence receive number */
+  next_sequence_receive: string;
+  /** merkle proof of existence */
+
+  proof: Uint8Array;
+  /** height at which the proof was retrieved */
+
+  proof_height?: HeightAmino;
 }
 /**
  * QuerySequenceResponse is the request type for the
@@ -688,6 +1056,20 @@ export const QueryChannelRequest = {
     message.portId = object.portId ?? "";
     message.channelId = object.channelId ?? "";
     return message;
+  },
+
+  fromAmino(object: QueryChannelRequestAmino): QueryChannelRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id
+    };
+  },
+
+  toAmino(message: QueryChannelRequest): QueryChannelRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    return obj;
   }
 
 };
@@ -769,6 +1151,22 @@ export const QueryChannelResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryChannelResponseAmino): QueryChannelResponse {
+    return {
+      channel: object?.channel ? Channel.fromAmino(object.channel) : undefined,
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryChannelResponse): QueryChannelResponseAmino {
+    const obj: any = {};
+    obj.channel = message.channel ? Channel.toAmino(message.channel) : undefined;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };
@@ -826,6 +1224,18 @@ export const QueryChannelsRequest = {
     const message = createBaseQueryChannelsRequest();
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryChannelsRequestAmino): QueryChannelsRequest {
+    return {
+      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+
+  toAmino(message: QueryChannelsRequest): QueryChannelsRequestAmino {
+    const obj: any = {};
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
   }
 
 };
@@ -913,6 +1323,28 @@ export const QueryChannelsResponse = {
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryChannelsResponseAmino): QueryChannelsResponse {
+    return {
+      channels: Array.isArray(object?.channels) ? object.channels.map((e: any) => IdentifiedChannel.fromAmino(e)) : [],
+      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined,
+      height: object?.height ? Height.fromAmino(object.height) : undefined
+    };
+  },
+
+  toAmino(message: QueryChannelsResponse): QueryChannelsResponseAmino {
+    const obj: any = {};
+
+    if (message.channels) {
+      obj.channels = message.channels.map(e => e ? IdentifiedChannel.toAmino(e) : undefined);
+    } else {
+      obj.channels = [];
+    }
+
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    return obj;
   }
 
 };
@@ -982,6 +1414,20 @@ export const QueryConnectionChannelsRequest = {
     message.connection = object.connection ?? "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryConnectionChannelsRequestAmino): QueryConnectionChannelsRequest {
+    return {
+      connection: object.connection,
+      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+
+  toAmino(message: QueryConnectionChannelsRequest): QueryConnectionChannelsRequestAmino {
+    const obj: any = {};
+    obj.connection = message.connection;
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
   }
 
 };
@@ -1069,6 +1515,28 @@ export const QueryConnectionChannelsResponse = {
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryConnectionChannelsResponseAmino): QueryConnectionChannelsResponse {
+    return {
+      channels: Array.isArray(object?.channels) ? object.channels.map((e: any) => IdentifiedChannel.fromAmino(e)) : [],
+      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined,
+      height: object?.height ? Height.fromAmino(object.height) : undefined
+    };
+  },
+
+  toAmino(message: QueryConnectionChannelsResponse): QueryConnectionChannelsResponseAmino {
+    const obj: any = {};
+
+    if (message.channels) {
+      obj.channels = message.channels.map(e => e ? IdentifiedChannel.toAmino(e) : undefined);
+    } else {
+      obj.channels = [];
+    }
+
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    return obj;
   }
 
 };
@@ -1138,6 +1606,20 @@ export const QueryChannelClientStateRequest = {
     message.portId = object.portId ?? "";
     message.channelId = object.channelId ?? "";
     return message;
+  },
+
+  fromAmino(object: QueryChannelClientStateRequestAmino): QueryChannelClientStateRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id
+    };
+  },
+
+  toAmino(message: QueryChannelClientStateRequest): QueryChannelClientStateRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    return obj;
   }
 
 };
@@ -1219,6 +1701,22 @@ export const QueryChannelClientStateResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryChannelClientStateResponseAmino): QueryChannelClientStateResponse {
+    return {
+      identifiedClientState: object?.identified_client_state ? IdentifiedClientState.fromAmino(object.identified_client_state) : undefined,
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryChannelClientStateResponse): QueryChannelClientStateResponseAmino {
+    const obj: any = {};
+    obj.identified_client_state = message.identifiedClientState ? IdentifiedClientState.toAmino(message.identifiedClientState) : undefined;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };
@@ -1312,6 +1810,24 @@ export const QueryChannelConsensusStateRequest = {
     message.revisionNumber = object.revisionNumber !== undefined && object.revisionNumber !== null ? Long.fromValue(object.revisionNumber) : Long.UZERO;
     message.revisionHeight = object.revisionHeight !== undefined && object.revisionHeight !== null ? Long.fromValue(object.revisionHeight) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: QueryChannelConsensusStateRequestAmino): QueryChannelConsensusStateRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      revisionNumber: Long.fromString(object.revision_number),
+      revisionHeight: Long.fromString(object.revision_height)
+    };
+  },
+
+  toAmino(message: QueryChannelConsensusStateRequest): QueryChannelConsensusStateRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.revision_number = message.revisionNumber ? message.revisionNumber.toString() : undefined;
+    obj.revision_height = message.revisionHeight ? message.revisionHeight.toString() : undefined;
+    return obj;
   }
 
 };
@@ -1405,6 +1921,24 @@ export const QueryChannelConsensusStateResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryChannelConsensusStateResponseAmino): QueryChannelConsensusStateResponse {
+    return {
+      consensusState: object?.consensus_state ? Any.fromAmino(object.consensus_state) : undefined,
+      clientId: object.client_id,
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryChannelConsensusStateResponse): QueryChannelConsensusStateResponseAmino {
+    const obj: any = {};
+    obj.consensus_state = message.consensusState ? Any.toAmino(message.consensusState) : undefined;
+    obj.client_id = message.clientId;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };
@@ -1486,6 +2020,22 @@ export const QueryPacketCommitmentRequest = {
     message.channelId = object.channelId ?? "";
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: QueryPacketCommitmentRequestAmino): QueryPacketCommitmentRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      sequence: Long.fromString(object.sequence)
+    };
+  },
+
+  toAmino(message: QueryPacketCommitmentRequest): QueryPacketCommitmentRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.sequence = message.sequence ? message.sequence.toString() : undefined;
+    return obj;
   }
 
 };
@@ -1567,6 +2117,22 @@ export const QueryPacketCommitmentResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryPacketCommitmentResponseAmino): QueryPacketCommitmentResponse {
+    return {
+      commitment: object.commitment,
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryPacketCommitmentResponse): QueryPacketCommitmentResponseAmino {
+    const obj: any = {};
+    obj.commitment = message.commitment;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };
@@ -1648,6 +2214,22 @@ export const QueryPacketCommitmentsRequest = {
     message.channelId = object.channelId ?? "";
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryPacketCommitmentsRequestAmino): QueryPacketCommitmentsRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined
+    };
+  },
+
+  toAmino(message: QueryPacketCommitmentsRequest): QueryPacketCommitmentsRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+    return obj;
   }
 
 };
@@ -1735,6 +2317,28 @@ export const QueryPacketCommitmentsResponse = {
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryPacketCommitmentsResponseAmino): QueryPacketCommitmentsResponse {
+    return {
+      commitments: Array.isArray(object?.commitments) ? object.commitments.map((e: any) => PacketState.fromAmino(e)) : [],
+      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined,
+      height: object?.height ? Height.fromAmino(object.height) : undefined
+    };
+  },
+
+  toAmino(message: QueryPacketCommitmentsResponse): QueryPacketCommitmentsResponseAmino {
+    const obj: any = {};
+
+    if (message.commitments) {
+      obj.commitments = message.commitments.map(e => e ? PacketState.toAmino(e) : undefined);
+    } else {
+      obj.commitments = [];
+    }
+
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    return obj;
   }
 
 };
@@ -1816,6 +2420,22 @@ export const QueryPacketReceiptRequest = {
     message.channelId = object.channelId ?? "";
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: QueryPacketReceiptRequestAmino): QueryPacketReceiptRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      sequence: Long.fromString(object.sequence)
+    };
+  },
+
+  toAmino(message: QueryPacketReceiptRequest): QueryPacketReceiptRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.sequence = message.sequence ? message.sequence.toString() : undefined;
+    return obj;
   }
 
 };
@@ -1897,6 +2517,22 @@ export const QueryPacketReceiptResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryPacketReceiptResponseAmino): QueryPacketReceiptResponse {
+    return {
+      received: object.received,
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryPacketReceiptResponse): QueryPacketReceiptResponseAmino {
+    const obj: any = {};
+    obj.received = message.received;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };
@@ -1978,6 +2614,22 @@ export const QueryPacketAcknowledgementRequest = {
     message.channelId = object.channelId ?? "";
     message.sequence = object.sequence !== undefined && object.sequence !== null ? Long.fromValue(object.sequence) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: QueryPacketAcknowledgementRequestAmino): QueryPacketAcknowledgementRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      sequence: Long.fromString(object.sequence)
+    };
+  },
+
+  toAmino(message: QueryPacketAcknowledgementRequest): QueryPacketAcknowledgementRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.sequence = message.sequence ? message.sequence.toString() : undefined;
+    return obj;
   }
 
 };
@@ -2059,6 +2711,22 @@ export const QueryPacketAcknowledgementResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryPacketAcknowledgementResponseAmino): QueryPacketAcknowledgementResponse {
+    return {
+      acknowledgement: object.acknowledgement,
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryPacketAcknowledgementResponse): QueryPacketAcknowledgementResponseAmino {
+    const obj: any = {};
+    obj.acknowledgement = message.acknowledgement;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };
@@ -2170,6 +2838,30 @@ export const QueryPacketAcknowledgementsRequest = {
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageRequest.fromPartial(object.pagination) : undefined;
     message.packetCommitmentSequences = object.packetCommitmentSequences?.map(e => Long.fromValue(e)) || [];
     return message;
+  },
+
+  fromAmino(object: QueryPacketAcknowledgementsRequestAmino): QueryPacketAcknowledgementsRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      pagination: object?.pagination ? PageRequest.fromAmino(object.pagination) : undefined,
+      packetCommitmentSequences: Array.isArray(object?.packet_commitment_sequences) ? object.packet_commitment_sequences.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: QueryPacketAcknowledgementsRequest): QueryPacketAcknowledgementsRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    obj.pagination = message.pagination ? PageRequest.toAmino(message.pagination) : undefined;
+
+    if (message.packetCommitmentSequences) {
+      obj.packet_commitment_sequences = message.packetCommitmentSequences.map(e => e);
+    } else {
+      obj.packet_commitment_sequences = [];
+    }
+
+    return obj;
   }
 
 };
@@ -2257,6 +2949,28 @@ export const QueryPacketAcknowledgementsResponse = {
     message.pagination = object.pagination !== undefined && object.pagination !== null ? PageResponse.fromPartial(object.pagination) : undefined;
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryPacketAcknowledgementsResponseAmino): QueryPacketAcknowledgementsResponse {
+    return {
+      acknowledgements: Array.isArray(object?.acknowledgements) ? object.acknowledgements.map((e: any) => PacketState.fromAmino(e)) : [],
+      pagination: object?.pagination ? PageResponse.fromAmino(object.pagination) : undefined,
+      height: object?.height ? Height.fromAmino(object.height) : undefined
+    };
+  },
+
+  toAmino(message: QueryPacketAcknowledgementsResponse): QueryPacketAcknowledgementsResponseAmino {
+    const obj: any = {};
+
+    if (message.acknowledgements) {
+      obj.acknowledgements = message.acknowledgements.map(e => e ? PacketState.toAmino(e) : undefined);
+    } else {
+      obj.acknowledgements = [];
+    }
+
+    obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    return obj;
   }
 
 };
@@ -2356,6 +3070,28 @@ export const QueryUnreceivedPacketsRequest = {
     message.channelId = object.channelId ?? "";
     message.packetCommitmentSequences = object.packetCommitmentSequences?.map(e => Long.fromValue(e)) || [];
     return message;
+  },
+
+  fromAmino(object: QueryUnreceivedPacketsRequestAmino): QueryUnreceivedPacketsRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      packetCommitmentSequences: Array.isArray(object?.packet_commitment_sequences) ? object.packet_commitment_sequences.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: QueryUnreceivedPacketsRequest): QueryUnreceivedPacketsRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+
+    if (message.packetCommitmentSequences) {
+      obj.packet_commitment_sequences = message.packetCommitmentSequences.map(e => e);
+    } else {
+      obj.packet_commitment_sequences = [];
+    }
+
+    return obj;
   }
 
 };
@@ -2444,6 +3180,26 @@ export const QueryUnreceivedPacketsResponse = {
     message.sequences = object.sequences?.map(e => Long.fromValue(e)) || [];
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryUnreceivedPacketsResponseAmino): QueryUnreceivedPacketsResponse {
+    return {
+      sequences: Array.isArray(object?.sequences) ? object.sequences.map((e: any) => e) : [],
+      height: object?.height ? Height.fromAmino(object.height) : undefined
+    };
+  },
+
+  toAmino(message: QueryUnreceivedPacketsResponse): QueryUnreceivedPacketsResponseAmino {
+    const obj: any = {};
+
+    if (message.sequences) {
+      obj.sequences = message.sequences.map(e => e);
+    } else {
+      obj.sequences = [];
+    }
+
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    return obj;
   }
 
 };
@@ -2543,6 +3299,28 @@ export const QueryUnreceivedAcksRequest = {
     message.channelId = object.channelId ?? "";
     message.packetAckSequences = object.packetAckSequences?.map(e => Long.fromValue(e)) || [];
     return message;
+  },
+
+  fromAmino(object: QueryUnreceivedAcksRequestAmino): QueryUnreceivedAcksRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id,
+      packetAckSequences: Array.isArray(object?.packet_ack_sequences) ? object.packet_ack_sequences.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: QueryUnreceivedAcksRequest): QueryUnreceivedAcksRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+
+    if (message.packetAckSequences) {
+      obj.packet_ack_sequences = message.packetAckSequences.map(e => e);
+    } else {
+      obj.packet_ack_sequences = [];
+    }
+
+    return obj;
   }
 
 };
@@ -2631,6 +3409,26 @@ export const QueryUnreceivedAcksResponse = {
     message.sequences = object.sequences?.map(e => Long.fromValue(e)) || [];
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryUnreceivedAcksResponseAmino): QueryUnreceivedAcksResponse {
+    return {
+      sequences: Array.isArray(object?.sequences) ? object.sequences.map((e: any) => e) : [],
+      height: object?.height ? Height.fromAmino(object.height) : undefined
+    };
+  },
+
+  toAmino(message: QueryUnreceivedAcksResponse): QueryUnreceivedAcksResponseAmino {
+    const obj: any = {};
+
+    if (message.sequences) {
+      obj.sequences = message.sequences.map(e => e);
+    } else {
+      obj.sequences = [];
+    }
+
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    return obj;
   }
 
 };
@@ -2700,6 +3498,20 @@ export const QueryNextSequenceReceiveRequest = {
     message.portId = object.portId ?? "";
     message.channelId = object.channelId ?? "";
     return message;
+  },
+
+  fromAmino(object: QueryNextSequenceReceiveRequestAmino): QueryNextSequenceReceiveRequest {
+    return {
+      portId: object.port_id,
+      channelId: object.channel_id
+    };
+  },
+
+  toAmino(message: QueryNextSequenceReceiveRequest): QueryNextSequenceReceiveRequestAmino {
+    const obj: any = {};
+    obj.port_id = message.portId;
+    obj.channel_id = message.channelId;
+    return obj;
   }
 
 };
@@ -2781,6 +3593,22 @@ export const QueryNextSequenceReceiveResponse = {
     message.proof = object.proof ?? new Uint8Array();
     message.proofHeight = object.proofHeight !== undefined && object.proofHeight !== null ? Height.fromPartial(object.proofHeight) : undefined;
     return message;
+  },
+
+  fromAmino(object: QueryNextSequenceReceiveResponseAmino): QueryNextSequenceReceiveResponse {
+    return {
+      nextSequenceReceive: Long.fromString(object.next_sequence_receive),
+      proof: object.proof,
+      proofHeight: object?.proof_height ? Height.fromAmino(object.proof_height) : undefined
+    };
+  },
+
+  toAmino(message: QueryNextSequenceReceiveResponse): QueryNextSequenceReceiveResponseAmino {
+    const obj: any = {};
+    obj.next_sequence_receive = message.nextSequenceReceive ? message.nextSequenceReceive.toString() : undefined;
+    obj.proof = message.proof;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    return obj;
   }
 
 };

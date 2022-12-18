@@ -1,5 +1,5 @@
-import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
-import { Period, PeriodSDKType } from "./vesting";
+import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
+import { Period, PeriodAmino, PeriodSDKType } from "./vesting";
 import { Long, isSet } from "../../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /**
@@ -19,6 +19,18 @@ export interface MsgCreateVestingAccount {
  * account.
  */
 
+export interface MsgCreateVestingAccountAmino {
+  from_address: string;
+  to_address: string;
+  amount: CoinAmino[];
+  end_time: string;
+  delayed: boolean;
+}
+/**
+ * MsgCreateVestingAccount defines a message that enables creating a vesting
+ * account.
+ */
+
 export interface MsgCreateVestingAccountSDKType {
   from_address: string;
   to_address: string;
@@ -29,6 +41,9 @@ export interface MsgCreateVestingAccountSDKType {
 /** MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type. */
 
 export interface MsgCreateVestingAccountResponse {}
+/** MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type. */
+
+export interface MsgCreateVestingAccountResponseAmino {}
 /** MsgCreateVestingAccountResponse defines the Msg/CreateVestingAccount response type. */
 
 export interface MsgCreateVestingAccountResponseSDKType {}
@@ -47,6 +62,16 @@ export interface MsgCreatePermanentLockedAccount {
  * locked account.
  */
 
+export interface MsgCreatePermanentLockedAccountAmino {
+  from_address: string;
+  to_address: string;
+  amount: CoinAmino[];
+}
+/**
+ * MsgCreatePermanentLockedAccount defines a message that enables creating a permanent
+ * locked account.
+ */
+
 export interface MsgCreatePermanentLockedAccountSDKType {
   from_address: string;
   to_address: string;
@@ -55,6 +80,9 @@ export interface MsgCreatePermanentLockedAccountSDKType {
 /** MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type. */
 
 export interface MsgCreatePermanentLockedAccountResponse {}
+/** MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type. */
+
+export interface MsgCreatePermanentLockedAccountResponseAmino {}
 /** MsgCreatePermanentLockedAccountResponse defines the Msg/CreatePermanentLockedAccount response type. */
 
 export interface MsgCreatePermanentLockedAccountResponseSDKType {}
@@ -74,6 +102,17 @@ export interface MsgCreatePeriodicVestingAccount {
  * account.
  */
 
+export interface MsgCreatePeriodicVestingAccountAmino {
+  from_address: string;
+  to_address: string;
+  start_time: string;
+  vesting_periods: PeriodAmino[];
+}
+/**
+ * MsgCreateVestingAccount defines a message that enables creating a vesting
+ * account.
+ */
+
 export interface MsgCreatePeriodicVestingAccountSDKType {
   from_address: string;
   to_address: string;
@@ -86,6 +125,12 @@ export interface MsgCreatePeriodicVestingAccountSDKType {
  */
 
 export interface MsgCreatePeriodicVestingAccountResponse {}
+/**
+ * MsgCreateVestingAccountResponse defines the Msg/CreatePeriodicVestingAccount
+ * response type.
+ */
+
+export interface MsgCreatePeriodicVestingAccountResponseAmino {}
 /**
  * MsgCreateVestingAccountResponse defines the Msg/CreatePeriodicVestingAccount
  * response type.
@@ -200,6 +245,32 @@ export const MsgCreateVestingAccount = {
     message.endTime = object.endTime !== undefined && object.endTime !== null ? Long.fromValue(object.endTime) : Long.ZERO;
     message.delayed = object.delayed ?? false;
     return message;
+  },
+
+  fromAmino(object: MsgCreateVestingAccountAmino): MsgCreateVestingAccount {
+    return {
+      fromAddress: object.from_address,
+      toAddress: object.to_address,
+      amount: Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromAmino(e)) : [],
+      endTime: Long.fromString(object.end_time),
+      delayed: object.delayed
+    };
+  },
+
+  toAmino(message: MsgCreateVestingAccount): MsgCreateVestingAccountAmino {
+    const obj: any = {};
+    obj.from_address = message.fromAddress;
+    obj.to_address = message.toAddress;
+
+    if (message.amount) {
+      obj.amount = message.amount.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.amount = [];
+    }
+
+    obj.end_time = message.endTime ? message.endTime.toString() : undefined;
+    obj.delayed = message.delayed;
+    return obj;
   }
 
 };
@@ -243,6 +314,15 @@ export const MsgCreateVestingAccountResponse = {
   fromPartial(_: Partial<MsgCreateVestingAccountResponse>): MsgCreateVestingAccountResponse {
     const message = createBaseMsgCreateVestingAccountResponse();
     return message;
+  },
+
+  fromAmino(_: MsgCreateVestingAccountResponseAmino): MsgCreateVestingAccountResponse {
+    return {};
+  },
+
+  toAmino(_: MsgCreateVestingAccountResponse): MsgCreateVestingAccountResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -330,6 +410,28 @@ export const MsgCreatePermanentLockedAccount = {
     message.toAddress = object.toAddress ?? "";
     message.amount = object.amount?.map(e => Coin.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: MsgCreatePermanentLockedAccountAmino): MsgCreatePermanentLockedAccount {
+    return {
+      fromAddress: object.from_address,
+      toAddress: object.to_address,
+      amount: Array.isArray(object?.amount) ? object.amount.map((e: any) => Coin.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: MsgCreatePermanentLockedAccount): MsgCreatePermanentLockedAccountAmino {
+    const obj: any = {};
+    obj.from_address = message.fromAddress;
+    obj.to_address = message.toAddress;
+
+    if (message.amount) {
+      obj.amount = message.amount.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.amount = [];
+    }
+
+    return obj;
   }
 
 };
@@ -373,6 +475,15 @@ export const MsgCreatePermanentLockedAccountResponse = {
   fromPartial(_: Partial<MsgCreatePermanentLockedAccountResponse>): MsgCreatePermanentLockedAccountResponse {
     const message = createBaseMsgCreatePermanentLockedAccountResponse();
     return message;
+  },
+
+  fromAmino(_: MsgCreatePermanentLockedAccountResponseAmino): MsgCreatePermanentLockedAccountResponse {
+    return {};
+  },
+
+  toAmino(_: MsgCreatePermanentLockedAccountResponse): MsgCreatePermanentLockedAccountResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -472,6 +583,30 @@ export const MsgCreatePeriodicVestingAccount = {
     message.startTime = object.startTime !== undefined && object.startTime !== null ? Long.fromValue(object.startTime) : Long.ZERO;
     message.vestingPeriods = object.vestingPeriods?.map(e => Period.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: MsgCreatePeriodicVestingAccountAmino): MsgCreatePeriodicVestingAccount {
+    return {
+      fromAddress: object.from_address,
+      toAddress: object.to_address,
+      startTime: Long.fromString(object.start_time),
+      vestingPeriods: Array.isArray(object?.vesting_periods) ? object.vesting_periods.map((e: any) => Period.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: MsgCreatePeriodicVestingAccount): MsgCreatePeriodicVestingAccountAmino {
+    const obj: any = {};
+    obj.from_address = message.fromAddress;
+    obj.to_address = message.toAddress;
+    obj.start_time = message.startTime ? message.startTime.toString() : undefined;
+
+    if (message.vestingPeriods) {
+      obj.vesting_periods = message.vestingPeriods.map(e => e ? Period.toAmino(e) : undefined);
+    } else {
+      obj.vesting_periods = [];
+    }
+
+    return obj;
   }
 
 };
@@ -515,6 +650,15 @@ export const MsgCreatePeriodicVestingAccountResponse = {
   fromPartial(_: Partial<MsgCreatePeriodicVestingAccountResponse>): MsgCreatePeriodicVestingAccountResponse {
     const message = createBaseMsgCreatePeriodicVestingAccountResponse();
     return message;
+  },
+
+  fromAmino(_: MsgCreatePeriodicVestingAccountResponseAmino): MsgCreatePeriodicVestingAccountResponse {
+    return {};
+  },
+
+  toAmino(_: MsgCreatePeriodicVestingAccountResponse): MsgCreatePeriodicVestingAccountResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };

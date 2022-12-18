@@ -1,5 +1,5 @@
-import { Any, AnySDKType } from "../../../../google/protobuf/any";
-import { Plan, PlanSDKType } from "../../../../cosmos/upgrade/v1beta1/upgrade";
+import { Any, AnyAmino, AnySDKType } from "../../../../google/protobuf/any";
+import { Plan, PlanAmino, PlanSDKType } from "../../../../cosmos/upgrade/v1beta1/upgrade";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long } from "../../../../helpers";
 /**
@@ -13,6 +13,18 @@ export interface IdentifiedClientState {
   /** client state */
 
   clientState?: Any;
+}
+/**
+ * IdentifiedClientState defines a client state with an additional client
+ * identifier field.
+ */
+
+export interface IdentifiedClientStateAmino {
+  /** client identifier */
+  client_id: string;
+  /** client state */
+
+  client_state?: AnyAmino;
 }
 /**
  * IdentifiedClientState defines a client state with an additional client
@@ -40,6 +52,18 @@ export interface ConsensusStateWithHeight {
  * field.
  */
 
+export interface ConsensusStateWithHeightAmino {
+  /** consensus state height */
+  height?: HeightAmino;
+  /** consensus state */
+
+  consensus_state?: AnyAmino;
+}
+/**
+ * ConsensusStateWithHeight defines a consensus state with an additional height
+ * field.
+ */
+
 export interface ConsensusStateWithHeightSDKType {
   height?: HeightSDKType;
   consensus_state?: AnySDKType;
@@ -55,6 +79,18 @@ export interface ClientConsensusStates {
   /** consensus states and their heights associated with the client */
 
   consensusStates: ConsensusStateWithHeight[];
+}
+/**
+ * ClientConsensusStates defines all the stored consensus states for a given
+ * client.
+ */
+
+export interface ClientConsensusStatesAmino {
+  /** client identifier */
+  client_id: string;
+  /** consensus states and their heights associated with the client */
+
+  consensus_states: ConsensusStateWithHeightAmino[];
 }
 /**
  * ClientConsensusStates defines all the stored consensus states for a given
@@ -97,6 +133,29 @@ export interface ClientUpdateProposal {
  * chain parameters (with exception to latest height, frozen height, and chain-id).
  */
 
+export interface ClientUpdateProposalAmino {
+  /** the title of the update proposal */
+  title: string;
+  /** the description of the proposal */
+
+  description: string;
+  /** the client identifier for the client to be updated if the proposal passes */
+
+  subject_client_id: string;
+  /**
+   * the substitute client identifier for the client standing in for the subject
+   * client
+   */
+
+  substitute_client_id: string;
+}
+/**
+ * ClientUpdateProposal is a governance proposal. If it passes, the substitute
+ * client's latest consensus state is copied over to the subject client. The proposal
+ * handler may fail if the subject and the substitute do not match in client and
+ * chain parameters (with exception to latest height, frozen height, and chain-id).
+ */
+
 export interface ClientUpdateProposalSDKType {
   $typeUrl?: string;
   title: string;
@@ -124,6 +183,26 @@ export interface UpgradeProposal {
    */
 
   upgradedClientState?: Any;
+}
+/**
+ * UpgradeProposal is a gov Content type for initiating an IBC breaking
+ * upgrade.
+ */
+
+export interface UpgradeProposalAmino {
+  title: string;
+  description: string;
+  plan?: PlanAmino;
+  /**
+   * An UpgradedClientState must be provided to perform an IBC breaking upgrade.
+   * This will make the chain commit to the correct upgraded (self) client state
+   * before the upgrade occurs, so that connecting chains can verify that the
+   * new upgraded client is valid by verifying a proof on the previous version
+   * of the chain. This will allow IBC connections to persist smoothly across
+   * planned chain upgrades
+   */
+
+  upgraded_client_state?: AnyAmino;
 }
 /**
  * UpgradeProposal is a gov Content type for initiating an IBC breaking
@@ -170,6 +249,26 @@ export interface Height {
  * gets reset
  */
 
+export interface HeightAmino {
+  /** the revision that the client is currently on */
+  revision_number: string;
+  /** the height within the given revision */
+
+  revision_height: string;
+}
+/**
+ * Height is a monotonically increasing data type
+ * that can be compared against another Height for the purposes of updating and
+ * freezing clients
+ * 
+ * Normally the RevisionHeight is incremented at each height while keeping
+ * RevisionNumber the same. However some consensus algorithms may choose to
+ * reset the height in certain conditions e.g. hard forks, state-machine
+ * breaking changes In these cases, the RevisionNumber is incremented so that
+ * height continues to be monitonically increasing even as the RevisionHeight
+ * gets reset
+ */
+
 export interface HeightSDKType {
   revision_number: Long;
   revision_height: Long;
@@ -179,6 +278,12 @@ export interface HeightSDKType {
 export interface Params {
   /** allowed_clients defines the list of allowed client state types. */
   allowedClients: string[];
+}
+/** Params defines the set of IBC light client parameters. */
+
+export interface ParamsAmino {
+  /** allowed_clients defines the list of allowed client state types. */
+  allowed_clients: string[];
 }
 /** Params defines the set of IBC light client parameters. */
 
@@ -251,6 +356,20 @@ export const IdentifiedClientState = {
     message.clientId = object.clientId ?? "";
     message.clientState = object.clientState !== undefined && object.clientState !== null ? Any.fromPartial(object.clientState) : undefined;
     return message;
+  },
+
+  fromAmino(object: IdentifiedClientStateAmino): IdentifiedClientState {
+    return {
+      clientId: object.client_id,
+      clientState: object?.client_state ? Any.fromAmino(object.client_state) : undefined
+    };
+  },
+
+  toAmino(message: IdentifiedClientState): IdentifiedClientStateAmino {
+    const obj: any = {};
+    obj.client_id = message.clientId;
+    obj.client_state = message.clientState ? Any.toAmino(message.clientState) : undefined;
+    return obj;
   }
 
 };
@@ -320,6 +439,20 @@ export const ConsensusStateWithHeight = {
     message.height = object.height !== undefined && object.height !== null ? Height.fromPartial(object.height) : undefined;
     message.consensusState = object.consensusState !== undefined && object.consensusState !== null ? Any.fromPartial(object.consensusState) : undefined;
     return message;
+  },
+
+  fromAmino(object: ConsensusStateWithHeightAmino): ConsensusStateWithHeight {
+    return {
+      height: object?.height ? Height.fromAmino(object.height) : undefined,
+      consensusState: object?.consensus_state ? Any.fromAmino(object.consensus_state) : undefined
+    };
+  },
+
+  toAmino(message: ConsensusStateWithHeight): ConsensusStateWithHeightAmino {
+    const obj: any = {};
+    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.consensus_state = message.consensusState ? Any.toAmino(message.consensusState) : undefined;
+    return obj;
   }
 
 };
@@ -395,6 +528,26 @@ export const ClientConsensusStates = {
     message.clientId = object.clientId ?? "";
     message.consensusStates = object.consensusStates?.map(e => ConsensusStateWithHeight.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: ClientConsensusStatesAmino): ClientConsensusStates {
+    return {
+      clientId: object.client_id,
+      consensusStates: Array.isArray(object?.consensus_states) ? object.consensus_states.map((e: any) => ConsensusStateWithHeight.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: ClientConsensusStates): ClientConsensusStatesAmino {
+    const obj: any = {};
+    obj.client_id = message.clientId;
+
+    if (message.consensusStates) {
+      obj.consensus_states = message.consensusStates.map(e => e ? ConsensusStateWithHeight.toAmino(e) : undefined);
+    } else {
+      obj.consensus_states = [];
+    }
+
+    return obj;
   }
 
 };
@@ -489,6 +642,24 @@ export const ClientUpdateProposal = {
     message.subjectClientId = object.subjectClientId ?? "";
     message.substituteClientId = object.substituteClientId ?? "";
     return message;
+  },
+
+  fromAmino(object: ClientUpdateProposalAmino): ClientUpdateProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      subjectClientId: object.subject_client_id,
+      substituteClientId: object.substitute_client_id
+    };
+  },
+
+  toAmino(message: ClientUpdateProposal): ClientUpdateProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.subject_client_id = message.subjectClientId;
+    obj.substitute_client_id = message.substituteClientId;
+    return obj;
   }
 
 };
@@ -583,6 +754,24 @@ export const UpgradeProposal = {
     message.plan = object.plan !== undefined && object.plan !== null ? Plan.fromPartial(object.plan) : undefined;
     message.upgradedClientState = object.upgradedClientState !== undefined && object.upgradedClientState !== null ? Any.fromPartial(object.upgradedClientState) : undefined;
     return message;
+  },
+
+  fromAmino(object: UpgradeProposalAmino): UpgradeProposal {
+    return {
+      title: object.title,
+      description: object.description,
+      plan: object?.plan ? Plan.fromAmino(object.plan) : undefined,
+      upgradedClientState: object?.upgraded_client_state ? Any.fromAmino(object.upgraded_client_state) : undefined
+    };
+  },
+
+  toAmino(message: UpgradeProposal): UpgradeProposalAmino {
+    const obj: any = {};
+    obj.title = message.title;
+    obj.description = message.description;
+    obj.plan = message.plan ? Plan.toAmino(message.plan) : undefined;
+    obj.upgraded_client_state = message.upgradedClientState ? Any.toAmino(message.upgradedClientState) : undefined;
+    return obj;
   }
 
 };
@@ -652,6 +841,20 @@ export const Height = {
     message.revisionNumber = object.revisionNumber !== undefined && object.revisionNumber !== null ? Long.fromValue(object.revisionNumber) : Long.UZERO;
     message.revisionHeight = object.revisionHeight !== undefined && object.revisionHeight !== null ? Long.fromValue(object.revisionHeight) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: HeightAmino): Height {
+    return {
+      revisionNumber: Long.fromString(object.revision_number),
+      revisionHeight: Long.fromString(object.revision_height)
+    };
+  },
+
+  toAmino(message: Height): HeightAmino {
+    const obj: any = {};
+    obj.revision_number = message.revisionNumber ? message.revisionNumber.toString() : undefined;
+    obj.revision_height = message.revisionHeight ? message.revisionHeight.toString() : undefined;
+    return obj;
   }
 
 };
@@ -715,6 +918,24 @@ export const Params = {
     const message = createBaseParams();
     message.allowedClients = object.allowedClients?.map(e => e) || [];
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      allowedClients: Array.isArray(object?.allowed_clients) ? object.allowed_clients.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+
+    if (message.allowedClients) {
+      obj.allowed_clients = message.allowedClients.map(e => e);
+    } else {
+      obj.allowed_clients = [];
+    }
+
+    return obj;
   }
 
 };

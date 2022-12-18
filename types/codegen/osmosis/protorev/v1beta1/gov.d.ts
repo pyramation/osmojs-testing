@@ -13,6 +13,15 @@ export interface SetProtoRevEnabledProposal {
  * SetProtoRevEnabledProposal is a gov Content type to update whether the
  * protorev module is enabled
  */
+export interface SetProtoRevEnabledProposalAmino {
+    title: string;
+    description: string;
+    enabled: boolean;
+}
+/**
+ * SetProtoRevEnabledProposal is a gov Content type to update whether the
+ * protorev module is enabled
+ */
 export interface SetProtoRevEnabledProposalSDKType {
     $typeUrl?: string;
     title: string;
@@ -35,6 +44,16 @@ export interface SetProtoRevAdminAccountProposal {
  * account that will receive permissions to alter hot routes and set the
  * developer address that will be receiving a share of profits from the module
  */
+export interface SetProtoRevAdminAccountProposalAmino {
+    title: string;
+    description: string;
+    account: string;
+}
+/**
+ * SetProtoRevAdminAccountProposal is a gov Content type to set the admin
+ * account that will receive permissions to alter hot routes and set the
+ * developer address that will be receiving a share of profits from the module
+ */
 export interface SetProtoRevAdminAccountProposalSDKType {
     $typeUrl?: string;
     title: string;
@@ -47,6 +66,8 @@ export declare const SetProtoRevEnabledProposal: {
     fromJSON(object: any): SetProtoRevEnabledProposal;
     toJSON(message: SetProtoRevEnabledProposal): unknown;
     fromPartial(object: Partial<SetProtoRevEnabledProposal>): SetProtoRevEnabledProposal;
+    fromAmino(object: SetProtoRevEnabledProposalAmino): SetProtoRevEnabledProposal;
+    toAmino(message: SetProtoRevEnabledProposal): SetProtoRevEnabledProposalAmino;
 };
 export declare const SetProtoRevAdminAccountProposal: {
     encode(message: SetProtoRevAdminAccountProposal, writer?: _m0.Writer): _m0.Writer;
@@ -54,4 +75,6 @@ export declare const SetProtoRevAdminAccountProposal: {
     fromJSON(object: any): SetProtoRevAdminAccountProposal;
     toJSON(message: SetProtoRevAdminAccountProposal): unknown;
     fromPartial(object: Partial<SetProtoRevAdminAccountProposal>): SetProtoRevAdminAccountProposal;
+    fromAmino(object: SetProtoRevAdminAccountProposalAmino): SetProtoRevAdminAccountProposal;
+    toAmino(message: SetProtoRevAdminAccountProposal): SetProtoRevAdminAccountProposalAmino;
 };

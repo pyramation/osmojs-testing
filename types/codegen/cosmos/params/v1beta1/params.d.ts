@@ -7,6 +7,12 @@ export interface ParameterChangeProposal {
     changes: ParamChange[];
 }
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
+export interface ParameterChangeProposalAmino {
+    title: string;
+    description: string;
+    changes: ParamChangeAmino[];
+}
+/** ParameterChangeProposal defines a proposal to change one or more parameters. */
 export interface ParameterChangeProposalSDKType {
     $typeUrl?: string;
     title: string;
@@ -26,6 +32,15 @@ export interface ParamChange {
  * ParamChange defines an individual parameter change, for use in
  * ParameterChangeProposal.
  */
+export interface ParamChangeAmino {
+    subspace: string;
+    key: string;
+    value: string;
+}
+/**
+ * ParamChange defines an individual parameter change, for use in
+ * ParameterChangeProposal.
+ */
 export interface ParamChangeSDKType {
     subspace: string;
     key: string;
@@ -37,6 +52,8 @@ export declare const ParameterChangeProposal: {
     fromJSON(object: any): ParameterChangeProposal;
     toJSON(message: ParameterChangeProposal): unknown;
     fromPartial(object: Partial<ParameterChangeProposal>): ParameterChangeProposal;
+    fromAmino(object: ParameterChangeProposalAmino): ParameterChangeProposal;
+    toAmino(message: ParameterChangeProposal): ParameterChangeProposalAmino;
 };
 export declare const ParamChange: {
     encode(message: ParamChange, writer?: _m0.Writer): _m0.Writer;
@@ -44,4 +61,6 @@ export declare const ParamChange: {
     fromJSON(object: any): ParamChange;
     toJSON(message: ParamChange): unknown;
     fromPartial(object: Partial<ParamChange>): ParamChange;
+    fromAmino(object: ParamChangeAmino): ParamChange;
+    toAmino(message: ParamChange): ParamChangeAmino;
 };

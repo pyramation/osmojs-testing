@@ -1,9 +1,14 @@
-import { FeeToken, FeeTokenSDKType } from "./feetoken";
+import { FeeToken, FeeTokenAmino, FeeTokenSDKType } from "./feetoken";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the txfees module's genesis state. */
 export interface GenesisState {
     basedenom: string;
     feetokens: FeeToken[];
+}
+/** GenesisState defines the txfees module's genesis state. */
+export interface GenesisStateAmino {
+    basedenom: string;
+    feetokens: FeeTokenAmino[];
 }
 /** GenesisState defines the txfees module's genesis state. */
 export interface GenesisStateSDKType {
@@ -16,4 +21,6 @@ export declare const GenesisState: {
     fromJSON(object: any): GenesisState;
     toJSON(message: GenesisState): unknown;
     fromPartial(object: Partial<GenesisState>): GenesisState;
+    fromAmino(object: GenesisStateAmino): GenesisState;
+    toAmino(message: GenesisState): GenesisStateAmino;
 };

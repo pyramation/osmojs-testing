@@ -1,5 +1,5 @@
-import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
-import { TwapRecord, TwapRecordSDKType } from "./twap_record";
+import { Duration, DurationAmino, DurationSDKType } from "../../../google/protobuf/duration";
+import { TwapRecord, TwapRecordAmino, TwapRecordSDKType } from "./twap_record";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
 /** Params holds parameters for the twap module */
@@ -7,6 +7,12 @@ import { isSet } from "../../../helpers";
 export interface Params {
   pruneEpochIdentifier: string;
   recordHistoryKeepPeriod?: Duration;
+}
+/** Params holds parameters for the twap module */
+
+export interface ParamsAmino {
+  prune_epoch_identifier: string;
+  record_history_keep_period?: DurationAmino;
 }
 /** Params holds parameters for the twap module */
 
@@ -22,6 +28,15 @@ export interface GenesisState {
   /** params is the container of twap parameters. */
 
   params?: Params;
+}
+/** GenesisState defines the twap module's genesis state. */
+
+export interface GenesisStateAmino {
+  /** twaps is the collection of all twap records. */
+  twaps: TwapRecordAmino[];
+  /** params is the container of twap parameters. */
+
+  params?: ParamsAmino;
 }
 /** GenesisState defines the twap module's genesis state. */
 
@@ -95,6 +110,20 @@ export const Params = {
     message.pruneEpochIdentifier = object.pruneEpochIdentifier ?? "";
     message.recordHistoryKeepPeriod = object.recordHistoryKeepPeriod !== undefined && object.recordHistoryKeepPeriod !== null ? Duration.fromPartial(object.recordHistoryKeepPeriod) : undefined;
     return message;
+  },
+
+  fromAmino(object: ParamsAmino): Params {
+    return {
+      pruneEpochIdentifier: object.prune_epoch_identifier,
+      recordHistoryKeepPeriod: object?.record_history_keep_period ? Duration.fromAmino(object.record_history_keep_period) : undefined
+    };
+  },
+
+  toAmino(message: Params): ParamsAmino {
+    const obj: any = {};
+    obj.prune_epoch_identifier = message.pruneEpochIdentifier;
+    obj.record_history_keep_period = message.recordHistoryKeepPeriod ? Duration.toAmino(message.recordHistoryKeepPeriod) : undefined;
+    return obj;
   }
 
 };
@@ -170,6 +199,26 @@ export const GenesisState = {
     message.twaps = object.twaps?.map(e => TwapRecord.fromPartial(e)) || [];
     message.params = object.params !== undefined && object.params !== null ? Params.fromPartial(object.params) : undefined;
     return message;
+  },
+
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      twaps: Array.isArray(object?.twaps) ? object.twaps.map((e: any) => TwapRecord.fromAmino(e)) : [],
+      params: object?.params ? Params.fromAmino(object.params) : undefined
+    };
+  },
+
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+
+    if (message.twaps) {
+      obj.twaps = message.twaps.map(e => e ? TwapRecord.toAmino(e) : undefined);
+    } else {
+      obj.twaps = [];
+    }
+
+    obj.params = message.params ? Params.toAmino(message.params) : undefined;
+    return obj;
   }
 
 };

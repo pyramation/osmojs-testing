@@ -1,4 +1,4 @@
-import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
+import { Coin, CoinAmino, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
 import { Long, isSet } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
 export interface MsgSuperfluidDelegate {
@@ -6,32 +6,48 @@ export interface MsgSuperfluidDelegate {
   lockId: Long;
   valAddr: string;
 }
+export interface MsgSuperfluidDelegateAmino {
+  sender: string;
+  lock_id: string;
+  val_addr: string;
+}
 export interface MsgSuperfluidDelegateSDKType {
   sender: string;
   lock_id: Long;
   val_addr: string;
 }
 export interface MsgSuperfluidDelegateResponse {}
+export interface MsgSuperfluidDelegateResponseAmino {}
 export interface MsgSuperfluidDelegateResponseSDKType {}
 export interface MsgSuperfluidUndelegate {
   sender: string;
   lockId: Long;
+}
+export interface MsgSuperfluidUndelegateAmino {
+  sender: string;
+  lock_id: string;
 }
 export interface MsgSuperfluidUndelegateSDKType {
   sender: string;
   lock_id: Long;
 }
 export interface MsgSuperfluidUndelegateResponse {}
+export interface MsgSuperfluidUndelegateResponseAmino {}
 export interface MsgSuperfluidUndelegateResponseSDKType {}
 export interface MsgSuperfluidUnbondLock {
   sender: string;
   lockId: Long;
+}
+export interface MsgSuperfluidUnbondLockAmino {
+  sender: string;
+  lock_id: string;
 }
 export interface MsgSuperfluidUnbondLockSDKType {
   sender: string;
   lock_id: Long;
 }
 export interface MsgSuperfluidUnbondLockResponse {}
+export interface MsgSuperfluidUnbondLockResponseAmino {}
 export interface MsgSuperfluidUnbondLockResponseSDKType {}
 /**
  * MsgLockAndSuperfluidDelegate locks coins with the unbonding period duration,
@@ -50,6 +66,17 @@ export interface MsgLockAndSuperfluidDelegate {
  * specified validator addr.
  */
 
+export interface MsgLockAndSuperfluidDelegateAmino {
+  sender: string;
+  coins: CoinAmino[];
+  val_addr: string;
+}
+/**
+ * MsgLockAndSuperfluidDelegate locks coins with the unbonding period duration,
+ * and then does a superfluid lock from the newly created lockup, to the
+ * specified validator addr.
+ */
+
 export interface MsgLockAndSuperfluidDelegateSDKType {
   sender: string;
   coins: CoinSDKType[];
@@ -57,6 +84,9 @@ export interface MsgLockAndSuperfluidDelegateSDKType {
 }
 export interface MsgLockAndSuperfluidDelegateResponse {
   ID: Long;
+}
+export interface MsgLockAndSuperfluidDelegateResponseAmino {
+  ID: string;
 }
 export interface MsgLockAndSuperfluidDelegateResponseSDKType {
   ID: Long;
@@ -87,12 +117,30 @@ export interface MsgUnPoolWhitelistedPool {
  * until unbond completion.
  */
 
+export interface MsgUnPoolWhitelistedPoolAmino {
+  sender: string;
+  pool_id: string;
+}
+/**
+ * MsgUnPoolWhitelistedPool Unpools every lock the sender has, that is
+ * associated with pool pool_id. If pool_id is not approved for unpooling by
+ * governance, this is a no-op. Unpooling takes the locked gamm shares, and runs
+ * "ExitPool" on it, to get the constituent tokens. e.g. z gamm/pool/1 tokens
+ * ExitPools into constituent tokens x uatom, y uosmo. Then it creates a new
+ * lock for every constituent token, with the duration associated with the lock.
+ * If the lock was unbonding, the new lockup durations should be the time left
+ * until unbond completion.
+ */
+
 export interface MsgUnPoolWhitelistedPoolSDKType {
   sender: string;
   pool_id: Long;
 }
 export interface MsgUnPoolWhitelistedPoolResponse {
   exitedLockIds: Long[];
+}
+export interface MsgUnPoolWhitelistedPoolResponseAmino {
+  exited_lock_ids: string[];
 }
 export interface MsgUnPoolWhitelistedPoolResponseSDKType {
   exited_lock_ids: Long[];
@@ -175,6 +223,22 @@ export const MsgSuperfluidDelegate = {
     message.lockId = object.lockId !== undefined && object.lockId !== null ? Long.fromValue(object.lockId) : Long.UZERO;
     message.valAddr = object.valAddr ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgSuperfluidDelegateAmino): MsgSuperfluidDelegate {
+    return {
+      sender: object.sender,
+      lockId: Long.fromString(object.lock_id),
+      valAddr: object.val_addr
+    };
+  },
+
+  toAmino(message: MsgSuperfluidDelegate): MsgSuperfluidDelegateAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.lock_id = message.lockId ? message.lockId.toString() : undefined;
+    obj.val_addr = message.valAddr;
+    return obj;
   }
 
 };
@@ -218,6 +282,15 @@ export const MsgSuperfluidDelegateResponse = {
   fromPartial(_: Partial<MsgSuperfluidDelegateResponse>): MsgSuperfluidDelegateResponse {
     const message = createBaseMsgSuperfluidDelegateResponse();
     return message;
+  },
+
+  fromAmino(_: MsgSuperfluidDelegateResponseAmino): MsgSuperfluidDelegateResponse {
+    return {};
+  },
+
+  toAmino(_: MsgSuperfluidDelegateResponse): MsgSuperfluidDelegateResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -287,6 +360,20 @@ export const MsgSuperfluidUndelegate = {
     message.sender = object.sender ?? "";
     message.lockId = object.lockId !== undefined && object.lockId !== null ? Long.fromValue(object.lockId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: MsgSuperfluidUndelegateAmino): MsgSuperfluidUndelegate {
+    return {
+      sender: object.sender,
+      lockId: Long.fromString(object.lock_id)
+    };
+  },
+
+  toAmino(message: MsgSuperfluidUndelegate): MsgSuperfluidUndelegateAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.lock_id = message.lockId ? message.lockId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -330,6 +417,15 @@ export const MsgSuperfluidUndelegateResponse = {
   fromPartial(_: Partial<MsgSuperfluidUndelegateResponse>): MsgSuperfluidUndelegateResponse {
     const message = createBaseMsgSuperfluidUndelegateResponse();
     return message;
+  },
+
+  fromAmino(_: MsgSuperfluidUndelegateResponseAmino): MsgSuperfluidUndelegateResponse {
+    return {};
+  },
+
+  toAmino(_: MsgSuperfluidUndelegateResponse): MsgSuperfluidUndelegateResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -399,6 +495,20 @@ export const MsgSuperfluidUnbondLock = {
     message.sender = object.sender ?? "";
     message.lockId = object.lockId !== undefined && object.lockId !== null ? Long.fromValue(object.lockId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: MsgSuperfluidUnbondLockAmino): MsgSuperfluidUnbondLock {
+    return {
+      sender: object.sender,
+      lockId: Long.fromString(object.lock_id)
+    };
+  },
+
+  toAmino(message: MsgSuperfluidUnbondLock): MsgSuperfluidUnbondLockAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.lock_id = message.lockId ? message.lockId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -442,6 +552,15 @@ export const MsgSuperfluidUnbondLockResponse = {
   fromPartial(_: Partial<MsgSuperfluidUnbondLockResponse>): MsgSuperfluidUnbondLockResponse {
     const message = createBaseMsgSuperfluidUnbondLockResponse();
     return message;
+  },
+
+  fromAmino(_: MsgSuperfluidUnbondLockResponseAmino): MsgSuperfluidUnbondLockResponse {
+    return {};
+  },
+
+  toAmino(_: MsgSuperfluidUnbondLockResponse): MsgSuperfluidUnbondLockResponseAmino {
+    const obj: any = {};
+    return obj;
   }
 
 };
@@ -529,6 +648,28 @@ export const MsgLockAndSuperfluidDelegate = {
     message.coins = object.coins?.map(e => Coin.fromPartial(e)) || [];
     message.valAddr = object.valAddr ?? "";
     return message;
+  },
+
+  fromAmino(object: MsgLockAndSuperfluidDelegateAmino): MsgLockAndSuperfluidDelegate {
+    return {
+      sender: object.sender,
+      coins: Array.isArray(object?.coins) ? object.coins.map((e: any) => Coin.fromAmino(e)) : [],
+      valAddr: object.val_addr
+    };
+  },
+
+  toAmino(message: MsgLockAndSuperfluidDelegate): MsgLockAndSuperfluidDelegateAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+
+    if (message.coins) {
+      obj.coins = message.coins.map(e => e ? Coin.toAmino(e) : undefined);
+    } else {
+      obj.coins = [];
+    }
+
+    obj.val_addr = message.valAddr;
+    return obj;
   }
 
 };
@@ -586,6 +727,18 @@ export const MsgLockAndSuperfluidDelegateResponse = {
     const message = createBaseMsgLockAndSuperfluidDelegateResponse();
     message.ID = object.ID !== undefined && object.ID !== null ? Long.fromValue(object.ID) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: MsgLockAndSuperfluidDelegateResponseAmino): MsgLockAndSuperfluidDelegateResponse {
+    return {
+      ID: Long.fromString(object.ID)
+    };
+  },
+
+  toAmino(message: MsgLockAndSuperfluidDelegateResponse): MsgLockAndSuperfluidDelegateResponseAmino {
+    const obj: any = {};
+    obj.ID = message.ID ? message.ID.toString() : undefined;
+    return obj;
   }
 
 };
@@ -655,6 +808,20 @@ export const MsgUnPoolWhitelistedPool = {
     message.sender = object.sender ?? "";
     message.poolId = object.poolId !== undefined && object.poolId !== null ? Long.fromValue(object.poolId) : Long.UZERO;
     return message;
+  },
+
+  fromAmino(object: MsgUnPoolWhitelistedPoolAmino): MsgUnPoolWhitelistedPool {
+    return {
+      sender: object.sender,
+      poolId: Long.fromString(object.pool_id)
+    };
+  },
+
+  toAmino(message: MsgUnPoolWhitelistedPool): MsgUnPoolWhitelistedPoolAmino {
+    const obj: any = {};
+    obj.sender = message.sender;
+    obj.pool_id = message.poolId ? message.poolId.toString() : undefined;
+    return obj;
   }
 
 };
@@ -730,6 +897,24 @@ export const MsgUnPoolWhitelistedPoolResponse = {
     const message = createBaseMsgUnPoolWhitelistedPoolResponse();
     message.exitedLockIds = object.exitedLockIds?.map(e => Long.fromValue(e)) || [];
     return message;
+  },
+
+  fromAmino(object: MsgUnPoolWhitelistedPoolResponseAmino): MsgUnPoolWhitelistedPoolResponse {
+    return {
+      exitedLockIds: Array.isArray(object?.exited_lock_ids) ? object.exited_lock_ids.map((e: any) => e) : []
+    };
+  },
+
+  toAmino(message: MsgUnPoolWhitelistedPoolResponse): MsgUnPoolWhitelistedPoolResponseAmino {
+    const obj: any = {};
+
+    if (message.exitedLockIds) {
+      obj.exited_lock_ids = message.exitedLockIds.map(e => e);
+    } else {
+      obj.exited_lock_ids = [];
+    }
+
+    return obj;
   }
 
 };

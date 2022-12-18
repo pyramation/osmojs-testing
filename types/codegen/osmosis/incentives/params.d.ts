@@ -8,6 +8,14 @@ export interface Params {
     distrEpochIdentifier: string;
 }
 /** Params holds parameters for the incentives module */
+export interface ParamsAmino {
+    /**
+     * distr_epoch_identifier is what epoch type distribution will be triggered by
+     * (day, week, etc.)
+     */
+    distr_epoch_identifier: string;
+}
+/** Params holds parameters for the incentives module */
 export interface ParamsSDKType {
     distr_epoch_identifier: string;
 }
@@ -17,4 +25,6 @@ export declare const Params: {
     fromJSON(object: any): Params;
     toJSON(message: Params): unknown;
     fromPartial(object: Partial<Params>): Params;
+    fromAmino(object: ParamsAmino): Params;
+    toAmino(message: Params): ParamsAmino;
 };

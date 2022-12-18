@@ -1,4 +1,4 @@
-import { PeriodLock, PeriodLockSDKType, SyntheticLock, SyntheticLockSDKType } from "./lock";
+import { PeriodLock, PeriodLockAmino, PeriodLockSDKType, SyntheticLock, SyntheticLockAmino, SyntheticLockSDKType } from "./lock";
 import { Long, isSet } from "../../helpers";
 import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the lockup module's genesis state. */
@@ -7,6 +7,13 @@ export interface GenesisState {
   lastLockId: Long;
   locks: PeriodLock[];
   syntheticLocks: SyntheticLock[];
+}
+/** GenesisState defines the lockup module's genesis state. */
+
+export interface GenesisStateAmino {
+  last_lock_id: string;
+  locks: PeriodLockAmino[];
+  synthetic_locks: SyntheticLockAmino[];
 }
 /** GenesisState defines the lockup module's genesis state. */
 
@@ -104,6 +111,33 @@ export const GenesisState = {
     message.locks = object.locks?.map(e => PeriodLock.fromPartial(e)) || [];
     message.syntheticLocks = object.syntheticLocks?.map(e => SyntheticLock.fromPartial(e)) || [];
     return message;
+  },
+
+  fromAmino(object: GenesisStateAmino): GenesisState {
+    return {
+      lastLockId: Long.fromString(object.last_lock_id),
+      locks: Array.isArray(object?.locks) ? object.locks.map((e: any) => PeriodLock.fromAmino(e)) : [],
+      syntheticLocks: Array.isArray(object?.synthetic_locks) ? object.synthetic_locks.map((e: any) => SyntheticLock.fromAmino(e)) : []
+    };
+  },
+
+  toAmino(message: GenesisState): GenesisStateAmino {
+    const obj: any = {};
+    obj.last_lock_id = message.lastLockId ? message.lastLockId.toString() : undefined;
+
+    if (message.locks) {
+      obj.locks = message.locks.map(e => e ? PeriodLock.toAmino(e) : undefined);
+    } else {
+      obj.locks = [];
+    }
+
+    if (message.syntheticLocks) {
+      obj.synthetic_locks = message.syntheticLocks.map(e => e ? SyntheticLock.toAmino(e) : undefined);
+    } else {
+      obj.synthetic_locks = [];
+    }
+
+    return obj;
   }
 
 };
