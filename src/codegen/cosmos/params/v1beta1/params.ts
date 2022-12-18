@@ -3,6 +3,7 @@ import { isSet } from "../../../helpers";
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
 
 export interface ParameterChangeProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   changes: ParamChange[];
@@ -10,6 +11,7 @@ export interface ParameterChangeProposal {
 /** ParameterChangeProposal defines a proposal to change one or more parameters. */
 
 export interface ParameterChangeProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   changes: ParamChangeSDKType[];
@@ -37,6 +39,7 @@ export interface ParamChangeSDKType {
 
 function createBaseParameterChangeProposal(): ParameterChangeProposal {
   return {
+    $typeUrl: "/cosmos.params.v1beta1.ParameterChangeProposal",
     title: "",
     description: "",
     changes: []

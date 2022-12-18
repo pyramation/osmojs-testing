@@ -72,10 +72,12 @@ export function authorizationTypeToJSON(object: AuthorizationType): string {
  */
 
 export interface StakeAuthorization {
+  $typeUrl?: string;
   /**
    * max_tokens specifies the maximum amount of tokens can be delegate to a validator. If it is
    * empty, there is no spend limit and any amount of coins can be delegated.
    */
+
   maxTokens?: Coin;
   /**
    * allow_list specifies list of validator addresses to whom grantee can delegate tokens on behalf of granter's
@@ -97,6 +99,7 @@ export interface StakeAuthorization {
  */
 
 export interface StakeAuthorizationSDKType {
+  $typeUrl?: string;
   max_tokens?: CoinSDKType;
   allow_list?: StakeAuthorization_ValidatorsSDKType;
   deny_list?: StakeAuthorization_ValidatorsSDKType;
@@ -115,6 +118,7 @@ export interface StakeAuthorization_ValidatorsSDKType {
 
 function createBaseStakeAuthorization(): StakeAuthorization {
   return {
+    $typeUrl: "/cosmos.staking.v1beta1.StakeAuthorization",
     maxTokens: undefined,
     allowList: undefined,
     denyList: undefined,

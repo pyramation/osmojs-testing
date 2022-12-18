@@ -1,5 +1,7 @@
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
+import { SendAuthorization } from "../../bank/v1beta1/authz";
+import { StakeAuthorization } from "../../staking/v1beta1/authz";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
 /**
@@ -8,7 +10,9 @@ import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
  */
 
 export interface GenericAuthorization {
+  $typeUrl?: string;
   /** Msg, identified by it's type URL, to grant unrestricted permissions to execute */
+
   msg: string;
 }
 /**
@@ -17,6 +21,7 @@ export interface GenericAuthorization {
  */
 
 export interface GenericAuthorizationSDKType {
+  $typeUrl?: string;
   msg: string;
 }
 /**
@@ -25,7 +30,7 @@ export interface GenericAuthorizationSDKType {
  */
 
 export interface Grant {
-  authorization?: Any;
+  authorization?: (GenericAuthorization & SendAuthorization & StakeAuthorization & Any) | undefined;
   /**
    * time when the grant will expire and will be pruned. If null, then the grant
    * doesn't have a time expiration (other conditions  in `authorization`
@@ -51,7 +56,7 @@ export interface GrantSDKType {
 export interface GrantAuthorization {
   granter: string;
   grantee: string;
-  authorization?: Any;
+  authorization?: (GenericAuthorization & SendAuthorization & StakeAuthorization & Any) | undefined;
   expiration?: Timestamp;
 }
 /**
@@ -79,6 +84,7 @@ export interface GrantQueueItemSDKType {
 
 function createBaseGenericAuthorization(): GenericAuthorization {
   return {
+    $typeUrl: "/cosmos.authz.v1beta1.GenericAuthorization",
     msg: ""
   };
 }
@@ -357,4 +363,22 @@ export const GrantQueueItem = {
     return message;
   }
 
+};
+export const Cosmos_authzAuthorization_InterfaceDecoder = (input: _m0.Reader | Uint8Array): GenericAuthorization | SendAuthorization | StakeAuthorization | Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    case "/cosmos.authz.v1beta1.GenericAuthorization":
+      return GenericAuthorization.decode(data.value);
+
+    case "/cosmos.bank.v1beta1.SendAuthorization":
+      return SendAuthorization.decode(data.value);
+
+    case "/cosmos.staking.v1beta1.StakeAuthorization":
+      return StakeAuthorization.decode(data.value);
+
+    default:
+      return data;
+  }
 };

@@ -6,6 +6,7 @@ import { isSet } from "../../../helpers";
  */
 
 export interface SetProtoRevEnabledProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   enabled: boolean;
@@ -16,6 +17,7 @@ export interface SetProtoRevEnabledProposal {
  */
 
 export interface SetProtoRevEnabledProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   enabled: boolean;
@@ -27,6 +29,7 @@ export interface SetProtoRevEnabledProposalSDKType {
  */
 
 export interface SetProtoRevAdminAccountProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   account: string;
@@ -38,6 +41,7 @@ export interface SetProtoRevAdminAccountProposal {
  */
 
 export interface SetProtoRevAdminAccountProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   account: string;
@@ -45,6 +49,7 @@ export interface SetProtoRevAdminAccountProposalSDKType {
 
 function createBaseSetProtoRevEnabledProposal(): SetProtoRevEnabledProposal {
   return {
+    $typeUrl: "/osmosis.protorev.v1beta1.SetProtoRevEnabledProposal",
     title: "",
     description: "",
     enabled: false
@@ -126,6 +131,7 @@ export const SetProtoRevEnabledProposal = {
 
 function createBaseSetProtoRevAdminAccountProposal(): SetProtoRevAdminAccountProposal {
   return {
+    $typeUrl: "/osmosis.protorev.v1beta1.SetProtoRevAdminAccountProposal",
     title: "",
     description: "",
     account: ""

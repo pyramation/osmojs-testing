@@ -10,6 +10,7 @@ import { isSet } from "../../../helpers";
  */
 
 export interface UpdateFeeTokenProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   feetoken?: FeeToken;
@@ -23,6 +24,7 @@ export interface UpdateFeeTokenProposal {
  */
 
 export interface UpdateFeeTokenProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   feetoken?: FeeTokenSDKType;
@@ -30,6 +32,7 @@ export interface UpdateFeeTokenProposalSDKType {
 
 function createBaseUpdateFeeTokenProposal(): UpdateFeeTokenProposal {
   return {
+    $typeUrl: "/osmosis.txfees.v1beta1.UpdateFeeTokenProposal",
     title: "",
     description: "",
     feetoken: undefined

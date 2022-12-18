@@ -1,5 +1,7 @@
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
+import { Pool as Pool1 } from "../pool-models/balancer/balancerPool";
+import { Pool as Pool2 } from "../pool-models/stableswap/stableswap_pool";
 import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../../helpers";
 /** Params holds parameters for the incentives module */
@@ -15,7 +17,7 @@ export interface ParamsSDKType {
 /** GenesisState defines the gamm module's genesis state. */
 
 export interface GenesisState {
-  pools: Any[];
+  pools: (Pool1 & Pool2 & Any)[] | Any[];
   /** will be renamed to next_pool_id in an upcoming version */
 
   nextPoolNumber: Long;
@@ -177,4 +179,19 @@ export const GenesisState = {
     return message;
   }
 
+};
+export const PoolI_InterfaceDecoder = (input: _m0.Reader | Uint8Array): Pool1 | Pool2 | Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    case "/osmosis.gamm.v1beta1.Pool":
+      return Pool1.decode(data.value);
+
+    case "/osmosis.gamm.poolmodels.stableswap.v1beta1.Pool":
+      return Pool2.decode(data.value);
+
+    default:
+      return data;
+  }
 };

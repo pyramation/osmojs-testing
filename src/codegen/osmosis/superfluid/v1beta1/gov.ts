@@ -7,6 +7,7 @@ import { isSet, Long } from "../../../helpers";
  */
 
 export interface SetSuperfluidAssetsProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   assets: SuperfluidAsset[];
@@ -17,6 +18,7 @@ export interface SetSuperfluidAssetsProposal {
  */
 
 export interface SetSuperfluidAssetsProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   assets: SuperfluidAssetSDKType[];
@@ -27,6 +29,7 @@ export interface SetSuperfluidAssetsProposalSDKType {
  */
 
 export interface RemoveSuperfluidAssetsProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   superfluidAssetDenoms: string[];
@@ -37,6 +40,7 @@ export interface RemoveSuperfluidAssetsProposal {
  */
 
 export interface RemoveSuperfluidAssetsProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   superfluid_asset_denoms: string[];
@@ -47,6 +51,7 @@ export interface RemoveSuperfluidAssetsProposalSDKType {
  */
 
 export interface UpdateUnpoolWhiteListProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   ids: Long[];
@@ -58,6 +63,7 @@ export interface UpdateUnpoolWhiteListProposal {
  */
 
 export interface UpdateUnpoolWhiteListProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   ids: Long[];
@@ -66,6 +72,7 @@ export interface UpdateUnpoolWhiteListProposalSDKType {
 
 function createBaseSetSuperfluidAssetsProposal(): SetSuperfluidAssetsProposal {
   return {
+    $typeUrl: "/osmosis.superfluid.v1beta1.SetSuperfluidAssetsProposal",
     title: "",
     description: "",
     assets: []
@@ -153,6 +160,7 @@ export const SetSuperfluidAssetsProposal = {
 
 function createBaseRemoveSuperfluidAssetsProposal(): RemoveSuperfluidAssetsProposal {
   return {
+    $typeUrl: "/osmosis.superfluid.v1beta1.RemoveSuperfluidAssetsProposal",
     title: "",
     description: "",
     superfluidAssetDenoms: []
@@ -240,6 +248,7 @@ export const RemoveSuperfluidAssetsProposal = {
 
 function createBaseUpdateUnpoolWhiteListProposal(): UpdateUnpoolWhiteListProposal {
   return {
+    $typeUrl: "/osmosis.superfluid.v1beta1.UpdateUnpoolWhiteListProposal",
     title: "",
     description: "",
     ids: [],

@@ -8,7 +8,7 @@ import { isSet, bytesFromBase64, base64FromBytes } from "../../../helpers";
 
 export interface MsgSubmitEvidence {
   submitter: string;
-  evidence?: Any;
+  evidence?: (Any) | undefined;
 }
 /**
  * MsgSubmitEvidence represents a message that supports submitting arbitrary
@@ -155,4 +155,13 @@ export const MsgSubmitEvidenceResponse = {
     return message;
   }
 
+};
+export const Cosmos_evidenceEvidence_InterfaceDecoder = (input: _m0.Reader | Uint8Array): Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    default:
+      return data;
+  }
 };

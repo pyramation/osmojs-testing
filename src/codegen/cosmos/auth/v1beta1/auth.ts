@@ -8,6 +8,7 @@ import * as _m0 from "protobufjs/minimal";
  */
 
 export interface BaseAccount {
+  $typeUrl?: string;
   address: string;
   pubKey?: Any;
   accountNumber: Long;
@@ -20,6 +21,7 @@ export interface BaseAccount {
  */
 
 export interface BaseAccountSDKType {
+  $typeUrl?: string;
   address: string;
   pub_key?: AnySDKType;
   account_number: Long;
@@ -28,6 +30,7 @@ export interface BaseAccountSDKType {
 /** ModuleAccount defines an account for modules that holds coins on a pool. */
 
 export interface ModuleAccount {
+  $typeUrl?: string;
   baseAccount?: BaseAccount;
   name: string;
   permissions: string[];
@@ -35,6 +38,7 @@ export interface ModuleAccount {
 /** ModuleAccount defines an account for modules that holds coins on a pool. */
 
 export interface ModuleAccountSDKType {
+  $typeUrl?: string;
   base_account?: BaseAccountSDKType;
   name: string;
   permissions: string[];
@@ -60,6 +64,7 @@ export interface ParamsSDKType {
 
 function createBaseBaseAccount(): BaseAccount {
   return {
+    $typeUrl: "/cosmos.auth.v1beta1.BaseAccount",
     address: "",
     pubKey: undefined,
     accountNumber: Long.UZERO,
@@ -153,6 +158,7 @@ export const BaseAccount = {
 
 function createBaseModuleAccount(): ModuleAccount {
   return {
+    $typeUrl: "/cosmos.auth.v1beta1.ModuleAccount",
     baseAccount: undefined,
     name: "",
     permissions: []

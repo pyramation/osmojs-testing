@@ -170,7 +170,7 @@ export interface Validator {
   operatorAddress: string;
   /** consensus_pubkey is the consensus public key of the validator, as a Protobuf Any. */
 
-  consensusPubkey?: Any;
+  consensusPubkey?: (Any) | undefined;
   /** jailed defined whether the validator has been jailed from bonded status or not. */
 
   jailed: boolean;
@@ -2228,4 +2228,13 @@ export const Pool = {
     return message;
   }
 
+};
+export const Cosmos_cryptoPubKey_InterfaceDecoder = (input: _m0.Reader | Uint8Array): Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    default:
+      return data;
+  }
 };

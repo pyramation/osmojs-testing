@@ -309,7 +309,9 @@ export interface MembersSDKType {
 /** ThresholdDecisionPolicy implements the DecisionPolicy interface */
 
 export interface ThresholdDecisionPolicy {
+  $typeUrl?: string;
   /** threshold is the minimum weighted sum of yes votes that must be met or exceeded for a proposal to succeed. */
+
   threshold: string;
   /** windows defines the different windows for voting and execution. */
 
@@ -318,13 +320,16 @@ export interface ThresholdDecisionPolicy {
 /** ThresholdDecisionPolicy implements the DecisionPolicy interface */
 
 export interface ThresholdDecisionPolicySDKType {
+  $typeUrl?: string;
   threshold: string;
   windows?: DecisionPolicyWindowsSDKType;
 }
 /** PercentageDecisionPolicy implements the DecisionPolicy interface */
 
 export interface PercentageDecisionPolicy {
+  $typeUrl?: string;
   /** percentage is the minimum percentage the weighted sum of yes votes must meet for a proposal to succeed. */
+
   percentage: string;
   /** windows defines the different windows for voting and execution. */
 
@@ -333,6 +338,7 @@ export interface PercentageDecisionPolicy {
 /** PercentageDecisionPolicy implements the DecisionPolicy interface */
 
 export interface PercentageDecisionPolicySDKType {
+  $typeUrl?: string;
   percentage: string;
   windows?: DecisionPolicyWindowsSDKType;
 }
@@ -439,7 +445,7 @@ export interface GroupPolicyInfo {
   version: Long;
   /** decision_policy specifies the group policy's decision policy. */
 
-  decisionPolicy?: Any;
+  decisionPolicy?: (ThresholdDecisionPolicy & PercentageDecisionPolicy & Any) | undefined;
   /** created_at is a timestamp specifying when a group policy was created. */
 
   createdAt?: Timestamp;
@@ -753,6 +759,7 @@ export const Members = {
 
 function createBaseThresholdDecisionPolicy(): ThresholdDecisionPolicy {
   return {
+    $typeUrl: "/cosmos.group.v1.ThresholdDecisionPolicy",
     threshold: "",
     windows: undefined
   };
@@ -822,6 +829,7 @@ export const ThresholdDecisionPolicy = {
 
 function createBasePercentageDecisionPolicy(): PercentageDecisionPolicy {
   return {
+    $typeUrl: "/cosmos.group.v1.PercentageDecisionPolicy",
     percentage: "",
     windows: undefined
   };
@@ -1682,4 +1690,19 @@ export const Vote = {
     return message;
   }
 
+};
+export const Cosmos_groupDecisionPolicy_InterfaceDecoder = (input: _m0.Reader | Uint8Array): ThresholdDecisionPolicy | PercentageDecisionPolicy | Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    case "/cosmos.group.v1.ThresholdDecisionPolicy":
+      return ThresholdDecisionPolicy.decode(data.value);
+
+    case "/cosmos.group.v1.PercentageDecisionPolicy":
+      return PercentageDecisionPolicy.decode(data.value);
+
+    default:
+      return data;
+  }
 };

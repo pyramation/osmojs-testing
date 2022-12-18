@@ -12,6 +12,7 @@ import { isSet } from "../../../helpers";
  */
 
 export interface ReplacePoolIncentivesProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   records: DistrRecord[];
@@ -27,6 +28,7 @@ export interface ReplacePoolIncentivesProposal {
  */
 
 export interface ReplacePoolIncentivesProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   records: DistrRecordSDKType[];
@@ -42,6 +44,7 @@ export interface ReplacePoolIncentivesProposalSDKType {
  */
 
 export interface UpdatePoolIncentivesProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   records: DistrRecord[];
@@ -57,6 +60,7 @@ export interface UpdatePoolIncentivesProposal {
  */
 
 export interface UpdatePoolIncentivesProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   records: DistrRecordSDKType[];
@@ -64,6 +68,7 @@ export interface UpdatePoolIncentivesProposalSDKType {
 
 function createBaseReplacePoolIncentivesProposal(): ReplacePoolIncentivesProposal {
   return {
+    $typeUrl: "/osmosis.poolincentives.v1beta1.ReplacePoolIncentivesProposal",
     title: "",
     description: "",
     records: []
@@ -151,6 +156,7 @@ export const ReplacePoolIncentivesProposal = {
 
 function createBaseUpdatePoolIncentivesProposal(): UpdatePoolIncentivesProposal {
   return {
+    $typeUrl: "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal",
     title: "",
     description: "",
     records: []

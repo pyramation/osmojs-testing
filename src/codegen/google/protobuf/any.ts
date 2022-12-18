@@ -83,6 +83,7 @@ import { isSet, bytesFromBase64, base64FromBytes } from "../../helpers";
  */
 
 export interface Any {
+  $typeUrl?: string;
   /**
    * A URL/resource name that uniquely identifies the type of the serialized
    * protocol buffer message. This string must contain at least
@@ -112,6 +113,7 @@ export interface Any {
    * Schemes other than `http`, `https` (or the empty scheme) might be
    * used with implementation specific semantics.
    */
+
   typeUrl: string;
   /** Must be a valid serialized protocol buffer of the above specified type. */
 
@@ -200,12 +202,14 @@ export interface Any {
  */
 
 export interface AnySDKType {
+  $typeUrl?: string;
   type_url: string;
   value: Uint8Array;
 }
 
 function createBaseAny(): Any {
   return {
+    $typeUrl: "/google.protobuf.Any",
     typeUrl: "",
     value: new Uint8Array()
   };

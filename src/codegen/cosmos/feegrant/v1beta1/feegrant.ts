@@ -10,11 +10,13 @@ import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
  */
 
 export interface BasicAllowance {
+  $typeUrl?: string;
   /**
    * spend_limit specifies the maximum amount of tokens that can be spent
    * by this allowance and will be updated as tokens are spent. If it is
    * empty, there is no spend limit and any amount of coins can be spent.
    */
+
   spendLimit: Coin[];
   /** expiration specifies an optional time when this allowance expires */
 
@@ -26,6 +28,7 @@ export interface BasicAllowance {
  */
 
 export interface BasicAllowanceSDKType {
+  $typeUrl?: string;
   spend_limit: CoinSDKType[];
   expiration?: TimestampSDKType;
 }
@@ -35,7 +38,9 @@ export interface BasicAllowanceSDKType {
  */
 
 export interface PeriodicAllowance {
+  $typeUrl?: string;
   /** basic specifies a struct of `BasicAllowance` */
+
   basic?: BasicAllowance;
   /**
    * period specifies the time duration in which period_spend_limit coins can
@@ -66,6 +71,7 @@ export interface PeriodicAllowance {
  */
 
 export interface PeriodicAllowanceSDKType {
+  $typeUrl?: string;
   basic?: BasicAllowanceSDKType;
   period?: DurationSDKType;
   period_spend_limit: CoinSDKType[];
@@ -75,8 +81,10 @@ export interface PeriodicAllowanceSDKType {
 /** AllowedMsgAllowance creates allowance only for specified message types. */
 
 export interface AllowedMsgAllowance {
+  $typeUrl?: string;
   /** allowance can be any of basic and periodic fee allowance. */
-  allowance?: Any;
+
+  allowance?: (BasicAllowance & PeriodicAllowance & AllowedMsgAllowance & Any) | undefined;
   /** allowed_messages are the messages for which the grantee has the access. */
 
   allowedMessages: string[];
@@ -84,6 +92,7 @@ export interface AllowedMsgAllowance {
 /** AllowedMsgAllowance creates allowance only for specified message types. */
 
 export interface AllowedMsgAllowanceSDKType {
+  $typeUrl?: string;
   allowance?: AnySDKType;
   allowed_messages: string[];
 }
@@ -97,7 +106,7 @@ export interface Grant {
   grantee: string;
   /** allowance can be any of basic, periodic, allowed fee allowance. */
 
-  allowance?: Any;
+  allowance?: (BasicAllowance & PeriodicAllowance & AllowedMsgAllowance & Any) | undefined;
 }
 /** Grant is stored in the KVStore to record a grant with full context */
 
@@ -109,6 +118,7 @@ export interface GrantSDKType {
 
 function createBaseBasicAllowance(): BasicAllowance {
   return {
+    $typeUrl: "/cosmos.feegrant.v1beta1.BasicAllowance",
     spendLimit: [],
     expiration: undefined
   };
@@ -184,6 +194,7 @@ export const BasicAllowance = {
 
 function createBasePeriodicAllowance(): PeriodicAllowance {
   return {
+    $typeUrl: "/cosmos.feegrant.v1beta1.PeriodicAllowance",
     basic: undefined,
     period: undefined,
     periodSpendLimit: [],
@@ -300,6 +311,7 @@ export const PeriodicAllowance = {
 
 function createBaseAllowedMsgAllowance(): AllowedMsgAllowance {
   return {
+    $typeUrl: "/cosmos.feegrant.v1beta1.AllowedMsgAllowance",
     allowance: undefined,
     allowedMessages: []
   };
@@ -452,4 +464,22 @@ export const Grant = {
     return message;
   }
 
+};
+export const Cosmos_feegrantFeeAllowanceI_InterfaceDecoder = (input: _m0.Reader | Uint8Array): BasicAllowance | PeriodicAllowance | AllowedMsgAllowance | Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    case "/cosmos.feegrant.v1beta1.BasicAllowance":
+      return BasicAllowance.decode(data.value);
+
+    case "/cosmos.feegrant.v1beta1.PeriodicAllowance":
+      return PeriodicAllowance.decode(data.value);
+
+    case "/cosmos.feegrant.v1beta1.AllowedMsgAllowance":
+      return AllowedMsgAllowance.decode(data.value);
+
+    default:
+      return data;
+  }
 };

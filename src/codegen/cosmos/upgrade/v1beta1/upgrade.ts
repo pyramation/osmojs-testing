@@ -69,6 +69,7 @@ export interface PlanSDKType {
 /** @deprecated */
 
 export interface SoftwareUpgradeProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
   plan?: Plan;
@@ -83,6 +84,7 @@ export interface SoftwareUpgradeProposal {
 /** @deprecated */
 
 export interface SoftwareUpgradeProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
   plan?: PlanSDKType;
@@ -97,6 +99,7 @@ export interface SoftwareUpgradeProposalSDKType {
 /** @deprecated */
 
 export interface CancelSoftwareUpgradeProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
 }
@@ -110,6 +113,7 @@ export interface CancelSoftwareUpgradeProposal {
 /** @deprecated */
 
 export interface CancelSoftwareUpgradeProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
 }
@@ -244,6 +248,7 @@ export const Plan = {
 
 function createBaseSoftwareUpgradeProposal(): SoftwareUpgradeProposal {
   return {
+    $typeUrl: "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal",
     title: "",
     description: "",
     plan: undefined
@@ -325,6 +330,7 @@ export const SoftwareUpgradeProposal = {
 
 function createBaseCancelSoftwareUpgradeProposal(): CancelSoftwareUpgradeProposal {
   return {
+    $typeUrl: "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal",
     title: "",
     description: ""
   };

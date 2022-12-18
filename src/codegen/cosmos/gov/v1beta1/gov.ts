@@ -2,6 +2,14 @@ import { Coin, CoinSDKType } from "../../base/v1beta1/coin";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
 import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
 import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
+import { CommunityPoolSpendProposal, CommunityPoolSpendProposalWithDeposit } from "../../distribution/v1beta1/distribution";
+import { ParameterChangeProposal } from "../../params/v1beta1/params";
+import { SoftwareUpgradeProposal, CancelSoftwareUpgradeProposal } from "../../upgrade/v1beta1/upgrade";
+import { ClientUpdateProposal, UpgradeProposal } from "../../../ibc/core/client/v1/client";
+import { ReplacePoolIncentivesProposal, UpdatePoolIncentivesProposal } from "../../../osmosis/pool-incentives/v1beta1/gov";
+import { SetProtoRevEnabledProposal, SetProtoRevAdminAccountProposal } from "../../../osmosis/protorev/v1beta1/gov";
+import { SetSuperfluidAssetsProposal, RemoveSuperfluidAssetsProposal, UpdateUnpoolWhiteListProposal } from "../../../osmosis/superfluid/v1beta1/gov";
+import { UpdateFeeTokenProposal } from "../../../osmosis/txfees/v1beta1/gov";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long, fromJsonTimestamp, fromTimestamp, bytesFromBase64, base64FromBytes } from "../../../helpers";
 /** VoteOption enumerates the valid vote options for a given governance proposal. */
@@ -195,6 +203,7 @@ export interface WeightedVoteOptionSDKType {
  */
 
 export interface TextProposal {
+  $typeUrl?: string;
   title: string;
   description: string;
 }
@@ -204,6 +213,7 @@ export interface TextProposal {
  */
 
 export interface TextProposalSDKType {
+  $typeUrl?: string;
   title: string;
   description: string;
 }
@@ -231,7 +241,7 @@ export interface DepositSDKType {
 
 export interface Proposal {
   proposalId: Long;
-  content?: Any;
+  content?: (TextProposal & CommunityPoolSpendProposal & CommunityPoolSpendProposalWithDeposit & ParameterChangeProposal & SoftwareUpgradeProposal & CancelSoftwareUpgradeProposal & ClientUpdateProposal & UpgradeProposal & ReplacePoolIncentivesProposal & UpdatePoolIncentivesProposal & SetProtoRevEnabledProposal & SetProtoRevAdminAccountProposal & SetSuperfluidAssetsProposal & RemoveSuperfluidAssetsProposal & UpdateUnpoolWhiteListProposal & UpdateFeeTokenProposal & Any) | undefined;
   status: ProposalStatus;
   /**
    * final_tally_result is the final tally result of the proposal. When
@@ -435,6 +445,7 @@ export const WeightedVoteOption = {
 
 function createBaseTextProposal(): TextProposal {
   return {
+    $typeUrl: "/cosmos.gov.v1beta1.TextProposal",
     title: "",
     description: ""
   };
@@ -1151,4 +1162,61 @@ export const TallyParams = {
     return message;
   }
 
+};
+export const Cosmos_govv1beta1Content_InterfaceDecoder = (input: _m0.Reader | Uint8Array): CommunityPoolSpendProposal | CommunityPoolSpendProposalWithDeposit | TextProposal | ParameterChangeProposal | SoftwareUpgradeProposal | CancelSoftwareUpgradeProposal | ClientUpdateProposal | UpgradeProposal | ReplacePoolIncentivesProposal | UpdatePoolIncentivesProposal | SetProtoRevEnabledProposal | SetProtoRevAdminAccountProposal | SetSuperfluidAssetsProposal | RemoveSuperfluidAssetsProposal | UpdateUnpoolWhiteListProposal | UpdateFeeTokenProposal | Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    case "/cosmos.distribution.v1beta1.CommunityPoolSpendProposal":
+      return CommunityPoolSpendProposal.decode(data.value);
+
+    case "/cosmos.distribution.v1beta1.CommunityPoolSpendProposalWithDeposit":
+      return CommunityPoolSpendProposalWithDeposit.decode(data.value);
+
+    case "/cosmos.gov.v1beta1.TextProposal":
+      return TextProposal.decode(data.value);
+
+    case "/cosmos.params.v1beta1.ParameterChangeProposal":
+      return ParameterChangeProposal.decode(data.value);
+
+    case "/cosmos.upgrade.v1beta1.SoftwareUpgradeProposal":
+      return SoftwareUpgradeProposal.decode(data.value);
+
+    case "/cosmos.upgrade.v1beta1.CancelSoftwareUpgradeProposal":
+      return CancelSoftwareUpgradeProposal.decode(data.value);
+
+    case "/ibc.core.client.v1.ClientUpdateProposal":
+      return ClientUpdateProposal.decode(data.value);
+
+    case "/ibc.core.client.v1.UpgradeProposal":
+      return UpgradeProposal.decode(data.value);
+
+    case "/osmosis.poolincentives.v1beta1.ReplacePoolIncentivesProposal":
+      return ReplacePoolIncentivesProposal.decode(data.value);
+
+    case "/osmosis.poolincentives.v1beta1.UpdatePoolIncentivesProposal":
+      return UpdatePoolIncentivesProposal.decode(data.value);
+
+    case "/osmosis.protorev.v1beta1.SetProtoRevEnabledProposal":
+      return SetProtoRevEnabledProposal.decode(data.value);
+
+    case "/osmosis.protorev.v1beta1.SetProtoRevAdminAccountProposal":
+      return SetProtoRevAdminAccountProposal.decode(data.value);
+
+    case "/osmosis.superfluid.v1beta1.SetSuperfluidAssetsProposal":
+      return SetSuperfluidAssetsProposal.decode(data.value);
+
+    case "/osmosis.superfluid.v1beta1.RemoveSuperfluidAssetsProposal":
+      return RemoveSuperfluidAssetsProposal.decode(data.value);
+
+    case "/osmosis.superfluid.v1beta1.UpdateUnpoolWhiteListProposal":
+      return UpdateUnpoolWhiteListProposal.decode(data.value);
+
+    case "/osmosis.txfees.v1beta1.UpdateFeeTokenProposal":
+      return UpdateFeeTokenProposal.decode(data.value);
+
+    default:
+      return data;
+  }
 };

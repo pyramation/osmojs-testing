@@ -12,7 +12,7 @@ export interface MsgCreateValidator {
   minSelfDelegation: string;
   delegatorAddress: string;
   validatorAddress: string;
-  pubkey?: Any;
+  pubkey?: (Any) | undefined;
   value?: Coin;
 }
 /** MsgCreateValidator defines a SDK message for creating a new validator. */
@@ -868,4 +868,13 @@ export const MsgUndelegateResponse = {
     return message;
   }
 
+};
+export const Cosmos_cryptoPubKey_InterfaceDecoder = (input: _m0.Reader | Uint8Array): Any => {
+  const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+  const data = Any.decode(reader, reader.uint32());
+
+  switch (data.typeUrl) {
+    default:
+      return data;
+  }
 };
