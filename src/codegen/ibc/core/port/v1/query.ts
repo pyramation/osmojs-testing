@@ -188,7 +188,7 @@ export const QueryAppVersionRequest = {
     const obj: any = {};
     obj.port_id = message.portId;
     obj.connection_id = message.connectionId;
-    message.ordering !== undefined && (obj.ordering = orderToJSON(message.ordering));
+    obj.ordering = message.ordering;
     obj.counterparty = message.counterparty ? Counterparty.toAmino(message.counterparty) : undefined;
     obj.proposed_version = message.proposedVersion;
     return obj;

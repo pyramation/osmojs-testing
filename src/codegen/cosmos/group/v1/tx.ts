@@ -2353,7 +2353,7 @@ export const MsgSubmitProposal = {
       obj.messages = [];
     }
 
-    message.exec !== undefined && (obj.exec = execToJSON(message.exec));
+    obj.exec = message.exec;
     return obj;
   }
 
@@ -2680,9 +2680,9 @@ export const MsgVote = {
     const obj: any = {};
     obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
     obj.voter = message.voter;
-    message.option !== undefined && (obj.option = voteOptionToJSON(message.option));
+    obj.option = message.option;
     obj.metadata = message.metadata;
-    message.exec !== undefined && (obj.exec = execToJSON(message.exec));
+    obj.exec = message.exec;
     return obj;
   }
 

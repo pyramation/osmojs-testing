@@ -153,7 +153,7 @@ export const ModuleRoute = {
 
   toAmino(message: ModuleRoute): ModuleRouteAmino {
     const obj: any = {};
-    message.poolType !== undefined && (obj.pool_type = poolTypeToJSON(message.poolType));
+    obj.pool_type = message.poolType;
     return obj;
   }
 

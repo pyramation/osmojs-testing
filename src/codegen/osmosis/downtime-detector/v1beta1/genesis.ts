@@ -109,7 +109,7 @@ export const GenesisDowntimeEntry = {
 
   toAmino(message: GenesisDowntimeEntry): GenesisDowntimeEntryAmino {
     const obj: any = {};
-    message.duration !== undefined && (obj.duration = downtimeToJSON(message.duration));
+    obj.duration = message.duration;
     obj.last_downtime = message.lastDowntime ? Timestamp.toAmino(message.lastDowntime) : undefined;
     return obj;
   }

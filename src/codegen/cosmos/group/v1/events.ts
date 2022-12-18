@@ -729,7 +729,7 @@ export const EventExec = {
   toAmino(message: EventExec): EventExecAmino {
     const obj: any = {};
     obj.proposal_id = message.proposalId ? message.proposalId.toString() : undefined;
-    message.result !== undefined && (obj.result = proposalExecutorResultToJSON(message.result));
+    obj.result = message.result;
     return obj;
   }
 

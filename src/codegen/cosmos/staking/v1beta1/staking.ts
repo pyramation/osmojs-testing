@@ -1402,7 +1402,7 @@ export const Validator = {
     obj.operator_address = message.operatorAddress;
     obj.consensus_pubkey = message.consensusPubkey ? Cosmos_cryptoPubKey_ToAmino((message.consensusPubkey as Any)) : undefined;
     obj.jailed = message.jailed;
-    message.status !== undefined && (obj.status = bondStatusToJSON(message.status));
+    obj.status = message.status;
     obj.tokens = message.tokens;
     obj.delegator_shares = message.delegatorShares;
     obj.description = message.description ? Description.toAmino(message.description) : undefined;
