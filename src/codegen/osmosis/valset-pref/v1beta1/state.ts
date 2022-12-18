@@ -27,13 +27,7 @@ export interface ValidatorPreference {
  */
 
 export interface ValidatorPreferenceSDKType {
-  /**
-   * val_oper_address holds the validator address the user wants to delegate
-   * funds to.
-   */
   val_oper_address: string;
-  /** weight is decimal between 0 and 1, and they all sum to 1. */
-
   weight: string;
 }
 /**
@@ -55,7 +49,6 @@ export interface ValidatorSetPreferences {
  */
 
 export interface ValidatorSetPreferencesSDKType {
-  /** preference holds {valAddr, weight} for the user who created it. */
   preferences: ValidatorPreferenceSDKType[];
 }
 

@@ -13,17 +13,17 @@ export interface AminoMsgCreateStableswapPool extends AminoMsg {
       denom: string;
       amount: string;
     }[];
-    scaling_factors: Long[];
+    scaling_factors: string[];
     future_pool_governor: string;
     scaling_factor_controller: string;
   };
 }
 export interface AminoMsgStableSwapAdjustScalingFactors extends AminoMsg {
-  type: "osmosis/gamm/stable-swap-adjust-scaling-factors";
+  type: "osmosis/gamm/stableswap-adjust-scaling-factors";
   value: {
     sender: string;
     pool_id: string;
-    scaling_factors: Long[];
+    scaling_factors: string[];
   };
 }
 export const AminoConverter = {
@@ -77,7 +77,7 @@ export const AminoConverter = {
     }
   },
   "/osmosis.gamm.poolmodels.stableswap.v1beta1.MsgStableSwapAdjustScalingFactors": {
-    aminoType: "osmosis/gamm/stable-swap-adjust-scaling-factors",
+    aminoType: "osmosis/gamm/stableswap-adjust-scaling-factors",
     toAmino: ({
       sender,
       poolId,

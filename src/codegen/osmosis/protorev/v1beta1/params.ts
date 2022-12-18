@@ -9,7 +9,6 @@ export interface Params {
 /** Params defines the parameters for the module. */
 
 export interface ParamsSDKType {
-  /** Boolean whether the module is going to be enabled */
   enabled: boolean;
 }
 

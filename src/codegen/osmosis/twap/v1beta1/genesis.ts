@@ -26,10 +26,7 @@ export interface GenesisState {
 /** GenesisState defines the twap module's genesis state. */
 
 export interface GenesisStateSDKType {
-  /** twaps is the collection of all twap records. */
   twaps: TwapRecordSDKType[];
-  /** params is the container of twap parameters. */
-
   params?: ParamsSDKType;
 }
 

@@ -19,25 +19,7 @@ export enum PoolType {
   Concentrated = 2,
   UNRECOGNIZED = -1,
 }
-/** PoolType is an enumeration of all supported pool types. */
-
-export enum PoolTypeSDKType {
-  /** Balancer - Balancer is the standard xy=k curve. Its pool model is defined in x/gamm. */
-  Balancer = 0,
-
-  /**
-   * Stableswap - Stableswap is the Solidly cfmm stable swap curve. Its pool model is defined
-   * in x/gamm.
-   */
-  Stableswap = 1,
-
-  /**
-   * Concentrated - Concentrated is the pool model specific to concentrated liquidity. It is
-   * defined in x/concentrated-liquidity.
-   */
-  Concentrated = 2,
-  UNRECOGNIZED = -1,
-}
+export const PoolTypeSDKType = PoolType;
 export function poolTypeFromJSON(object: any): PoolType {
   switch (object) {
     case 0:
@@ -93,8 +75,7 @@ export interface ModuleRoute {
  */
 
 export interface ModuleRouteSDKType {
-  /** pool_type specifies the type of the pool */
-  pool_type: PoolTypeSDKType;
+  pool_type: PoolType;
 }
 
 function createBaseModuleRoute(): ModuleRoute {

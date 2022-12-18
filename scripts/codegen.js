@@ -17,7 +17,12 @@ telescope({
         'cosmos/staking/v1beta1/tx.amino.ts'
       ]
     },
+    interfaces: {
+      enabled: true,
+      useUnionTypes: false
+    },
     prototypes: {
+      addTypeUrlToDecoders: true,
       includePackageVar: false,
       typingsFormat: {
         useDeepPartial: false,

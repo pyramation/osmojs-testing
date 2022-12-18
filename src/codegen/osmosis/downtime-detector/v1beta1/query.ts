@@ -1,4 +1,4 @@
-import { Downtime, DowntimeSDKType, downtimeFromJSON, downtimeToJSON } from "./downtime_duration";
+import { Downtime, downtimeFromJSON, downtimeToJSON } from "./downtime_duration";
 import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
 import * as _m0 from "protobufjs/minimal";
 import { isSet } from "../../../helpers";
@@ -17,7 +17,7 @@ export interface RecoveredSinceDowntimeOfLengthRequest {
  */
 
 export interface RecoveredSinceDowntimeOfLengthRequestSDKType {
-  downtime: DowntimeSDKType;
+  downtime: Downtime;
   recovery?: DurationSDKType;
 }
 export interface RecoveredSinceDowntimeOfLengthResponse {

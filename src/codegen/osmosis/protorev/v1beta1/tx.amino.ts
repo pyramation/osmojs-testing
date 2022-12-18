@@ -2,7 +2,7 @@ import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../../../helpers";
 import { MsgSetHotRoutes, MsgSetDeveloperAccount } from "./tx";
 export interface AminoMsgSetHotRoutes extends AminoMsg {
-  type: "osmosis/protorev/set-hot-routes";
+  type: "osmosis/MsgSetHotRoutes";
   value: {
     admin: string;
     hot_routes: {
@@ -19,7 +19,7 @@ export interface AminoMsgSetHotRoutes extends AminoMsg {
   };
 }
 export interface AminoMsgSetDeveloperAccount extends AminoMsg {
-  type: "osmosis/protorev/set-developer-account";
+  type: "osmosis/MsgSetDeveloperAccount";
   value: {
     admin: string;
     developer_account: string;
@@ -27,7 +27,7 @@ export interface AminoMsgSetDeveloperAccount extends AminoMsg {
 }
 export const AminoConverter = {
   "/osmosis.protorev.v1beta1.MsgSetHotRoutes": {
-    aminoType: "osmosis/protorev/set-hot-routes",
+    aminoType: "osmosis/MsgSetHotRoutes",
     toAmino: ({
       admin,
       hotRoutes
@@ -68,7 +68,7 @@ export const AminoConverter = {
     }
   },
   "/osmosis.protorev.v1beta1.MsgSetDeveloperAccount": {
-    aminoType: "osmosis/protorev/set-developer-account",
+    aminoType: "osmosis/MsgSetDeveloperAccount",
     toAmino: ({
       admin,
       developerAccount

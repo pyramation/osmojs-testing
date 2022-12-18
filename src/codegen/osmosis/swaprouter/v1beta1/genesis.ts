@@ -23,10 +23,7 @@ export interface GenesisState {
 /** GenesisState defines the swaprouter module's genesis state. */
 
 export interface GenesisStateSDKType {
-  /** the next_pool_id */
   next_pool_id: Long;
-  /** params is the container of swaprouter parameters. */
-
   params?: ParamsSDKType;
 }
 

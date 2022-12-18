@@ -2,7 +2,7 @@ import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../../../../../helpers";
 import { MsgCreateBalancerPool } from "./tx";
 export interface AminoMsgCreateBalancerPool extends AminoMsg {
-  type: "osmosis/gamm/poolmodels/balancer/create-balancer-pool";
+  type: "osmosis/gamm/create-balancer-pool";
   value: {
     sender: string;
     pool_params: {
@@ -45,7 +45,7 @@ export interface AminoMsgCreateBalancerPool extends AminoMsg {
 }
 export const AminoConverter = {
   "/osmosis.gamm.poolmodels.balancer.v1beta1.MsgCreateBalancerPool": {
-    aminoType: "osmosis/gamm/poolmodels/balancer/create-balancer-pool",
+    aminoType: "osmosis/gamm/create-balancer-pool",
     toAmino: ({
       sender,
       poolParams,

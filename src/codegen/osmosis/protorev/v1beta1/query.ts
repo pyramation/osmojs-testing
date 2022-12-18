@@ -18,7 +18,6 @@ export interface QueryParamsResponse {
 /** QueryParamsResponse is response type for the Query/Params RPC method. */
 
 export interface QueryParamsResponseSDKType {
-  /** params holds all the parameters of this module. */
   params?: ParamsSDKType;
 }
 /**
@@ -48,7 +47,6 @@ export interface QueryGetProtoRevNumberOfTradesResponse {
  */
 
 export interface QueryGetProtoRevNumberOfTradesResponseSDKType {
-  /** number_of_trades is the number of trades the module has executed */
   number_of_trades: string;
 }
 /**
@@ -66,7 +64,6 @@ export interface QueryGetProtoRevProfitsByDenomRequest {
  */
 
 export interface QueryGetProtoRevProfitsByDenomRequestSDKType {
-  /** denom is the denom to query profits by */
   denom: string;
 }
 /**
@@ -84,7 +81,6 @@ export interface QueryGetProtoRevProfitsByDenomResponse {
  */
 
 export interface QueryGetProtoRevProfitsByDenomResponseSDKType {
-  /** profit is the profits of the module by the selected denom */
   profit?: CoinSDKType;
 }
 /**
@@ -114,7 +110,6 @@ export interface QueryGetProtoRevAllProfitsResponse {
  */
 
 export interface QueryGetProtoRevAllProfitsResponseSDKType {
-  /** profits is a list of all of the profits from the module */
   profits: CoinSDKType[];
 }
 /**
@@ -132,7 +127,6 @@ export interface QueryGetProtoRevStatisticsByPoolRequest {
  */
 
 export interface QueryGetProtoRevStatisticsByPoolRequestSDKType {
-  /** pool_id is the pool id to query statistics by */
   pool_id: Long;
 }
 /**
@@ -153,10 +147,6 @@ export interface QueryGetProtoRevStatisticsByPoolResponse {
  */
 
 export interface QueryGetProtoRevStatisticsByPoolResponseSDKType {
-  /**
-   * statistics contains the number of trades the module has executed after a
-   * swap on a given pool and the profits from the trades
-   */
   statistics?: PoolStatisticsSDKType;
 }
 /**
@@ -189,10 +179,6 @@ export interface QueryGetProtoRevAllStatisticsResponse {
  */
 
 export interface QueryGetProtoRevAllStatisticsResponseSDKType {
-  /**
-   * statistics contains the number of trades the module has executed after a
-   * swap on a given pool and the profits from the trades for all pools
-   */
   statistics: PoolStatisticsSDKType[];
 }
 /**
@@ -225,10 +211,6 @@ export interface QueryGetProtoRevTokenPairArbRoutesResponse {
  */
 
 export interface QueryGetProtoRevTokenPairArbRoutesResponseSDKType {
-  /**
-   * routes is a list of all of the hot routes that the module is currently
-   * arbitraging
-   */
   routes: TokenPairArbRoutesSDKType[];
 }
 

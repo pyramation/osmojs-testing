@@ -1,6 +1,6 @@
 import { PeriodLock, PeriodLockSDKType, SyntheticLock, SyntheticLockSDKType } from "./lock";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /** GenesisState defines the lockup module's genesis state. */
 
 export interface GenesisState {

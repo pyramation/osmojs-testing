@@ -13,10 +13,7 @@ export interface MsgSetHotRoutes {
 /** MsgSetHotRoutes defines the Msg/SetHotRoutes request type. */
 
 export interface MsgSetHotRoutesSDKType {
-  /** admin is the account that is authorized to set the hot routes. */
   admin: string;
-  /** hot_routes is the list of hot routes to set. */
-
   hot_routes: TokenPairArbRoutesSDKType[];
 }
 /** MsgSetHotRoutesResponse defines the Msg/SetHotRoutes response type. */
@@ -40,13 +37,7 @@ export interface MsgSetDeveloperAccount {
 /** MsgSetDeveloperAccount defines the Msg/SetDeveloperAccount request type. */
 
 export interface MsgSetDeveloperAccountSDKType {
-  /** admin is the account that is authorized to set the developer account. */
   admin: string;
-  /**
-   * developer_account is the account that will receive a portion of the profits
-   * from the protorev module.
-   */
-
   developer_account: string;
 }
 /**

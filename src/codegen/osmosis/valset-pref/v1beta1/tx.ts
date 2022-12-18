@@ -14,10 +14,7 @@ export interface MsgSetValidatorSetPreference {
 /** MsgCreateValidatorSetPreference is a list that holds validator-set. */
 
 export interface MsgSetValidatorSetPreferenceSDKType {
-  /** delegator is the user who is trying to create a validator-set. */
   delegator: string;
-  /** list of {valAddr, weight} to delegate to */
-
   preferences: ValidatorPreferenceSDKType[];
 }
 export interface MsgSetValidatorSetPreferenceResponse {}
@@ -45,15 +42,7 @@ export interface MsgDelegateToValidatorSet {
  */
 
 export interface MsgDelegateToValidatorSetSDKType {
-  /** delegator is the user who is trying to delegate. */
   delegator: string;
-  /**
-   * the amount of tokens the user is trying to delegate.
-   * For ex: delegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3, ValC
-   * -> 0.2} our staking logic would attempt to delegate 5osmo to A , 3osmo to
-   * B, 2osmo to C.
-   */
-
   coin?: CoinSDKType;
 }
 export interface MsgDelegateToValidatorSetResponse {}
@@ -72,16 +61,7 @@ export interface MsgUndelegateFromValidatorSet {
   coin?: Coin;
 }
 export interface MsgUndelegateFromValidatorSetSDKType {
-  /** delegator is the user who is trying to undelegate. */
   delegator: string;
-  /**
-   * the amount the user wants to undelegate
-   * For ex: Undelegate 10osmo with validator-set {ValA -> 0.5, ValB -> 0.3,
-   * ValC
-   * -> 0.2} our undelegate logic would attempt to undelegate 5osmo from A ,
-   * 3osmo from B, 2osmo from C
-   */
-
   coin?: CoinSDKType;
 }
 export interface MsgUndelegateFromValidatorSetResponse {}
@@ -94,10 +74,7 @@ export interface MsgRedelegateValidatorSet {
   preferences: ValidatorPreference[];
 }
 export interface MsgRedelegateValidatorSetSDKType {
-  /** delegator is the user who is trying to create a validator-set. */
   delegator: string;
-  /** list of {valAddr, weight} to delegate to */
-
   preferences: ValidatorPreferenceSDKType[];
 }
 export interface MsgRedelegateValidatorSetResponse {}
@@ -117,7 +94,6 @@ export interface MsgWithdrawDelegationRewards {
  */
 
 export interface MsgWithdrawDelegationRewardsSDKType {
-  /** delegator is the user who is trying to claim staking rewards. */
   delegator: string;
 }
 export interface MsgWithdrawDelegationRewardsResponse {}

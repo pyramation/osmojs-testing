@@ -2,7 +2,7 @@ import { AminoMsg } from "@cosmjs/amino";
 import { Long } from "../../../helpers";
 import { MsgSetValidatorSetPreference, MsgDelegateToValidatorSet, MsgUndelegateFromValidatorSet, MsgRedelegateValidatorSet, MsgWithdrawDelegationRewards } from "./tx";
 export interface AminoMsgSetValidatorSetPreference extends AminoMsg {
-  type: "osmosis/valsetpref/set-validator-set-preference";
+  type: "osmosis/valset-pref/MsgSetValidatorSetPreference";
   value: {
     delegator: string;
     preferences: {
@@ -12,7 +12,7 @@ export interface AminoMsgSetValidatorSetPreference extends AminoMsg {
   };
 }
 export interface AminoMsgDelegateToValidatorSet extends AminoMsg {
-  type: "osmosis/valsetpref/delegate-to-validator-set";
+  type: "osmosis/valset-pref/MsgDelegateToValidatorSet";
   value: {
     delegator: string;
     coin: {
@@ -22,7 +22,7 @@ export interface AminoMsgDelegateToValidatorSet extends AminoMsg {
   };
 }
 export interface AminoMsgUndelegateFromValidatorSet extends AminoMsg {
-  type: "osmosis/valsetpref/undelegate-from-validator-set";
+  type: "osmosis/valset-pref/MsgUndelegateFromValidatorSet";
   value: {
     delegator: string;
     coin: {
@@ -42,14 +42,14 @@ export interface AminoMsgRedelegateValidatorSet extends AminoMsg {
   };
 }
 export interface AminoMsgWithdrawDelegationRewards extends AminoMsg {
-  type: "osmosis/valsetpref/withdraw-delegation-rewards";
+  type: "osmosis/valset-pref/MsgWithdrawDelegationRewards";
   value: {
     delegator: string;
   };
 }
 export const AminoConverter = {
   "/osmosis.valsetpref.v1beta1.MsgSetValidatorSetPreference": {
-    aminoType: "osmosis/valsetpref/set-validator-set-preference",
+    aminoType: "osmosis/valset-pref/MsgSetValidatorSetPreference",
     toAmino: ({
       delegator,
       preferences
@@ -76,7 +76,7 @@ export const AminoConverter = {
     }
   },
   "/osmosis.valsetpref.v1beta1.MsgDelegateToValidatorSet": {
-    aminoType: "osmosis/valsetpref/delegate-to-validator-set",
+    aminoType: "osmosis/valset-pref/MsgDelegateToValidatorSet",
     toAmino: ({
       delegator,
       coin
@@ -103,7 +103,7 @@ export const AminoConverter = {
     }
   },
   "/osmosis.valsetpref.v1beta1.MsgUndelegateFromValidatorSet": {
-    aminoType: "osmosis/valsetpref/undelegate-from-validator-set",
+    aminoType: "osmosis/valset-pref/MsgUndelegateFromValidatorSet",
     toAmino: ({
       delegator,
       coin
@@ -157,7 +157,7 @@ export const AminoConverter = {
     }
   },
   "/osmosis.valsetpref.v1beta1.MsgWithdrawDelegationRewards": {
-    aminoType: "osmosis/valsetpref/withdraw-delegation-rewards",
+    aminoType: "osmosis/valset-pref/MsgWithdrawDelegationRewards",
     toAmino: ({
       delegator
     }: MsgWithdrawDelegationRewards): AminoMsgWithdrawDelegationRewards["value"] => {

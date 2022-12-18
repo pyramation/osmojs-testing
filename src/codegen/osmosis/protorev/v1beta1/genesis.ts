@@ -14,10 +14,7 @@ export interface GenesisState {
 /** GenesisState defines the protorev module's genesis state. */
 
 export interface GenesisStateSDKType {
-  /** Module Parameters */
   params?: ParamsSDKType;
-  /** Hot routes that are configured on genesis */
-
   token_pairs: TokenPairArbRoutesSDKType[];
 }
 

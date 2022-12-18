@@ -1,8 +1,8 @@
 import { Duration, DurationSDKType } from "../../../google/protobuf/duration";
 import { DistrInfo, DistrInfoSDKType, Params, ParamsSDKType } from "./incentives";
 import { Gauge, GaugeSDKType } from "../../incentives/gauge";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../../helpers";
+import * as _m0 from "protobufjs/minimal";
 export interface QueryGaugeIdsRequest {
   poolId: Long;
 }

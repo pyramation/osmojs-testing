@@ -1,5 +1,5 @@
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /**
  * QuerySpotPriceRequest defines the gRPC request structure for a SpotPrice
  * query.
@@ -35,7 +35,6 @@ export interface QuerySpotPriceResponse {
  */
 
 export interface QuerySpotPriceResponseSDKType {
-  /** String of the Dec. Ex) 10.203uatom */
   spot_price: string;
 }
 

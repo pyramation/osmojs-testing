@@ -1,6 +1,6 @@
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /**
  * ===================== MsgJoinPool
  * This is really MsgJoinPoolNoSwap

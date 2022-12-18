@@ -16,13 +16,8 @@ export interface TokenPairArbRoutes {
 /** TokenPairArbRoutes tracks all of the hot routes for a given pair of tokens */
 
 export interface TokenPairArbRoutesSDKType {
-  /** Stores all of the possible hot paths for a given pair of tokens */
   arb_routes: RouteSDKType[];
-  /** Token denomination of the first asset */
-
   token_in: string;
-  /** Token denomination of the second asset */
-
   token_out: string;
 }
 /** Route is a hot route for a given pair of tokens */
@@ -37,10 +32,6 @@ export interface Route {
 /** Route is a hot route for a given pair of tokens */
 
 export interface RouteSDKType {
-  /**
-   * The pool IDs that are travered in the directed cyclic graph (traversed left
-   * -> right)
-   */
   trades: TradeSDKType[];
 }
 /** Trade is a single trade in a route */
@@ -61,16 +52,8 @@ export interface Trade {
 /** Trade is a single trade in a route */
 
 export interface TradeSDKType {
-  /**
-   * The pool IDs that are travered in the directed cyclic graph (traversed left
-   * -> right)
-   */
   pool: Long;
-  /** The denom of token A that is traded */
-
   token_in: string;
-  /** The denom of token B that is traded */
-
   token_out: string;
 }
 /**
@@ -94,13 +77,8 @@ export interface PoolStatistics {
  */
 
 export interface PoolStatisticsSDKType {
-  /** profits is the total profit from all trades on this pool */
   profits: CoinSDKType[];
-  /** number_of_trades is the number of trades the module has executed */
-
   number_of_trades: string;
-  /** pool_id is the id of the pool */
-
   pool_id: Long;
 }
 

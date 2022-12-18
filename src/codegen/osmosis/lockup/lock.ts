@@ -1,8 +1,8 @@
 import { Duration, DurationSDKType } from "../../google/protobuf/duration";
 import { Timestamp, TimestampSDKType } from "../../google/protobuf/timestamp";
 import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet, fromJsonTimestamp, fromTimestamp } from "../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /**
  * LockQueryType defines the type of the lock query that can
  * either be by duration or start time of the lock.
@@ -13,16 +13,7 @@ export enum LockQueryType {
   ByTime = 1,
   UNRECOGNIZED = -1,
 }
-/**
- * LockQueryType defines the type of the lock query that can
- * either be by duration or start time of the lock.
- */
-
-export enum LockQueryTypeSDKType {
-  ByDuration = 0,
-  ByTime = 1,
-  UNRECOGNIZED = -1,
-}
+export const LockQueryTypeSDKType = LockQueryType;
 export function lockQueryTypeFromJSON(object: any): LockQueryType {
   switch (object) {
     case 0:
@@ -99,33 +90,10 @@ export interface PeriodLock {
  */
 
 export interface PeriodLockSDKType {
-  /**
-   * ID is the unique id of the lock.
-   * The ID of the lock is decided upon lock creation, incrementing by 1 for
-   * every lock.
-   */
   ID: Long;
-  /**
-   * Owner is the account address of the lock owner.
-   * Only the owner can modify the state of the lock.
-   */
-
   owner: string;
-  /**
-   * Duration is the time needed for a lock to mature after unlocking has
-   * started.
-   */
-
   duration?: DurationSDKType;
-  /**
-   * EndTime refers to the time at which the lock would mature and get deleted.
-   * This value is first initialized when an unlock has started for the lock,
-   * end time being block time + duration.
-   */
-
   end_time?: TimestampSDKType;
-  /** Coins are the tokens locked within the lock, kept in the module account. */
-
   coins: CoinSDKType[];
 }
 /**
@@ -162,24 +130,9 @@ export interface QueryCondition {
  */
 
 export interface QueryConditionSDKType {
-  /** LockQueryType is a type of lock query, ByLockDuration | ByLockTime */
-  lock_query_type: LockQueryTypeSDKType;
-  /** Denom represents the token denomination we are looking to lock up */
-
+  lock_query_type: LockQueryType;
   denom: string;
-  /**
-   * Duration is used to query locks with longer duration than the specified
-   * duration. Duration field must not be nil when the lock query type is
-   * `ByLockDuration`.
-   */
-
   duration?: DurationSDKType;
-  /**
-   * Timestamp is used by locks started before the specified duration.
-   * Timestamp field must not be nil when the lock query type is `ByLockTime`.
-   * Querying locks with timestamp is currently not implemented.
-   */
-
   timestamp?: TimestampSDKType;
 }
 /**
@@ -222,28 +175,9 @@ export interface SyntheticLock {
  */
 
 export interface SyntheticLockSDKType {
-  /**
-   * Underlying Lock ID is the underlying native lock's id for this synthetic
-   * lockup. A synthetic lock MUST have an underlying lock.
-   */
   underlying_lock_id: Long;
-  /**
-   * SynthDenom is the synthetic denom that is a combination of
-   * gamm share + bonding status + validator address.
-   */
-
   synth_denom: string;
-  /**
-   * used for unbonding synthetic lockups, for active synthetic lockups, this
-   * value is set to uninitialized value
-   */
-
   end_time?: TimestampSDKType;
-  /**
-   * Duration is the duration for a synthetic lock to mature
-   * at the point of unbonding has started.
-   */
-
   duration?: DurationSDKType;
 }
 

@@ -26,7 +26,6 @@ export interface EstimateSwapExactAmountInRequest {
 /** =============================== EstimateSwapExactAmountIn */
 
 export interface EstimateSwapExactAmountInRequestSDKType {
-  /** TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE */
   sender: string;
   pool_id: Long;
   token_in: string;
@@ -50,7 +49,6 @@ export interface EstimateSwapExactAmountOutRequest {
 /** =============================== EstimateSwapExactAmountOut */
 
 export interface EstimateSwapExactAmountOutRequestSDKType {
-  /** TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE */
   sender: string;
   pool_id: Long;
   routes: SwapAmountOutRouteSDKType[];

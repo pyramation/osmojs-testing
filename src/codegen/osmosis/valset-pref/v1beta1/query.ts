@@ -10,7 +10,6 @@ export interface UserValidatorPreferencesRequest {
 /** Request type for UserValidatorPreferences. */
 
 export interface UserValidatorPreferencesRequestSDKType {
-  /** user account address */
   address: string;
 }
 /** Response type the QueryUserValidatorPreferences query request */

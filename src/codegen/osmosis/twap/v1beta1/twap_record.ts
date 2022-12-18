@@ -1,6 +1,6 @@
 import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /**
  * A TWAP record should be indexed in state by pool_id, (asset pair), timestamp
  * The asset pair assets should be lexicographically sorted.
@@ -58,37 +58,15 @@ export interface TwapRecord {
 
 export interface TwapRecordSDKType {
   pool_id: Long;
-  /** Lexicographically smaller denom of the pair */
-
   asset0_denom: string;
-  /** Lexicographically larger denom of the pair */
-
   asset1_denom: string;
-  /** height this record corresponds to, for debugging purposes */
-
   height: Long;
-  /**
-   * This field should only exist until we have a global registry in the state
-   * machine, mapping prior block heights within {TIME RANGE} to times.
-   */
-
   time?: TimestampSDKType;
-  /**
-   * We store the last spot prices in the struct, so that we can interpolate
-   * accumulator values for times between when accumulator records are stored.
-   */
-
   p0_last_spot_price: string;
   p1_last_spot_price: string;
   p0_arithmetic_twap_accumulator: string;
   p1_arithmetic_twap_accumulator: string;
   geometric_twap_accumulator: string;
-  /**
-   * This field contains the time in which the last spot price error occured.
-   * It is used to alert the caller if they are getting a potentially erroneous
-   * TWAP, due to an unforeseen underlying error.
-   */
-
   last_error_time?: TimestampSDKType;
 }
 

@@ -2,8 +2,8 @@ import { PageRequest, PageRequestSDKType, PageResponse, PageResponseSDKType } fr
 import { Coin, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import { SwapAmountInRoute, SwapAmountInRouteSDKType, SwapAmountOutRoute, SwapAmountOutRouteSDKType } from "./tx";
 import { Any, AnySDKType } from "../../../google/protobuf/any";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet } from "../../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /** =============================== Pool */
 
 export interface QueryPoolRequest {
@@ -29,7 +29,6 @@ export interface QueryPoolsRequest {
 /** =============================== Pools */
 
 export interface QueryPoolsRequestSDKType {
-  /** pagination defines an optional pagination for the request. */
   pagination?: PageRequestSDKType;
 }
 export interface QueryPoolsResponse {
@@ -40,8 +39,6 @@ export interface QueryPoolsResponse {
 }
 export interface QueryPoolsResponseSDKType {
   pools: AnySDKType[];
-  /** pagination defines the pagination in the response. */
-
   pagination?: PageResponseSDKType;
 }
 /** =============================== NumPools */
@@ -220,8 +217,6 @@ export interface QueryPoolsWithFilterResponse {
 }
 export interface QueryPoolsWithFilterResponseSDKType {
   pools: AnySDKType[];
-  /** pagination defines the pagination in the response. */
-
   pagination?: PageResponseSDKType;
 }
 /**
@@ -243,7 +238,6 @@ export interface QuerySpotPriceResponse {
 /** @deprecated */
 
 export interface QuerySpotPriceResponseSDKType {
-  /** String of the Dec. Ex) 10.203uatom */
   spot_price: string;
 }
 /** =============================== EstimateSwapExactAmountIn */
@@ -258,7 +252,6 @@ export interface QuerySwapExactAmountInRequest {
 /** =============================== EstimateSwapExactAmountIn */
 
 export interface QuerySwapExactAmountInRequestSDKType {
-  /** TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE */
   sender: string;
   pool_id: Long;
   token_in: string;
@@ -282,7 +275,6 @@ export interface QuerySwapExactAmountOutRequest {
 /** =============================== EstimateSwapExactAmountOut */
 
 export interface QuerySwapExactAmountOutRequestSDKType {
-  /** TODO: CHANGE THIS TO RESERVED IN A PATCH RELEASE */
   sender: string;
   pool_id: Long;
   routes: SwapAmountOutRouteSDKType[];

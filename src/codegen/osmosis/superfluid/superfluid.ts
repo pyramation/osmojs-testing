@@ -11,16 +11,7 @@ export enum SuperfluidAssetType {
   SuperfluidAssetTypeLPShare = 1,
   UNRECOGNIZED = -1,
 }
-/**
- * SuperfluidAssetType indicates whether the superfluid asset is
- * a native token itself or the lp share of a pool.
- */
-
-export enum SuperfluidAssetTypeSDKType {
-  SuperfluidAssetTypeNative = 0,
-  SuperfluidAssetTypeLPShare = 1,
-  UNRECOGNIZED = -1,
-}
+export const SuperfluidAssetTypeSDKType = SuperfluidAssetType;
 export function superfluidAssetTypeFromJSON(object: any): SuperfluidAssetType {
   switch (object) {
     case 0:
@@ -65,12 +56,7 @@ export interface SuperfluidAsset {
 
 export interface SuperfluidAssetSDKType {
   denom: string;
-  /**
-   * AssetType indicates whether the superfluid asset is a native token or an lp
-   * share
-   */
-
-  asset_type: SuperfluidAssetTypeSDKType;
+  asset_type: SuperfluidAssetType;
 }
 /**
  * SuperfluidIntermediaryAccount takes the role of intermediary between LP token
@@ -93,11 +79,8 @@ export interface SuperfluidIntermediaryAccount {
  */
 
 export interface SuperfluidIntermediaryAccountSDKType {
-  /** Denom indicates the denom of the superfluid asset. */
   denom: string;
   val_addr: string;
-  /** perpetual gauge for rewards distribution */
-
   gauge_id: Long;
 }
 /**
@@ -129,8 +112,6 @@ export interface OsmoEquivalentMultiplierRecord {
 
 export interface OsmoEquivalentMultiplierRecordSDKType {
   epoch_number: Long;
-  /** superfluid asset denom, can be LP token or native token */
-
   denom: string;
   multiplier: string;
 }

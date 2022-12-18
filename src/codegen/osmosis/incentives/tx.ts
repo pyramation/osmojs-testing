@@ -1,8 +1,8 @@
 import { QueryCondition, QueryConditionSDKType } from "../lockup/lock";
 import { Coin, CoinSDKType } from "../../cosmos/base/v1beta1/coin";
 import { Timestamp, TimestampSDKType } from "../../google/protobuf/timestamp";
-import * as _m0 from "protobufjs/minimal";
 import { Long, isSet, fromJsonTimestamp, fromTimestamp } from "../../helpers";
+import * as _m0 from "protobufjs/minimal";
 /** MsgCreateGauge creates a gague to distribute rewards to users */
 
 export interface MsgCreateGauge {
@@ -39,34 +39,11 @@ export interface MsgCreateGauge {
 /** MsgCreateGauge creates a gague to distribute rewards to users */
 
 export interface MsgCreateGaugeSDKType {
-  /**
-   * is_perpetual shows if it's a perpetual or non-perpetual gauge
-   * Non-perpetual gauges distribute their tokens equally per epoch while the
-   * gauge is in the active period. Perpetual gauges distribute all their tokens
-   * at a single time and only distribute their tokens again once the gauge is
-   * refilled
-   */
   is_perpetual: boolean;
-  /** owner is the address of gauge creator */
-
   owner: string;
-  /**
-   * distribute_to show which lock the gauge should distribute to by time
-   * duration or by timestamp
-   */
-
   distribute_to?: QueryConditionSDKType;
-  /** coins are coin(s) to be distributed by the gauge */
-
   coins: CoinSDKType[];
-  /** start_time is the distribution start time */
-
   start_time?: TimestampSDKType;
-  /**
-   * num_epochs_paid_over is the number of epochs distribution will be completed
-   * over
-   */
-
   num_epochs_paid_over: Long;
 }
 export interface MsgCreateGaugeResponse {}
@@ -86,13 +63,8 @@ export interface MsgAddToGauge {
 /** MsgAddToGauge adds coins to a previously created gauge */
 
 export interface MsgAddToGaugeSDKType {
-  /** owner is the gauge owner's address */
   owner: string;
-  /** gauge_id is the ID of gauge that rewards are getting added to */
-
   gauge_id: Long;
-  /** rewards are the coin(s) to add to gauge */
-
   rewards: CoinSDKType[];
 }
 export interface MsgAddToGaugeResponse {}

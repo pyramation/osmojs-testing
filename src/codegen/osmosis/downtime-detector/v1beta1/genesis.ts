@@ -1,4 +1,4 @@
-import { Downtime, DowntimeSDKType, downtimeFromJSON, downtimeToJSON } from "./downtime_duration";
+import { Downtime, downtimeFromJSON, downtimeToJSON } from "./downtime_duration";
 import { Timestamp, TimestampSDKType } from "../../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
@@ -7,7 +7,7 @@ export interface GenesisDowntimeEntry {
   lastDowntime?: Timestamp;
 }
 export interface GenesisDowntimeEntrySDKType {
-  duration: DowntimeSDKType;
+  duration: Downtime;
   last_downtime?: TimestampSDKType;
 }
 /** GenesisState defines the twap module's genesis state. */

@@ -41,8 +41,6 @@ export interface MsgBeginUnlocking {
 export interface MsgBeginUnlockingSDKType {
   owner: string;
   ID: Long;
-  /** Amount of unlocking coins. Unlock all if not set. */
-
   coins: CoinSDKType[];
 }
 export interface MsgBeginUnlockingResponse {
@@ -74,11 +72,6 @@ export interface MsgExtendLockup {
 export interface MsgExtendLockupSDKType {
   owner: string;
   ID: Long;
-  /**
-   * duration to be set. fails if lower than the current duration, or is
-   * unlocking
-   */
-
   duration?: DurationSDKType;
 }
 export interface MsgExtendLockupResponse {
@@ -107,8 +100,6 @@ export interface MsgForceUnlock {
 export interface MsgForceUnlockSDKType {
   owner: string;
   ID: Long;
-  /** Amount of unlocking coins. Unlock all if not set. */
-
   coins: CoinSDKType[];
 }
 export interface MsgForceUnlockResponse {
