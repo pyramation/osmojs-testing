@@ -686,11 +686,11 @@ export const MsgConnectionOpenTry = {
       obj.counterparty_versions = [];
     }
 
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.proof_init = message.proofInit;
     obj.proof_client = message.proofClient;
     obj.proof_consensus = message.proofConsensus;
-    obj.consensus_height = message.consensusHeight ? Height.toAmino(message.consensusHeight) : undefined;
+    obj.consensus_height = message.consensusHeight ? Height.toAmino(message.consensusHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -933,11 +933,11 @@ export const MsgConnectionOpenAck = {
     obj.counterparty_connection_id = message.counterpartyConnectionId;
     obj.version = message.version ? Version.toAmino(message.version) : undefined;
     obj.client_state = message.clientState ? Any.toAmino(message.clientState) : undefined;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.proof_try = message.proofTry;
     obj.proof_client = message.proofClient;
     obj.proof_consensus = message.proofConsensus;
-    obj.consensus_height = message.consensusHeight ? Height.toAmino(message.consensusHeight) : undefined;
+    obj.consensus_height = message.consensusHeight ? Height.toAmino(message.consensusHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -1100,7 +1100,7 @@ export const MsgConnectionOpenConfirm = {
     const obj: any = {};
     obj.connection_id = message.connectionId;
     obj.proof_ack = message.proofAck;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }

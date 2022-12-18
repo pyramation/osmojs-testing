@@ -1165,7 +1165,7 @@ export const QueryChannelResponse = {
     const obj: any = {};
     obj.channel = message.channel ? Channel.toAmino(message.channel) : undefined;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -1343,7 +1343,7 @@ export const QueryChannelsResponse = {
     }
 
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -1535,7 +1535,7 @@ export const QueryConnectionChannelsResponse = {
     }
 
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -1715,7 +1715,7 @@ export const QueryChannelClientStateResponse = {
     const obj: any = {};
     obj.identified_client_state = message.identifiedClientState ? IdentifiedClientState.toAmino(message.identifiedClientState) : undefined;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -1937,7 +1937,7 @@ export const QueryChannelConsensusStateResponse = {
     obj.consensus_state = message.consensusState ? Any.toAmino(message.consensusState) : undefined;
     obj.client_id = message.clientId;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -2131,7 +2131,7 @@ export const QueryPacketCommitmentResponse = {
     const obj: any = {};
     obj.commitment = message.commitment;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -2337,7 +2337,7 @@ export const QueryPacketCommitmentsResponse = {
     }
 
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -2531,7 +2531,7 @@ export const QueryPacketReceiptResponse = {
     const obj: any = {};
     obj.received = message.received;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -2725,7 +2725,7 @@ export const QueryPacketAcknowledgementResponse = {
     const obj: any = {};
     obj.acknowledgement = message.acknowledgement;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -2969,7 +2969,7 @@ export const QueryPacketAcknowledgementsResponse = {
     }
 
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -3198,7 +3198,7 @@ export const QueryUnreceivedPacketsResponse = {
       obj.sequences = [];
     }
 
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -3427,7 +3427,7 @@ export const QueryUnreceivedAcksResponse = {
       obj.sequences = [];
     }
 
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -3607,7 +3607,7 @@ export const QueryNextSequenceReceiveResponse = {
     const obj: any = {};
     obj.next_sequence_receive = message.nextSequenceReceive ? message.nextSequenceReceive.toString() : undefined;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 

@@ -740,7 +740,7 @@ export const MsgChannelOpenTry = {
     obj.channel = message.channel ? Channel.toAmino(message.channel) : undefined;
     obj.counterparty_version = message.counterpartyVersion;
     obj.proof_init = message.proofInit;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -945,7 +945,7 @@ export const MsgChannelOpenAck = {
     obj.counterparty_channel_id = message.counterpartyChannelId;
     obj.counterparty_version = message.counterpartyVersion;
     obj.proof_try = message.proofTry;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -1122,7 +1122,7 @@ export const MsgChannelOpenConfirm = {
     obj.port_id = message.portId;
     obj.channel_id = message.channelId;
     obj.proof_ack = message.proofAck;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -1448,7 +1448,7 @@ export const MsgChannelCloseConfirm = {
     obj.port_id = message.portId;
     obj.channel_id = message.channelId;
     obj.proof_init = message.proofInit;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -1611,7 +1611,7 @@ export const MsgRecvPacket = {
     const obj: any = {};
     obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
     obj.proof_commitment = message.proofCommitment;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }
@@ -1787,7 +1787,7 @@ export const MsgTimeout = {
     const obj: any = {};
     obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
     obj.proof_unreceived = message.proofUnreceived;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.next_sequence_recv = message.nextSequenceRecv ? message.nextSequenceRecv.toString() : undefined;
     obj.signer = message.signer;
     return obj;
@@ -1978,7 +1978,7 @@ export const MsgTimeoutOnClose = {
     obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
     obj.proof_unreceived = message.proofUnreceived;
     obj.proof_close = message.proofClose;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.next_sequence_recv = message.nextSequenceRecv ? message.nextSequenceRecv.toString() : undefined;
     obj.signer = message.signer;
     return obj;
@@ -2156,7 +2156,7 @@ export const MsgAcknowledgement = {
     obj.packet = message.packet ? Packet.toAmino(message.packet) : undefined;
     obj.acknowledgement = message.acknowledgement;
     obj.proof_acked = message.proofAcked;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     obj.signer = message.signer;
     return obj;
   }

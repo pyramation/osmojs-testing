@@ -1011,7 +1011,7 @@ export const Packet = {
     obj.destination_port = message.destinationPort;
     obj.destination_channel = message.destinationChannel;
     obj.data = message.data;
-    obj.timeout_height = message.timeoutHeight ? Height.toAmino(message.timeoutHeight) : undefined;
+    obj.timeout_height = message.timeoutHeight ? Height.toAmino(message.timeoutHeight) : {};
     obj.timeout_timestamp = message.timeoutTimestamp ? message.timeoutTimestamp.toString() : undefined;
     return obj;
   }

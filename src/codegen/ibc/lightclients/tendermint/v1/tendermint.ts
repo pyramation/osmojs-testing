@@ -494,8 +494,8 @@ export const ClientState = {
     obj.trusting_period = message.trustingPeriod ? Duration.toAmino(message.trustingPeriod) : undefined;
     obj.unbonding_period = message.unbondingPeriod ? Duration.toAmino(message.unbondingPeriod) : undefined;
     obj.max_clock_drift = message.maxClockDrift ? Duration.toAmino(message.maxClockDrift) : undefined;
-    obj.frozen_height = message.frozenHeight ? Height.toAmino(message.frozenHeight) : undefined;
-    obj.latest_height = message.latestHeight ? Height.toAmino(message.latestHeight) : undefined;
+    obj.frozen_height = message.frozenHeight ? Height.toAmino(message.frozenHeight) : {};
+    obj.latest_height = message.latestHeight ? Height.toAmino(message.latestHeight) : {};
 
     if (message.proofSpecs) {
       obj.proof_specs = message.proofSpecs.map(e => e ? ProofSpec.toAmino(e) : undefined);
@@ -814,7 +814,7 @@ export const Header = {
     const obj: any = {};
     obj.signed_header = message.signedHeader ? SignedHeader.toAmino(message.signedHeader) : undefined;
     obj.validator_set = message.validatorSet ? ValidatorSet.toAmino(message.validatorSet) : undefined;
-    obj.trusted_height = message.trustedHeight ? Height.toAmino(message.trustedHeight) : undefined;
+    obj.trusted_height = message.trustedHeight ? Height.toAmino(message.trustedHeight) : {};
     obj.trusted_validators = message.trustedValidators ? ValidatorSet.toAmino(message.trustedValidators) : undefined;
     return obj;
   }

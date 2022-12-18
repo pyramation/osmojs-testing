@@ -241,7 +241,7 @@ export const MsgTransfer = {
     obj.token = message.token ? Coin.toAmino(message.token) : undefined;
     obj.sender = message.sender;
     obj.receiver = message.receiver;
-    obj.timeout_height = message.timeoutHeight ? Height.toAmino(message.timeoutHeight) : undefined;
+    obj.timeout_height = message.timeoutHeight ? Height.toAmino(message.timeoutHeight) : {};
     obj.timeout_timestamp = message.timeoutTimestamp ? message.timeoutTimestamp.toString() : undefined;
     return obj;
   }

@@ -509,7 +509,7 @@ export const QueryConnectionResponse = {
     const obj: any = {};
     obj.connection = message.connection ? ConnectionEnd.toAmino(message.connection) : undefined;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -687,7 +687,7 @@ export const QueryConnectionsResponse = {
     }
 
     obj.pagination = message.pagination ? PageResponse.toAmino(message.pagination) : undefined;
-    obj.height = message.height ? Height.toAmino(message.height) : undefined;
+    obj.height = message.height ? Height.toAmino(message.height) : {};
     return obj;
   }
 
@@ -865,7 +865,7 @@ export const QueryClientConnectionsResponse = {
     }
 
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -1031,7 +1031,7 @@ export const QueryConnectionClientStateResponse = {
     const obj: any = {};
     obj.identified_client_state = message.identifiedClientState ? IdentifiedClientState.toAmino(message.identifiedClientState) : undefined;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
@@ -1239,7 +1239,7 @@ export const QueryConnectionConsensusStateResponse = {
     obj.consensus_state = message.consensusState ? Any.toAmino(message.consensusState) : undefined;
     obj.client_id = message.clientId;
     obj.proof = message.proof;
-    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : undefined;
+    obj.proof_height = message.proofHeight ? Height.toAmino(message.proofHeight) : {};
     return obj;
   }
 
