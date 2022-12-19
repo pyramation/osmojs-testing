@@ -2,6 +2,7 @@ import { PageRequest, PageRequestAmino, PageRequestSDKType, PageResponse, PageRe
 import { ContractInfo, ContractInfoAmino, ContractInfoSDKType, ContractCodeHistoryEntry, ContractCodeHistoryEntryAmino, ContractCodeHistoryEntrySDKType, Model, ModelAmino, ModelSDKType, AccessConfig, AccessConfigAmino, AccessConfigSDKType, Params, ParamsAmino, ParamsSDKType } from "./types";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, Long, bytesFromBase64, base64FromBytes } from "../../../helpers";
+import { toUtf8, fromUtf8 } from "@cosmjs/encoding";
 /**
  * QueryContractInfoRequest is the request type for the Query/ContractInfo RPC
  * method
@@ -1523,14 +1524,14 @@ export const QuerySmartContractStateRequest = {
   fromAmino(object: QuerySmartContractStateRequestAmino): QuerySmartContractStateRequest {
     return {
       address: object.address,
-      queryData: object.query_data
+      queryData: toUtf8(JSON.stringify(object.query_data))
     };
   },
 
   toAmino(message: QuerySmartContractStateRequest): QuerySmartContractStateRequestAmino {
     const obj: any = {};
     obj.address = message.address;
-    obj.query_data = message.queryData;
+    obj.query_data = message.queryData ? JSON.parse(fromUtf8(message.queryData)) : undefined;
     return obj;
   }
 
@@ -1593,13 +1594,13 @@ export const QuerySmartContractStateResponse = {
 
   fromAmino(object: QuerySmartContractStateResponseAmino): QuerySmartContractStateResponse {
     return {
-      data: object.data
+      data: toUtf8(JSON.stringify(object.data))
     };
   },
 
   toAmino(message: QuerySmartContractStateResponse): QuerySmartContractStateResponseAmino {
     const obj: any = {};
-    obj.data = message.data;
+    obj.data = message.data ? JSON.parse(fromUtf8(message.data)) : undefined;
     return obj;
   }
 

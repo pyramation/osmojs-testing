@@ -2,6 +2,7 @@ import { AccessConfig, AccessConfigAmino, AccessConfigSDKType } from "./types";
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, bytesFromBase64, base64FromBytes, Long } from "../../../helpers";
+import { fromBase64, toBase64, toUtf8, fromUtf8 } from "@cosmjs/encoding";
 /** StoreCodeProposal gov proposal content type to submit WASM code to the system */
 
 export interface StoreCodeProposal {
@@ -954,7 +955,7 @@ export const StoreCodeProposal = {
       title: object.title,
       description: object.description,
       runAs: object.run_as,
-      wasmByteCode: object.wasm_byte_code,
+      wasmByteCode: fromBase64(object.wasm_byte_code),
       instantiatePermission: object?.instantiate_permission ? AccessConfig.fromAmino(object.instantiate_permission) : undefined,
       unpinCode: object.unpin_code,
       source: object.source,
@@ -968,7 +969,7 @@ export const StoreCodeProposal = {
     obj.title = message.title;
     obj.description = message.description;
     obj.run_as = message.runAs;
-    obj.wasm_byte_code = message.wasmByteCode;
+    obj.wasm_byte_code = message.wasmByteCode ? toBase64(message.wasmByteCode) : undefined;
     obj.instantiate_permission = message.instantiatePermission ? AccessConfig.toAmino(message.instantiatePermission) : undefined;
     obj.unpin_code = message.unpinCode;
     obj.source = message.source;
@@ -1133,7 +1134,7 @@ export const InstantiateContractProposal = {
       admin: object.admin,
       codeId: Long.fromString(object.code_id),
       label: object.label,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : []
     };
   },
@@ -1146,7 +1147,7 @@ export const InstantiateContractProposal = {
     obj.admin = message.admin;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
     obj.label = message.label;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);
@@ -1337,7 +1338,7 @@ export const InstantiateContract2Proposal = {
       admin: object.admin,
       codeId: Long.fromString(object.code_id),
       label: object.label,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : [],
       salt: object.salt,
       fixMsg: object.fix_msg
@@ -1352,7 +1353,7 @@ export const InstantiateContract2Proposal = {
     obj.admin = message.admin;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
     obj.label = message.label;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);
@@ -1477,7 +1478,7 @@ export const MigrateContractProposal = {
       description: object.description,
       contract: object.contract,
       codeId: Long.fromString(object.code_id),
-      msg: object.msg
+      msg: toUtf8(JSON.stringify(object.msg))
     };
   },
 
@@ -1487,7 +1488,7 @@ export const MigrateContractProposal = {
     obj.description = message.description;
     obj.contract = message.contract;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
     return obj;
   }
 
@@ -1590,7 +1591,7 @@ export const SudoContractProposal = {
       title: object.title,
       description: object.description,
       contract: object.contract,
-      msg: object.msg
+      msg: toUtf8(JSON.stringify(object.msg))
     };
   },
 
@@ -1599,7 +1600,7 @@ export const SudoContractProposal = {
     obj.title = message.title;
     obj.description = message.description;
     obj.contract = message.contract;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
     return obj;
   }
 
@@ -1733,7 +1734,7 @@ export const ExecuteContractProposal = {
       description: object.description,
       runAs: object.run_as,
       contract: object.contract,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : []
     };
   },
@@ -1744,7 +1745,7 @@ export const ExecuteContractProposal = {
     obj.description = message.description;
     obj.run_as = message.runAs;
     obj.contract = message.contract;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);
@@ -2615,12 +2616,12 @@ export const StoreAndInstantiateContractProposal = {
       title: object.title,
       description: object.description,
       runAs: object.run_as,
-      wasmByteCode: object.wasm_byte_code,
+      wasmByteCode: fromBase64(object.wasm_byte_code),
       instantiatePermission: object?.instantiate_permission ? AccessConfig.fromAmino(object.instantiate_permission) : undefined,
       unpinCode: object.unpin_code,
       admin: object.admin,
       label: object.label,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : [],
       source: object.source,
       builder: object.builder,
@@ -2633,12 +2634,12 @@ export const StoreAndInstantiateContractProposal = {
     obj.title = message.title;
     obj.description = message.description;
     obj.run_as = message.runAs;
-    obj.wasm_byte_code = message.wasmByteCode;
+    obj.wasm_byte_code = message.wasmByteCode ? toBase64(message.wasmByteCode) : undefined;
     obj.instantiate_permission = message.instantiatePermission ? AccessConfig.toAmino(message.instantiatePermission) : undefined;
     obj.unpin_code = message.unpinCode;
     obj.admin = message.admin;
     obj.label = message.label;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);

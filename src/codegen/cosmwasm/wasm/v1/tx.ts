@@ -2,6 +2,7 @@ import { AccessConfig, AccessConfigAmino, AccessConfigSDKType } from "./types";
 import { Coin, CoinAmino, CoinSDKType } from "../../../cosmos/base/v1beta1/coin";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, bytesFromBase64, base64FromBytes, Long } from "../../../helpers";
+import { fromBase64, toBase64, toUtf8, fromUtf8 } from "@cosmjs/encoding";
 /** MsgStoreCode submit Wasm code to the system */
 
 export interface MsgStoreCode {
@@ -525,7 +526,7 @@ export const MsgStoreCode = {
   fromAmino(object: MsgStoreCodeAmino): MsgStoreCode {
     return {
       sender: object.sender,
-      wasmByteCode: object.wasm_byte_code,
+      wasmByteCode: fromBase64(object.wasm_byte_code),
       instantiatePermission: object?.instantiate_permission ? AccessConfig.fromAmino(object.instantiate_permission) : undefined
     };
   },
@@ -533,7 +534,7 @@ export const MsgStoreCode = {
   toAmino(message: MsgStoreCode): MsgStoreCodeAmino {
     const obj: any = {};
     obj.sender = message.sender;
-    obj.wasm_byte_code = message.wasmByteCode;
+    obj.wasm_byte_code = message.wasmByteCode ? toBase64(message.wasmByteCode) : undefined;
     obj.instantiate_permission = message.instantiatePermission ? AccessConfig.toAmino(message.instantiatePermission) : undefined;
     return obj;
   }
@@ -750,7 +751,7 @@ export const MsgInstantiateContract = {
       admin: object.admin,
       codeId: Long.fromString(object.code_id),
       label: object.label,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : []
     };
   },
@@ -761,7 +762,7 @@ export const MsgInstantiateContract = {
     obj.admin = message.admin;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
     obj.label = message.label;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);
@@ -925,7 +926,7 @@ export const MsgInstantiateContract2 = {
       admin: object.admin,
       codeId: Long.fromString(object.code_id),
       label: object.label,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : [],
       salt: object.salt,
       fixMsg: object.fix_msg
@@ -938,7 +939,7 @@ export const MsgInstantiateContract2 = {
     obj.admin = message.admin;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
     obj.label = message.label;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);
@@ -1220,7 +1221,7 @@ export const MsgExecuteContract = {
     return {
       sender: object.sender,
       contract: object.contract,
-      msg: object.msg,
+      msg: toUtf8(JSON.stringify(object.msg)),
       funds: Array.isArray(object?.funds) ? object.funds.map((e: any) => Coin.fromAmino(e)) : []
     };
   },
@@ -1229,7 +1230,7 @@ export const MsgExecuteContract = {
     const obj: any = {};
     obj.sender = message.sender;
     obj.contract = message.contract;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
 
     if (message.funds) {
       obj.funds = message.funds.map(e => e ? Coin.toAmino(e) : undefined);
@@ -1407,7 +1408,7 @@ export const MsgMigrateContract = {
       sender: object.sender,
       contract: object.contract,
       codeId: Long.fromString(object.code_id),
-      msg: object.msg
+      msg: toUtf8(JSON.stringify(object.msg))
     };
   },
 
@@ -1416,7 +1417,7 @@ export const MsgMigrateContract = {
     obj.sender = message.sender;
     obj.contract = message.contract;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
     return obj;
   }
 

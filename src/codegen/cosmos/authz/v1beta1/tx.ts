@@ -624,16 +624,10 @@ export const Sdk_Msg_InterfaceDecoder = (input: _m0.Reader | Uint8Array): Any =>
   }
 };
 export const Sdk_Msg_FromAmino = (content: AnyAmino) => {
-  switch (content.type) {
-    default:
-      return Any.fromAmino(content);
-  }
+  return Any.fromAmino(content);
 };
 export const Sdk_Msg_ToAmino = (content: Any) => {
-  switch (content.typeUrl) {
-    default:
-      return Any.toAmino(content);
-  }
+  return Any.toAmino(content);
 };
 export const Cosmos_authzAuthorization_InterfaceDecoder = (input: _m0.Reader | Uint8Array): GenericAuthorization | SendAuthorization | StakeAuthorization | ContractExecutionAuthorization | ContractMigrationAuthorization | Any => {
   const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);

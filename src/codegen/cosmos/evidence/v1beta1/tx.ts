@@ -207,14 +207,8 @@ export const Cosmos_evidenceEvidence_InterfaceDecoder = (input: _m0.Reader | Uin
   }
 };
 export const Cosmos_evidenceEvidence_FromAmino = (content: AnyAmino) => {
-  switch (content.type) {
-    default:
-      return Any.fromAmino(content);
-  }
+  return Any.fromAmino(content);
 };
 export const Cosmos_evidenceEvidence_ToAmino = (content: Any) => {
-  switch (content.typeUrl) {
-    default:
-      return Any.toAmino(content);
-  }
+  return Any.toAmino(content);
 };

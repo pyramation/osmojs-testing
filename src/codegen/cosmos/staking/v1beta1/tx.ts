@@ -4,6 +4,8 @@ import { Coin, CoinAmino, CoinSDKType } from "../../base/v1beta1/coin";
 import { Timestamp, TimestampAmino, TimestampSDKType } from "../../../google/protobuf/timestamp";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, fromJsonTimestamp, fromTimestamp } from "../../../helpers";
+import { toBase64, fromBase64 } from "@cosmjs/encoding";
+import { encodeBech32Pubkey, decodeBech32Pubkey } from "@cosmjs/amino";
 /** MsgCreateValidator defines a SDK message for creating a new validator. */
 
 export interface MsgCreateValidator {
@@ -360,7 +362,10 @@ export const MsgCreateValidator = {
       minSelfDelegation: object.min_self_delegation,
       delegatorAddress: object.delegator_address,
       validatorAddress: object.validator_address,
-      pubkey: object?.pubkey ? Cosmos_cryptoPubKey_FromAmino(object.pubkey) : undefined,
+      pubkey: encodeBech32Pubkey({
+        type: "tendermint/PubKeySecp256k1",
+        value: toBase64(object.pubkey.value)
+      }, "cosmos"),
       value: object?.value ? Coin.fromAmino(object.value) : undefined
     };
   },
@@ -372,7 +377,10 @@ export const MsgCreateValidator = {
     obj.min_self_delegation = message.minSelfDelegation;
     obj.delegator_address = message.delegatorAddress;
     obj.validator_address = message.validatorAddress;
-    obj.pubkey = message.pubkey ? Cosmos_cryptoPubKey_ToAmino((message.pubkey as Any)) : undefined;
+    obj.pubkey = message.pubkey ? {
+      typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+      value: fromBase64(decodeBech32Pubkey(message.pubkey).value)
+    } : undefined;
     obj.value = message.value ? Coin.toAmino(message.value) : undefined;
     return obj;
   }
@@ -1098,14 +1106,14 @@ export const Cosmos_cryptoPubKey_InterfaceDecoder = (input: _m0.Reader | Uint8Ar
   }
 };
 export const Cosmos_cryptoPubKey_FromAmino = (content: AnyAmino) => {
-  switch (content.type) {
-    default:
-      return Any.fromAmino(content);
-  }
+  return encodeBech32Pubkey({
+    type: "tendermint/PubKeySecp256k1",
+    value: toBase64(content.value)
+  }, "cosmos");
 };
 export const Cosmos_cryptoPubKey_ToAmino = (content: Any) => {
-  switch (content.typeUrl) {
-    default:
-      return Any.toAmino(content);
-  }
+  return {
+    typeUrl: "/cosmos.crypto.secp256k1.PubKey",
+    value: fromBase64(decodeBech32Pubkey(content).value)
+  };
 };

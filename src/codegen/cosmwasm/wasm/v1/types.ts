@@ -1,6 +1,7 @@
 import { Any, AnyAmino, AnySDKType } from "../../../google/protobuf/any";
 import * as _m0 from "protobufjs/minimal";
 import { isSet, bytesFromBase64, base64FromBytes, Long } from "../../../helpers";
+import { toUtf8, fromUtf8 } from "@cosmjs/encoding";
 /** AccessType permission types */
 
 export enum AccessType {
@@ -995,7 +996,7 @@ export const ContractCodeHistoryEntry = {
       operation: isSet(object.operation) ? contractCodeHistoryOperationTypeFromJSON(object.operation) : 0,
       codeId: Long.fromString(object.code_id),
       updated: object?.updated ? AbsoluteTxPosition.fromAmino(object.updated) : undefined,
-      msg: object.msg
+      msg: toUtf8(JSON.stringify(object.msg))
     };
   },
 
@@ -1004,7 +1005,7 @@ export const ContractCodeHistoryEntry = {
     obj.operation = message.operation;
     obj.code_id = message.codeId ? message.codeId.toString() : undefined;
     obj.updated = message.updated ? AbsoluteTxPosition.toAmino(message.updated) : undefined;
-    obj.msg = message.msg;
+    obj.msg = message.msg ? JSON.parse(fromUtf8(message.msg)) : undefined;
     return obj;
   }
 
@@ -1185,14 +1186,8 @@ export const ContractInfoExtension_InterfaceDecoder = (input: _m0.Reader | Uint8
   }
 };
 export const ContractInfoExtension_FromAmino = (content: AnyAmino) => {
-  switch (content.type) {
-    default:
-      return Any.fromAmino(content);
-  }
+  return Any.fromAmino(content);
 };
 export const ContractInfoExtension_ToAmino = (content: Any) => {
-  switch (content.typeUrl) {
-    default:
-      return Any.toAmino(content);
-  }
+  return Any.toAmino(content);
 };
